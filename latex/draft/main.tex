@@ -1,0 +1,51 @@
+\ExplSyntaxOn
+\sys_ensure_backend:
+\pdf_version_gset:n{1.7}
+\ExplSyntaxOff
+\documentclass{article}
+\usepackage{simonspreamble}
+
+%%%%%% WRITE COURSE CODE HERE %%%%%%
+\makeatletter
+\edef\headcourse{MEK5960}
+\makeatother
+
+%%%%%% FILL OUT TITLE, NAME, AND DATE %%%%%%
+\title{Draft}
+\subtitle{\textit{\headcourse}}
+\author{\textsc{Simon Lederhilger}}
+\date{December 8\textsuperscript{th} 2025}
+
+%%%%%% DEFINES THE HEADER TITLE %%%%%%
+\makeatletter
+\edef\headtitle{\@title}
+\makeatother
+
+\begin{document}
+\maketitle\thispagestyle{fancy}
+%\section{Foreword}
+%\subfile{SECTIONS/FOREWORD/foreword.tex}
+\newpage\tableofcontents
+
+%\newpage
+%\section*{Preface}
+%\subfile{sections/preface/preface.tex}
+
+\newpage
+\section{Introduction}
+\subfile{sections/introduction/introduction.tex}
+
+\newpage
+\section{Vector fields}
+\subfile{sections/vectors/vectors.tex}
+
+\section[Panel Methods]{Boundary Element Method}
+\subfile{sections/panel/panel.tex}
+
+\section{Numerical Implementation}
+
+\section{Conclusion}
+\subfile{sections/conclusion/conclusion.tex}
+
+\printbibliography
+\end{document}
