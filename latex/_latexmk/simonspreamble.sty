@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%% SIMON's preamble %%%%%%%%%%%%%%%%%%%%%%%
 \ProvidesClass{simonspreamble} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Version 04122025, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
+% Version 03012025, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -62,13 +62,6 @@
 \RequirePackage{subfiles}
 \RequirePackage{csquotes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%% MULTICOLS %%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \RequirePackage{multicol} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Highly incompatible with the dblfnote package. May seemingly %
-% work, but compile may break suddenly. Not recommended. %%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% MATH TYPESETTING PACKAGES %%%%%%%%%%%%%%%%%%%
@@ -96,25 +89,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% ALLOWING FOR OTHER FONTS %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{fontspec}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%% TYPESETTING PRETTIFYING %%%%%%%%%%%%%%%%%%%%
-\RequirePackage{xcolor}
-\RequirePackage{scalerel}
-\DeclareEmphSequence{\slshape}
-%%%%%%%%%%%% Scaled down \in symbol for subscripts %%%%%%%%%%%%%
-\newcommand{\smallerrel}[1]{%
-    \mathrel{\mathpalette\smallerrelaux{#1}}}
-\newcommand{\smallerrelaux}[2]{%
-    \raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
-\newcommand{\smallin}{\smallerrel{\in}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%% Pi-theorem Matrix %%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{nicematrix}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% PHYSICS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[version=4]{mhchem}
-\RequirePackage{siunitx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,11 +100,6 @@
     calc, bending, positioning}
 \RequirePackage{pdfrender}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%% Figures for two columns %%%%%%%%%%%%%%%%%%%%
-\newenvironment{Figure}
-  {\par\medskip\noindent\minipage{\linewidth}}
-  {\endminipage\par\medskip}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% CODE/PROGRAMMING TYPESETTING (MATLAB) %%%%%%%%%%%%
@@ -140,7 +109,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[language = auto,%
     autolang = other,%
     bibencoding = utf8,%
@@ -149,7 +120,9 @@
 \DeclareNameAlias{author}{family-given}
 \addbibresource{bibliography.bib}
 \WarningFilter{biblatex}{Patching footnotes failed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% REFERENCING %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \disable@package@load{auxhook}{}
 \RequirePackage{hyperref}
 \hypersetup{%
@@ -170,7 +143,40 @@
     (\hyperref[\temp]{#1#2})%
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% GLOSSARIES %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[%
+  record, nomain, symbols, style = alttreegroup
+]{glossaries-extra}
+\GlsXtrLoadResources[%
+  sort-field = {group},
+  sort-suffix = {description},
+  src = {symbols.bib},
+  selection = {all},
+  type = {symbols}
+]
+\setglossarypreamble[symbols]{\glssetwidest{MMM}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% TYPESETTING PRETTIFYING %%%%%%%%%%%%%%%%%%%%
+\RequirePackage{xcolor}
+\RequirePackage{scalerel}
+\DeclareEmphSequence{\slshape}
+%%%%%%%%%%%% Scaled down \in symbol for subscripts %%%%%%%%%%%%%
+\newcommand{\smallerrel}[1]{%
+    \mathrel{\mathpalette\smallerrelaux{#1}}}
+\newcommand{\smallerrelaux}[2]{%
+    \raisebox{.1ex}{\scalebox{.75}{$#1#2$}}}
+\newcommand{\smallin}{\smallerrel{\in}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Pi-theorem Matrix %%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{nicematrix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% PHYSICS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[version=4]{mhchem}
+\RequirePackage{siunitx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% MATHEMATICS %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,6 +190,8 @@
 \renewcommand\th@plain{\slshape}
 \theoremstyle{proposition}
 \newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{lemma}
+\newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -207,6 +215,7 @@
 \DeclareMathOperator{\Res}{Res}
 \DeclareMathOperator{\Log}{Log}
 \DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\signum}{sgn}
 \DeclareMathOperator{\amplitudinis}{am}
 \DeclareMathOperator{\sn}{sn}
 \DeclareMathOperator{\cn}{cn}
@@ -226,15 +235,22 @@
 \newcommand{\uvec}{\mathbf{u}}
 \newcommand{\ufrak}{\mathfrak{u}}
 \newcommand{\Uvec}{\mathbf{U}}
+\newcommand{\vfrak}{\mathfrak{v}}
 \newcommand{\xvec}{\mathbf{x}}
 \newcommand{\evec}{\mathbf{e}}
 \newcommand{\avec}{\mathbf{a}}
 \newcommand{\afrak}{\mathfrak{a}}
 \newcommand{\bvec}{\mathbf{b}}
 \newcommand{\bfrak}{\mathfrak{b}}
+\newcommand{\cvec}{\mathbf{c}}
 \newcommand{\svec}{\mathbf{s}}
-\newcommand{\eye}{\mathfrak{d}}
+\newcommand{\dfrak}{\mathfrak{d}}
+\newcommand{\pfrak}{\mathfrak{p}}
+\newcommand{\metricg}{\mathrm{g}}
+\newcommand{\metrictensor}{\mathfrak{g}}
 \newcommand{\jacobi}[1]{\mathbf{\mathfrak{J}_{#1}}}
+\newcommand{\lieder}[1]{\mathscr{L}_{#1}}
+\newcommand{\hamilton}{\mathcal{H}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%% PHYSICAL %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\stress}{\mathbf{\mathfrak{P}}}
 \newcommand{\strain}{\mathbf{\mathfrak{e}}}
@@ -346,7 +362,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EZH %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ezh}{\foreignlanguage{russian}{\textit{ӡ}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GWA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\Gwamma}{\foreignlanguage{russian}{\text{Ғ}}}
+\newcommand{\Gwamma}{\foreignlanguage{russian}{\textnormal{Ғ}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% ZHWE (ꚅ) %%%%%%%%%%%%%%%%%%%%%%%%%
 %\newcommand{\zhwe}{\textit{\textcyrillic{ꚅ}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%% ABKHAZ HA %%%%%%%%%%%%%%%%%%%%%%%%%%
