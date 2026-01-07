@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%% SIMON's preamble %%%%%%%%%%%%%%%%%%%%%%%
 \ProvidesClass{simonspreamble} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Version 03012025, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
+% Version 07012025, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -147,16 +147,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% GLOSSARIES %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[%
-  record, nomain, symbols, style = alttreegroup
+  symbols, nomain, record, stylemods = {topic}, nostyles
 ]{glossaries-extra}
+
+\renewcommand{\glstopicMarker}[1]{%
+ \pdfbookmark[2]{\glsentryname{#1}}{\currentglossary.#1}%
+}
+\glsxtrsetgrouptitle{latin}{Latin letters}
+\glsxtrsetgrouptitle{greek}{Greek letters}
+\glsxtrsetgrouptitle{cyrillic}{Cyrillic letters}
+\glsxtrsetgrouptitle{math}{Mathematical symbols}
 \GlsXtrLoadResources[%
-  sort-field = {group},
-  sort-suffix = {description},
-  src = {symbols.bib},
-  selection = {all},
-  type = {symbols}
+  src = {%
+    symboltopics,
+    latinsymbols,
+    greeksymbols,
+    mathsymbols,
+    cyrillicsymbols
+  },
+  field-aliases = {%
+    identifier = parent
+  },
+  type = {symbols},
+  set-widest
 ]
-\setglossarypreamble[symbols]{\glssetwidest{MMM}}
+
+%\setglossarypreamble[symbols]{\glssetwidest{MMM}}
+\renewcommand*\glspostdescription{\dotfill}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% TYPESETTING PRETTIFYING %%%%%%%%%%%%%%%%%%%%
@@ -188,9 +205,7 @@
 \patchcmd{\@endtheorem}{\endtrivlist}{\endlist}{}{}
 \newtheorem{theorem}{Theorem}[section]
 \renewcommand\th@plain{\slshape}
-\theoremstyle{proposition}
 \newtheorem{proposition}[theorem]{Proposition}
-\theoremstyle{lemma}
 \newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
