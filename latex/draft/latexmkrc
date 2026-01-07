@@ -3,3 +3,44 @@ ensure_path('BIBINPUTS', '../_latexmk//');
 $pdf_mode = 4;
 $postscript_mode = $dvi_mode = 0;
 $aux_dir = 'compile';
+
+push @generated_exts, 'glg', '%R*.glstex';
+add_cus_dep( 'aux', 'glstex', 0, 'run_bib2gls' );
+sub run_bib2gls {
+    my $ret = 0;
+    my ($base, $path) = fileparse( $_[0] );
+    my @bib2gls_cmd = (
+         "--tex-encoding", "UTF-8",
+         "--log-encoding", "UTF-8",
+         "--dir",
+         $path,
+         $base
+    );
+    if ($silent) { unshift @bib2gls_cmd, "--silent"; }
+    unshift @bib2gls_cmd, "bib2gls";
+    print "Running '@bib2gls_cmd'...\n";
+    $ret = system @bib2gls_cmd;
+    
+    if ($ret) {
+        warn "Run_bib2gls: Error, so I won't analyze .glg file\n";
+        return $ret;
+    }
+    my $glg = "$_[0].glg";
+    if ( open( my $glg_fh, '<', $glg) ) {
+        rdb_add_generated( $glg ); 
+        while (<$glg_fh>) {
+            s/\s*$//;
+            if (/^Reading\s+(.+)$/) { rdb_ensure_file( $rule, $1 ); }
+            if (/^Writing\s+(.+)$/) { rdb_add_generated( $1 ); }
+        }
+        close $glg_fh;
+    }
+    else {
+        warn "Run_bib2gls: Cannot read log file '$glg': $!\n";
+    }
+    return $ret;
+}
+
+sub run_bib2gls_alt {
+    return Run_subst( 'internal run_bib2gls %Y%R' );
+}
