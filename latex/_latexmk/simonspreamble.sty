@@ -97,7 +97,8 @@
 \RequirePackage{subcaption}
 \RequirePackage{tikz}
 \usetikzlibrary{patterns, 3d, arrows, perspective,%
-    calc, bending, positioning}
+  calc, bending, positioning}
+\RequirePackage{tikz-3dplot}
 \RequirePackage{pdfrender}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -265,7 +266,7 @@
 \newcommand{\metricg}{\mathrm{g}}
 \newcommand{\metrictensor}{\mathfrak{g}}
 \newcommand{\jacobi}[1]{\mathbf{\mathfrak{J}_{#1}}}
-\newcommand{\lieder}[1]{\mathscr{L}_{#1}}
+\newcommand{\lieder}[1]{{£}_{#1}}
 \newcommand{\hamilton}{\mathcal{H}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%% PHYSICAL %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\stress}{\mathbf{\mathfrak{P}}}
@@ -381,20 +382,4 @@
 \newcommand{\Gwamma}{\foreignlanguage{russian}{\textnormal{Ғ}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% ZHWE (ꚅ) %%%%%%%%%%%%%%%%%%%%%%%%%
 %\newcommand{\zhwe}{\textit{\textcyrillic{ꚅ}}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%% ABKHAZ HA %%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\abha}{\foreignlanguage{russian}{\textit{ҩ}}}
-
-\newcommand{\othal}{\foreignlanguage{gothic}{\text{𐍉}}}
-\newcommand{\Psifrak}{\mathchoice
-  {\raisebox{-.2em}{\mbox{$\resizebox{.74em}{1em}{%
-          \includegraphics{SYMBOLS/Psi.pdf}}$}}}
-  {\raisebox{-.2em}{\mbox{$\resizebox{.74em}{1em}{%
-          \includegraphics{SYMBOLS/Psi.pdf}}$}}}
-  {\raisebox{-0.2em}{\scalebox{.7}{\mbox{%
-          $\resizebox{.74em}{1em}{%
-            \includegraphics{SYMBOLS/Psi.pdf}}$}}}}
-  {\raisebox{-0.2em}{\scalebox{.5}{\mbox{%
-          $\resizebox{.74em}{1em}{%
-            \includegraphics{SYMBOLS/Psi.pdf}}$}}}}
-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
