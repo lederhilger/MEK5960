@@ -1,0 +1,52 @@
+The vortex lattice method exchanges the doublet source panels of the boundary element method for vortex filaments along their boundaries.
+Multiple authors%
+\footnote{%
+        \cite{deng2020acceleration} \textsc{Deng} \emph{et al.} (2020)
+}\textsuperscript{,}%
+\footnote{%
+        cite another
+}
+have cited \textsc{Hess} \& \textsc{Smith}'s monumental work \emph{Calculation of Potential Flow about Arbitrary Bodies}%
+\footnote{%
+        \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
+}
+to the equivalence between a dipole panel and a vortex panel.
+Such a statement is not found there.
+Rather, rather a relationship was demonstrated by \textsc{Hess}%
+\footnote{%
+        \cite{hess1972calculation} \textsc{Hess} (1972), Appendix A
+}
+between the velocity induced by a distribution of dipoles and that induced by a certain vortex distribution.
+\begin{equation}
+        \int_{\Omega} \Curl{\cdot} \,\dee V = -\int_{S} \cdot \times \dee\svec
+\end{equation}
+Confer \textsc{Truesdell}%
+\footnote{
+        \cite{truesdell1954kinematics} \textsc{Truesdell}, p.11
+}
+
+Some form of interpolation is done for the circulation on each filament, for which we choose a constant value.
+Thus,
+\[
+  \uvec(\bzhe) \approx \frac{1}{4\pi} \sum_{i = 1}^{4} \Gamma_i \int_{C_i} \frac{\xvec - \bzhe}{r^3} \times \dee\svec.
+\]
+For each filament, we can calculate the induced velocity.
+In order to reduce clutter, we drop the index indicating filament.
+\begin{figure}[h]
+        \centering
+        \scalebox{1}{\input{line_integral.tikz}}
+        \caption{Line integral}
+        \label{fig:line_integral}
+\end{figure}
+
+We consider the parametrization of the line\footnote{\cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013)} such that $\dee\svec = \sfrac{1}{2}(\xvec^{\romani} - \xvec^{\romanii})\,\dee s$.
+\begin{subequations}\label{eq:line_parametrization}
+        \begin{equation}\tag{\theequation{a, b}}
+                \xvec = \kha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii}), \qquad \kha = \frac{x^{\romani} + x^{\romanii}}{2}
+        \end{equation}
+\end{subequations}
+
+\begin{equation}\label{eq:Biot-Savart_projection}
+  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{\mathbf{r}^{\romani} \times \mathbf{r}^{\romanii}}{r^{\romani} r^{\romanii} + \mathbf{r}^{\romani} \cdot \mathbf{r}^{\romanii}} \left( \frac{1}{r^{\romani}} + \frac{1}{r^{\romanii}} \right), \qquad \mathbf{r}_i = \bzhe - \xvec_i, \qquad \xvec_i \in \partial C_i.
+\end{equation}
+        

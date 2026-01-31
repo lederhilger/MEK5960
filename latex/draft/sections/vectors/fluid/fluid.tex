@@ -1,0 +1,139 @@
+In our effort to mathematically describe natural fluid flow, our work shal be inspired by the principles of nature.
+The discussion that follows will elucidate to which extent our modeling actually reflects real fluids.
+Studying the physics of fluids is in large part shared by the consideration of the forces applied---dynamics---and the resulting motion---kinematics.
+It is the fluid kinematics we shall study first.
+Regarding the motion of the fluid, we should like to distinguish two frames of reference, namely the material and the spatial.
+The material frame of reference follows some specific fluid particle, whilst the spatial frame observes the fluid passing through some fixed point.%
+\footnote{%
+        \cite{truesdell1954kinematics} \textsc{Truesdell}, \S14, pp.29--35
+}
+Consider some particle $\xvec_0 \in \Omega_0$, which is carried by some flow onto the point $\xvec \in \Omega$ at time $t$.
+Distinguishing $\Omega_0$ is a formality---for our purposes it is the very same manifold as we otherwise consider, and the flow is an automorphism.
+This configuration describes nothing less than the dynamical system $\xvec = \cvec(\xvec_0, t)$, $\xvec_0 = \cvec(\xvec_0, t)$.
+Clearly the velocity of the fluid at such a fixed point $x$ must depend on the motion of the fluid particle.
+The nature of his dependency is however not immediately apparent.
+To this end, we consider the integral curves of the fluid velocity vector field $\uvec$ charted by $\xvec$.
+Such an integral curve we may in general label $\cvec(t)$, and are defined by its derivative coinciding with the velocity field at each point.
+These are not necessarily constrained by an initial condition, but do correspond with the flow when they are.
+Although we shall not do so, it may be shown that flows actually constitute a diffeomorphism group $\mathscr{G}$, a group of differentiable flows whose inverses exist and are differentiable. Upon inspection, the group action reveals itself to be map composition.
+The flow from some initial time by some increment of time will obviously constitute the same chronology when flowing therefrom to some other increment of time, should the flow start from the very same position and be carried to the sum of the two considered time increments.
+We conclude that tracing the same path of the flow backwards constitutes applying the inverse flow map, yielding the composition of the flow with the inverse flow, being the identity operator. We label the derivative of the flow with respect to time the particle velocity $\uvec_{\cvec}$, representing the material frame of reference.
+Fixing some $\xvec$, it is now clear that the spatial frame of reference is equivalent to the expression $\uvec \uvec_{\cvec} \circ \cvec^{-1}(\xvec)$.
+Should an explicit formula for this relationship be established, equations of motion may be derived from Newtonian principles and deliberation of dynamics, as we would possess the constitutive acceleration.
+We shall, however, explore another avenue through Hamiltonian mechanics.
+Considerable amount of such work can be done from very minimal physical considerations, as is shown in Vladimir \textsc{Arnol'd}’s works.%
+\footnote{%
+        \cite{arnold1966geometrie} \textsc{Arnol'd} (1966)
+}\textsuperscript{,}%
+\footnote{%
+        \cite{arnold2011topological} \textsc{Arnol'd} \& \textsc{Xesin}, ch.X
+}
+Although the results of these works are magnificent, the process by which the are derived are beyond the scope of this work, and indeed the writer at the present time.
+We shall therefore draw from other monographs as sources on connexions and symplectic forms to present these results.
+Thus we cannot motivate all steps in the derivations to come.
+The geometric formulation of hydrodynamics developed in the periphery of these named works of \textsc{Arnol'd} do indeed build upon the Hamiltonian formalism using the theory of groups mentioned above.
+They consider variations of fluid paths, and seek to minimize their effort by means of observing the extrema of the so-called \emph{action}.
+Considering the kinetic energy $\mathscr{L}(t) = \sfrac{1}{2}(\deet\cvec, \deet\cvec)$.
+\begin{equation}
+        \updelta J = \frac{\dee}{\dee \epsilon}
+\end{equation}
+
+\noindent
+We get the following theorem.%
+\footnote{%
+        \cite{jost2011riemannian} \textsc{Jost}, p.79
+}
+
+\begin{theorem}[\textsc{Darboux}]
+  Let $\frak{h}$ be a closed, nondegenerate bivector on some manifold of even dimension.
+  Then every point $\xvec$ has some neighborhood on which we can find a coordinate system $(x^1,\dots,p_1,\dots)$, with
+  \begin{equation}
+        \frak{h} = \dee p_i \wedge \dee x^i.
+  \end{equation}
+\end{theorem}
+
+\noindent
+The meaning of this theorem is that we can not only guarantee that $\mathfrak{h}$ is closed, but also that it is exact, since we can write $\dee p_{i} \wedge \dee x^{i} = \dee\pfrak$.
+Consider the projection $\Pi: \Tangent^{\ast}\Omega\to\Omega$ such that the pullback is defined by $\dee\Pi = \Pi_{\ast}: \Tangent\Tangent^{\ast}\Omega \to \Tangent\Omega$.
+Then some tangent vector $\avec \in \Tangent_{(\xvec,\pfrak)}\Omega$ is given as $\avec = a^{i}\partial_{x^i} + b_{j}\partial_{p_j}$, and $\Pi_{\ast}\avec = a^{i}\partial_{x^i} \in \Tangent_{x}\Omega$.
+
+\begin{definition}[Symplectic manifold]
+  A symplectic structure on a differentiable manifold of even dimension is a closed, nondegenerate bivector.
+  The pair is a symplectic manifold.
+\end{definition}
+
+\[
+        \uvec \iprod \mathfrak{h} = -\dee\hamilton.
+\]
+The symplectic form is preserved along the flow.
+
+\[
+        \frac{\partial x^{i}}{\partial t} = \frac{\partial \hamilton}{\partial p_{i}}, \qquad \frac{\partial p_{i}}{\partial t} = -\frac{\partial \hamilton}{\partial x^{i}}
+\]
+
+\begin{definition}[\textsc{Lie} derivative]
+  Let $\uvec$ be a vector field on the manifold $\Omega$, and $\cvec$ the flow.
+  For an arbitrary $\afrak \in \Lambda^{k}\Omega$, the \textsc{Lie} derivative of $\afrak$ by $\uvec$ is
+  \[
+        \lieder{\uvec} \afrak = \dee(\uvec\iprod\afrak) + \uvec\iprod\dee\afrak.
+  \]
+  The vector field $\uvec$ is symplectic if $\lieder{\uvec}\afrak = 0$ for a symplectic form $\afrak$.
+  For a vector field $\mathbf{v}$, the \textsc{Lie} derivative is defined to be
+  \[
+        \lieder{\uvec} \mathbf{v} = [\uvec, \mathbf{v}].
+  \]
+\end{definition}
+
+
+\begin{definition}[\textsc{Levi-Civita} connexion]
+  Let $\uvec \in \Tangent\Omega$ and $\afrak$ be a section of some vector bundle.
+  A connexion $\nabla$ is a bilinear form.
+  Should it preserve the metric in the sense that $\nabla\metrictensor = 0$, and be torsion free, then it is a \textsc{Levi-Civita} connexion.
+  These are determined by the \glossentrydesc{christoffel}{s}
+  \begin{equation}\label{eq:Christoffel}
+        \nabla_i\partial_j = \gls{christoffel}_{ij}^{k}\partial_{k}, \qquad \Gwamma_{ij}^{k} = \sfrac{\metricg^{k\ell}}{2}\big( \partial_{j}\metricg_{i\ell} + \partial_{i}\metricg_{j\ell} - \partial_{\ell}\metricg_{ij} \big).
+  \end{equation}
+\end{definition}
+
+\begin{theorem}[Fundamental thoerem of pseudo-Riemannian geometry]
+  Every pseudo-Riemannian manifold has a unique \textsc{Levi-Civita} connexion.
+\end{theorem}
+A curve is called geodesic if $\nabla_{\dot{\cvec}}\dot{\cvec} = 0$.
+
+The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ metric on the diffeomorphism group, where the pressure is the constraining force orthogonal to the diffeomorphism group.\footnote{\cite{xesin2025universal} \textsc{Xesin} \& \textsc{Modin} (2025), Remark 2.3}\textsuperscript{,}\footnote{\cite{izosimov2024geometry} \textsc{Izosimov} \& \textsc{Xesin} (2024)}
+%\[
+%    \Dee_t U^i = \deet U^i + \Gwamma_{jk}^{i} U^{j} \deet\phi^{k}
+%\]
+%We define the mass of the fluid occupying the manifold $\Omega$ in terms of the integral
+%\[
+%        m(t) = \int_{\Omega} \star\density(\xvec, t).
+%\]
+%
+%\[
+%        \strain = \lieder{\uvec}\mathfrak{\metrictensor}
+%\]
+
+\begin{subequations}\label{eq:Navier-Stokes-full}
+        \begin{equation}\tag{\theequation{a, b}}
+                \density \Dee_t \uvec = \nabla\cdot\stress + \varrho\vgravity, \qquad  \Dee_t \density = -\density \nabla \cdot \uvec
+        \end{equation}
+\end{subequations}
+
+\begin{subequations}\label{eq:Navier-Stokes}
+        \begin{equation}\tag{\theequation{a, b}}
+          \density \deet \ufrak + \density\lieder{\uvec} \ufrak = -\dee p + \mu\nabla^2 \ufrak + \varrho\vgravity, \qquad \updelta\ufrak = 0
+        \end{equation}
+\end{subequations}
+
+%\[
+%        \deet p + \mathrm{ad}^{\ast}p = 0.
+%\]
+
+%Discussion on the \textsc{Mach} number and the \textsc{Reynolds} number.
+%\[
+%        \mu\nabla^2 \uvec = \mu \nabla (\nabla\cdot\uvec) + \mu \nabla \times (\nabla\times\uvec).
+%\]
+
+%For steady density, such that $\deet\varrho = 0$, a sufficient condition for the density convection to be negligible is that the flow be relatively small compared to the celerity of pressure waves in the fluid.
+%That is, we may have densiy variations in the fluid, but we will assume that is not the case.
+%Considering high \textsc{Reynolds} numbers, the flow will in large part be inviscid---the influence of viscosity is reduced to thin boundary layers.\footnote{show or cite.}

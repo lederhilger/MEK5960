@@ -1,0 +1,15 @@
+\begin{tikzpicture}[3d view,
+  perspective={
+    p = {(8,0,0)},
+    q = {(0,8,0)}}]
+  \begin{scope}[scale = 1]
+    \coordinate (O) at (0,0,0);
+    \draw[-latex] (O)--(1,0,0) node[below]{$x$};
+    \draw[-latex] (O)--(0,1,0) node[below]{$y$};
+    \draw[-latex] (O)--(0,0,1) node[below]{$z$};
+    \begin{scope}[plane is the xz axis]
+      \def\a{1}
+      \def\b{.7}
+    \end{scope}
+  \end{scope}
+\end{tikzpicture}

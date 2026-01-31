@@ -1,0 +1,45 @@
+Throughout this text, we shall draw from the results of the theory of differential geometry, the most important of which is \emph{the fundamental theorem of multivariate calculus}.
+The conditions under which this theorem holds is of such importance to the validity of this work that some of the underlying theory will be discussed.
+Since a thorough understanding of the theory requires such attention to detail in order to discuss in any more meaningful detail than merely superficial mention, only the minimal required vocabulary and ideas to grasp  will be introduced.
+For a more thorough derivation and explanation of the formalities of the theory and the background thereof, the reader is therefore refered to a dedicated text on the topic.
+The work at hand will utilize the conventions of Shigeyuki \textsc{Morita}'s \emph{Geometry of Differential Forms} for this purpose, and any rigorous proofs or additional definitions to that end are referred thither.
+Admittedly, not including proofs of what is stated to be such foundational results preceding this work will not serve to enhance intuition \emph{per se}, and so the reason for its inclusion is in part due to completeness, and in part so as to insure ourselves that there is indeed work from which we can draw already proven rules of arithmetic.
+Subsequently, the theory of functions of a complex variable will be discussed.
+For although the work at hand is concerned with fluid flow of three dimensions, results from the study of fluid flows of two dimensions will turn out to be useful, which we shall find can be viewed through the lens of complex analysis.
+
+It ultimately is results pertaining to the fluid flow of air around and in the wake of a wind turbine rotor we wish to model.
+Of pertinence, then, is to outline the mathematical description of fluid flow altogether.
+For the purposes of this text, it is sufficient we establish for the moment a fluid to be a volume of a specified density and viscosity, both of which govern its dynamics, or motion.
+We suppose this motion may be represented in terms of a velocity vector of scalar functions in the infinite Euclidean space it occupies.
+In practice, such a vector is found through the integration of a differential equation governed by the applicable physical principles.
+We shall justify this notion of fluids for application to our problem of wind turbines, as it will in time become clear that the assumptions made are in no way general to the physics of fluid flow, or even correct, for that matter.
+
+The aforementioned fundamental theorem of multivariate calculus may then be employed to transform such an integrated differential equation evaluated throughout the entire fluid domain to one over its boundary.
+In the case of a wind turbine blade, this entails integrating over its surface.
+There are two special cases of this fundamental theorem of particular interest, namely the \textsc{Gauss}--\textsc{Ostrogradsky} theorem, and the \textsc{Thomson}--\textsc{Stokes} theorem.
+The names are inconsequential, as they are indeed only merely offshoots of this more fundamental theorem, and are as such simply often labeled the divergence theorem and curl theorem.
+Unsurprisingly, they respectively relate the divergence and curl in the fluid to some flux of fluid at the boundary, and are given by
+\begin{subequations}\label{eq:divergence_curl}
+        \begin{equation}\tag{\theequation{a, b}}
+                \int_{\Omega} \Div\uvec \,\dee V = \int_{\partial\Omega} \uvec\cdot \,\dee\mathbf{S}, \qquad \int_{\Omega} \Curl\uvec \cdot\dee\mathbf{S} = \int_{\partial\Omega} \uvec \cdot\dee\svec.
+        \end{equation}
+\end{subequations}
+As is stated, the derivation of this fundamental theorem is beyond the scope of this work, so it will simply be presented once the foundation has been laid.
+This foundation will also reveal the theory of harmonic analysis, upon which we may build complex analysis.
+Once discussed, the topic of fluid mechanics will at last be addressed in full, and we shall discuss its dynamics and kinematics.
+Finally, we shall derive the theory with which this thesis seeks to address its problems---namely the decomposition of fluid processes in solenoidal and vortical porcesses.
+
+\subsection{Exterior calculus}
+\subfile{exterior/exterior.tex}
+
+\subsection{Complex analysis}
+\subfile{complex/complex.tex}
+
+\subsection{Fluid mechanics}
+\subfile{fluid/fluid.tex}
+
+\subsection{Potential fluid flow}
+\subfile{potential/potential.tex}
+
+\subsection{Vortical fluid flow}
+\subfile{vortex/vortex.tex}

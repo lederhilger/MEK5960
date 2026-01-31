@@ -1,0 +1,108 @@
+In order to study the effects of vortices on the velocity field, we define the vorticity $\vorticityfrak = \star\dee\ufrak$, with the relation $\vorticityfrak^{\sharp} = \vorticity$.
+We consider the vorticity equation, obtained by taking the curl of the \textsc{Navier}--\textsc{Stokes} equation \subeqref{\ref{eq:Navier-Stokes}}[a].
+\begin{subequations}\label{eq:vorticity-equation}
+         \begin{equation}\tag{\theequation{a, b}}
+           \varrho\deet\vorticityfrak + \varrho\lieder{\uvec}\vorticityfrak = \mu\Delta\vorticityfrak, \qquad \codee\vorticityfrak = 0.
+         \end{equation}
+\end{subequations}
+Confer with \textsc{Batchelor},%
+\footnote{%
+        \cite{batchelor2007introduction} \textsc{Batchelor}, \S5.2, pp.267--273
+}
+\textsc{Marsden} \& \textsc{Weinstein},%
+\footnote{%
+        \cite{marsden1983coadjoint} \textsc{Marsden} \& \textsc{Weinstein} (1983), eq.V
+}
+or \textsc{Modin} \emph{et al}.%
+\footnote{%
+        \cite{modin2010geodesics} \textsc{Modin} \emph{et al.} (2010)
+}
+The question at hand is whether the vorticity is useful in the representation of the fluid flow we are interested in modeling.
+For any structure interacting with a fluid inducing a perturbed velocity, this velocity ought to not propagate indefinitely.
+In other words, it should be evanescent.
+Such vector fields may be described by decomposition into constituent \textsc{Helmholtz} components, wherein
+\begin{subequations}\label{eq:Helmholtz_decomposition}
+        \begin{equation}\tag{\theequation{a, b}}
+            \uvec = \nabla \Phi + \nabla \times \mathbf{\Psi}, \qquad \mathbf{\Psi} = \psi \nabla A.
+        \end{equation}
+\end{subequations}
+We understand from the above discussion that this is just a special case of the \textsc{Hodge} decomposition, where $\Phi$ is a sharped zero-form, and $\mathbf{\Psi}$ is a sharped one-form.
+Indeed, as the curl operator is simply $\star\dee$, any choice of bivector $\vfrak$ such that $\star\vfrak = \Psi_i\,\dee x^i$ will be approporiate, revealing the familiar \textsc{Hodge} decomposition of theorem \ref{thm:Hodge_decomposition}.
+Such a choice of representation of the vector potential is called a gauge, and the gauge chosen in equation \subeqref{\ref{eq:Helmholtz_decomposition}}[b] is that of \textsc{Gumerov} \& \textsc{Duraiswami},%
+\footnote{%
+        \cite{gumerov2006fast} \textsc{Gumerov} \& \textsc{Duraiswami} (2006)
+}
+where we impose the condition that $\Div\mathbf{\Psi} = 0$.
+In other words, the bivector $\vfrak$ is exact.
+It ought to be noted that the condition of evanescence is not one which applies to the \textsc{Helmholtz} decomposition, but rather that of the convergence of integrals which will be discussed promptly.
+
+Should the fluid happen to interact with a structure, it is only near the surface the effects of viscosity are apparent.
+A formulation, then, wherein the vorticity is nonzero only on the boundary of the object, we may be able to proceed with a potential flow formulation in the rest of the fluid domain.
+Nevertheless, the laplacian term in the \textsc{Navier}--\textsc{Stokes} equation may be expanded in terms of equation \eqref{eq:Hodge_laplacian} so as to reveal that
+\begin{equation}\label{eq:Laplace_vector_definition}
+\mu\Delta \uvec = \mu\nabla(\nabla \cdot \uvec) - \mu \nabla \times \vorticity.
+\end{equation}
+This immediately yields the biharmonic equation for the potential function $\Phi$ when the vorticity is zero, which has been discussed by \textsc{Gumerov} and \textsc{Duraiswami} in terms of implementation through fast multipole methods.\footnote{\emph{ibid}.}
+For we know the divergence of the velocity field to be zero, so that the Laplacian is equal to the curl of the vorticity.
+The connexion is immediately apparent between that of viscous effects encoded in the Laplacian term, and the vorticity of the fluid.
+Thus our motivation is plainly laid out before us---we wish to imitate the viscous effects that the fluid exhibits through a potential formulation.
+Employing the above \textsc{Helmholtz} decomposition of equation \eqref{eq:Helmholtz_decomposition}, we find that by taking the laplacian thereof and substituting in the value of the vorticity of equation \eqref{eq:Laplace_vector_definition},
+\[
+  -\nabla \times \vorticity = \nabla \times \Delta \mathbf{\Psi}.
+\]
+We are free to equate the two arguments of the curl so that the vorticity equals the negative laplacian of the vector field $\mathbf{\Psi}$, or in terms of differential forms, $\Delta\star\vfrak = -\vorticityfrak$.
+This is a \textsc{Poisson} equation, which is solved by the convolution $\star\vfrak = -\mathfrak{w} \ast \green$,%
+\footnote{%
+        \cite{taylor2023partial} \textsc{Taylor}, \S3.4
+}
+where $\green$ is the familiar \textsc{Green} function, expressed in local coordinates as
+\[
+        \Psi_i(\xvec) = -\int_{\Omega(\bzhe)} w_i \green \,\dee V, \qquad \green(\xvec, \bzhe) = \frac{1}{4\pi \absl{\xvec - \bzhe}}.
+\]
+Since it is the velocity $\ufrak = \Div\vfrak$ we wish to find, we may simply calculate it from the above expression by taking the curl.
+Note that integration is done with respect to the variable $\bzhe$, whilst the exterior derivative will be taken with respect to $\xvec$.
+To that end, we have $\partial_i \vorticityfrak(\bzhe)\dee x^{i} = 0$, so that by the graded product rule, we only differentiate the \textsc{Green} function.
+We then find the velocity vector field in terms of the vorticity, such that
+\[
+        \ufrak(\xvec) = -\int_{\Omega} \star\dee(\vorticityfrak \green) = -\int_{\Omega} \star\big( \mathfrak{w}\wedge\dee\green \big).
+\]
+
+\noindent
+Confer with \textsc{Xesin}.%
+\footnote{%
+        \cite{xesin2012symplectic} \textsc{Xesin} (2012)
+}
+As was noted above, the condition of evanescence of the velocity is a result of this formulation.%
+\footnote{%
+        cite
+}
+
+We note the relation between the \textsc{Hodge} star of the exterior product of two 1-forms and the cross product of two vectors; $\star(\afrak \wedge \bfrak) = (\avec \times \bvec)$, up to musical isomorphism.
+Expressing this in terms of vectors, we have the generalized \textsc{Biot}--\textsc{Savart} equation,
+\begin{equation}
+        \uvec(\xvec) = -\frac{1}{4\pi}\int_{\Omega} \frac{ \vorticity \times (\xvec - \bzhe) }{ {\absl{ \xvec - \bzhe }}^3 } \,\dee V.
+\end{equation}
+
+\newpage
+Introduce circulation, such that the vorticity is given along vortex filaments, $\vorticityfrak = \Gamma\mathfrak{t}$.
+Gives compact support, etc. so integrals converge nicely.
+Provide definition of circulation.
+\[
+  \Gamma = \oint_{C} \uvec \cdot \dee\mathbf{s} = \int_{S} \vorticity \cdot \nhat \,\dee S.
+\]
+We can derive the circulation theorem.
+\[
+  \Dee_t \Gamma = 0.
+\]
+We will derive how boundary layers may be approximated by vortex sheets.
+
+The \textsc{Biot}--\textsc{Savart} formulation of the disturbance velocity field at any point by the filamtent $C$ is then given by%
+\footnote{%
+        \cite{deng2020acceleration} \textsc{Deng} \emph{et al.} (2020), eq.6
+}
+
+\begin{equation}\label{eq:Biot-Savart}
+  \uvec(\bzhe) = \frac{1}{4\pi} \int_{C} \Gamma(\xvec)\frac{\xvec - \bzhe}{r^3} \times \dee\mathbf{s}.
+\end{equation}
+
+\noindent
