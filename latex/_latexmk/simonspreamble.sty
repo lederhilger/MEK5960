@@ -81,7 +81,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% LANGUAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[russian, greek,  main = english]{babel}
+\RequirePackage[russian, greek, japanese,  main = english]{babel}
 \RequirePackage{luatexja-fontspec}
 \ltjsetparameter{jacharrange={-2,-3}}
 \RequirePackage{newcomputermodern}
@@ -116,6 +116,7 @@
 \RequirePackage[language = auto,%
     autolang = other,%
     bibencoding = utf8,%
+    maxcitenames = 5,%
     backend = biber]{biblatex}
 \renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
 \DeclareNameAlias{author}{family-given}
@@ -213,6 +214,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% ANALYSIS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \DeclareMathOperator{\Tangent}{T}
+\newcommand{\righthook}{↪}
 %%%%%%%%%%%%%%%%%%%%%%% differentials %%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\dee}{\mathrm{d}}
 \newcommand{\Dee}{\mathrm{D}}
