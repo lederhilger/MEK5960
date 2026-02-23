@@ -1,12 +1,10 @@
-The boundary element method, or panel method, takes the integral equation \eqref{eq:integral_equation} and discretizes the boundary of the fluid into quadrilateral panels.
-We often set the boundary of the fluid to be the surface of some object, and impose the \textsc{Neumann} boundary condition of impermeability,
+The boundary element method is a method of calculating values related to the fluid velocity through the second kind \textsc{Fredholm} integral equation \eqref{eq:integral_equation}, whereby the boundary is discretized into quadrilateral panels.
+As has been established, the conditions under which the solution is unique is determined at the boundary, here being the \textsc{Neumann} boundary condition of impermeability,
 \begin{equation}\label{eq:impermeability}
   \partial_{\nhat} \Phi(\xvec) = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega.
 \end{equation}
-This boundary condition can be modified to model non-rigidity as well.
-Some approximation of the potential at the panel is then set, and the integral equation can be posed as a set of algebraic equations.
 
-Equation \eqref{eq:integral_equation} is in fact a \textsc{Fredholm} integral equation of the second kind for $\phi(\bzhe)$.
+\noindent
 We can now solve for the potential function $\Phi$ of equation \eqref{eq:Laplace_equation} by the means we see fit.
 The alternative construction is to consider distributions of simple and double sources over the boundary.
 The potential at the point $\xvec$ due to simple or double sources are given respectively by
@@ -17,8 +15,9 @@ The potential at the point $\xvec$ due to simple or double sources are given res
 \end{subequations}
 This is valid for any square integrable vector field.%
 \footnote{%
-        \cite{byxovskij1960orthogonal} \textsc{Byhovskiy} \& \textsc{Smirnov} (1960)
-}\textsuperscript{,}\footnote{%
+        \cite{byhovskij1960orthogonal} \textsc{Byhovskij} \& \textsc{Smirnov} (1960)
+}\textsuperscript{,}%
+\footnote{%
         \cite{morino1993boundary} \textsc{Morino} (1993)
 }
 
@@ -27,8 +26,13 @@ It can be shown that equation \eqref{eq:impermeability} can be recast in terms o
 \[
   -2\pi \sigma + \int_S \sigma \partial_{\nhat} r^{-1} \,\dee S = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega.
 \]
+
+\noindent
+Confer with \textsc{Hess} \& \textsc{Smith}.%
+\footnote{%
+        \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
+}
 This distribution can now be inserted into equation \subeqref{\ref{eq:distribution_representation}}[a] to find the potential.
-The potential
 
 \subsection{The vortex lattice method}
 \subfile{vlm/vlm.tex}
