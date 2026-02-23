@@ -1,0 +1,69 @@
+Any blade of a wind turbine is composed from root to tip of a smooth distribution of cross sections, much like the one illustrated in figure \labelcref{subfig:zukovsky_foil}.
+Referred to as airfoils, these cross sections are optimized for the generation of lift.
+As was alluded to in the section on complex analysis, these are wholly two dimensional objects, whose ability to generate lift can be quantified by the means of this theory.
+Their mathematical representation warrants discussion, as it lends itself to the impending numerical analysis by way of comparison to theoretically derived values.
+Consider then the complex variable $\ezh^{\prime} = x^{\prime} + i z^{\prime}$ whose values trace the circle centered at the origin of radius $c$.
+The \textsc{Žukvoskij} transform takes a complex value and maps it to the point%
+\footnote{%
+  \cite{schlichting1967aerodynamiki} \textsc{Schlichting} \& \textsc{Truckenbrodt}, p.404, eq.6.37
+}
+\begin{equation}\label{eq:zukovsky_map}
+  \ezh = f(\ezh^{\prime}) = \ezh^{\prime} + \frac{c^2}{\ezh^{\prime}}.
+\end{equation}
+
+\noindent
+Expressing the variables in terms of their polar representations $x^{\prime} = r \cos{\theta}$ and $z^{\prime} = r \sin{\theta}$ yields
+\begin{subequations}\label{eq:zukovsky_ellipse}
+        \begin{equation}\tag{\theequation{a, b}}
+          x = \left( r + \frac{c^2}{r} \right) \cos{\theta}, \qquad z = \left( r - \frac{c^2}{r} \right) \sin{\theta}.
+        \end{equation}
+\end{subequations}
+
+\noindent
+This constitutes an ellipse, as upon squaring the equations \subeqref{\ref{eq:zukovsky_ellipse}}[a, b], and adding them, we find that
+\begin{subequations}\label{eq:ellipse_equations}
+        \begin{equation}\tag{\theequation{a, b, c}}
+          \frac{x^2}{a^2} + \frac{z^2}{b^2} = 1, \qquad a = r + \frac{c^2}{r}, \qquad b = \left\vert r - \frac{c^2}{r} \right\vert.
+        \end{equation}
+\end{subequations}
+
+The airfoils of \textsc{von Kármán} \& \textsc{Trefftz} are generalizations of those of \textsc{Žukovskij}.%
+\footnote{%
+        \cite{prandtl1957applied} \textsc{Prandtl} \& \textsc{Tietjens}, \S106, pp.182--185
+}
+
+\begin{equation}
+  \frac{\ezh - 2c}{\ezh + 2c} = \frac{{(\ezh^{\prime} - c)}^2}{{(\ezh^{\prime} + c)}^2}
+\end{equation}
+
+\noindent
+It can be shown%
+\footnote{%
+        \cite{milne-thomson1958aerodynamics} \textsc{Milne-Thomson}, pp.125--128
+}
+that this is equivalent to the expression
+
+\begin{equation}
+  \frac{\ezh}{kc} = \frac{{(\ezh^{\prime} + c)}^k + {(\ezh^{\prime} - c)}^k}{{(\ezh^{\prime} + c)}^k - {(\ezh^{\prime} - c)}^k}.
+\end{equation}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.45\textwidth}
+    \centering
+    \scalebox{1}{\input{zukovsky-foil.tikz}}
+    \caption{\textsc{Žukovskij} airfoil}
+    \label{subfig:zukovsky_foil}
+  \end{subfigure}
+  \begin{subfigure}{.45\textwidth}
+    \centering
+    \scalebox{1}{\input{karman-trefftz-foil.tikz}}
+    \caption{\textsc{von Kármán}--\textsc{Trefftz} airfoil}
+    \label{subfig:karman-trefftz_foil}
+  \end{subfigure}
+  \caption{%
+        (a) \textsc{Žukovsky} and (b) \textsc{von Kármán}--\textsc{Trefftz} airfoils, whose parameters are $c = 1.4$ and $s = \sfrac{1}{4}(i -\sfrac{3}{5})$.
+        The $k = 1.94$
+        }
+  \label{fig:analytic_foils}
+\end{figure}

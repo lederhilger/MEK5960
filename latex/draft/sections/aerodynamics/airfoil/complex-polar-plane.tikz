@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+	\begin{scope}[scale = 1]
+		\def\rmin{.15}
+		\def\enn{16}
+		\def\rmax{\enn*\rmin}
+		\coordinate (O) at (0,0);
+		\draw[thick] (O) circle (\rmin);
+		\foreach \kay in {2, 3, ..., \enn}{%
+			 \draw (O) circle (\kay*\rmin);
+		}
+		\def\EN{32}
+		\foreach \kay in {1, 2, ..., \EN}{%
+			 \draw ({\rmin*cos(deg(\kay*2*pi/\EN))},{\rmin*sin(deg(\kay*2*pi/\EN))})--({\rmax*cos(deg(\kay*2*pi/\EN))},{\rmax*sin(deg(\kay*2*pi/\EN))});
+		}
+	\end{scope}
+\end{tikzpicture}
