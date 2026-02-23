@@ -2,14 +2,19 @@
 	\def\thefocus{.5}
 	\makeatletter
 	\def\zukovskijtransform{%
-		\pgfmathsetmacro{\xprime}{%
-			((sqrt((\pgf@x/1cm)^2 + (\pgf@y/1cm)^2)*cos(atan2(\pgf@y/1cm, \pgf@x/1cm)))*(1 + (\thefocus^2)/((\pgf@x/1cm)^2 + (\pgf@y/1cm)^2)))*1cm
-		}%
-		\pgfmathsetmacro{\yprime}{%
-			((sqrt((\pgf@x/1cm)^2 + (\pgf@y/1cm)^2)*sin(atan2(\pgf@y/1cm, \pgf@x/1cm)))*(1 - (\thefocus^2)/((\pgf@x/1cm)^2 + (\pgf@y/1cm)^2)))*1cm
-		}%
-		\pgf@x=\xprime pt%
-		\pgf@y=\yprime pt%
+		\pgfmathsetmacro{\modulussquared}{(\pgf@x/1cm)^2 + (\pgf@y/1cm)^2}%
+		\ifdim\modulussquared pt=0pt
+			%
+		\else
+			\pgfmathsetmacro{\xprime}{%
+				(\pgf@x/1cm)*(1 + (\thefocus^2)/\modulussquared)*1cm
+			}%
+			\pgfmathsetmacro{\yprime}{%
+				(\pgf@y/1cm)*(1 - (\thefocus^2)/\modulussquared)*1cm
+			}%
+			\pgf@x=\xprime pt%
+			\pgf@y=\yprime pt%
+		\fi
 	}
 	\makeatother
 	\begin{scope}[scale = 1]
