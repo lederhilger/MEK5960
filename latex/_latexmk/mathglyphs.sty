@@ -1,82 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%% SIMON's preamble %%%%%%%%%%%%%%%%%%%%%%%
-\ProvidesClass{simonspreamble} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% SIMON's math glyphs %%%%%%%%%%%%%%%%%%%%%%
+\ProvidesClass{mathglyphs.sty} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Version 07012025, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
+% Version 25022026, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% WARNINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{silence}
-\WarningFilter{latexfont}{Size substitutions with differences}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%% MATH TYPESETTING PACKAGES %%%%%%%%%%%%%%%%%%%
-\RequirePackage{mathtools}
-\RequirePackage{amsmath}
-\RequirePackage{amsfonts}
-\RequirePackage{amssymb}
-\RequirePackage{unicode-math}
-\unimathsetup{mathbf = sym, math-style = ISO, bold-style = ISO}
-\ExplSyntaxOn
-\bool_gset_true:N\g__um_upGreek_bool
-\bool_gset_true:N\g__um_bfupGreek_bool
-\ExplSyntaxOff
-\RequirePackage{xfrac}
-\RequirePackage{tensor}
-\RequirePackage{mathrsfs}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% LANGUAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[russian, greek, japanese,  main = english]{babel}
-\RequirePackage{luatexja-fontspec}
-\ltjsetparameter{jacharrange={-2,-3}}
-\RequirePackage{newcomputermodern}
-\RequirePackage{textalpha}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%% ALLOWING FOR OTHER FONTS %%%%%%%%%%%%%%%%%%%%
-\RequirePackage{fontspec}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% GRAPHICS %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{graphicx}
-\RequirePackage{subcaption}
-\RequirePackage{tikz}
-\usetikzlibrary{patterns, 3d, arrows, perspective,%
-  calc, bending, positioning}
-\usepgfmodule{nonlineartransformations}
-\RequirePackage{tikz-3dplot}
-\RequirePackage{pdfrender}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCING %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\disable@package@load{auxhook}{}
-\RequirePackage{hyperref}
-\hypersetup{%
-    colorlinks,%
-    linkcolor={black},%
-    citecolor={black},%
-    urlcolor={black}%
-}
-\RequirePackage[noabbrev]{cleveref}
-\numberwithin{equation}{section}
-%%%%%%%%%%%%%%%%%% REFERENCING SUB-EQUATIONS %%%%%%%%%%%%%%%%%%%
-\RequirePackage{xstring}
-\DeclareDocumentCommand{\subeqref}{m o}{%
-    \edef\c{\detokenize{#1}}%
-    \edef\lbracetoken{\string{}%
-    \edef\rbracetoken{\string}}%
-    \StrBetween{\c}{\lbracetoken}{\rbracetoken}[\temp]%
-    (\hyperref[\temp]{#1#2})%
-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% TYPESETTING PRETTIFYING %%%%%%%%%%%%%%%%%%%%
@@ -100,6 +27,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% MATHEMATICS %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{amsthm}
+\RequirePackage{xpatch}
+\patchcmd{\@thm}{\trivlist}{\list{}{%
+    \leftmargin=3em \rightmargin=3em}}{}{}%
+\patchcmd{\@endtheorem}{\endtrivlist}{\endlist}{}{}
+\newtheorem{theorem}{Theorem}[section]
+\renewcommand\th@plain{\slshape}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% ANALYSIS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \DeclareMathOperator{\Tangent}{T}

@@ -9,16 +9,20 @@ The material frame of reference follows some specific fluid particle, whilst the
 }
 Consider some particle $\xvec_0 \in \Omega_0$, which is carried by some flow onto the point $\xvec \in \Omega$ at time $t$.
 Distinguishing $\Omega_0$ is a formality---for our purposes it is the very same manifold as we otherwise consider, and the flow is an automorphism.
-This configuration describes nothing less than the dynamical system $\xvec = \cvec(\xvec_0, t)$, $\xvec_0 = \cvec(\xvec_0, t)$.
+This configuration describes nothing less than the dynamical system $\xvec = \cvec(\xvec_0, t)$, $\xvec_0 = \cvec(\xvec_0, t)$, a solution of which is guaranteed locally by the \textsc{Picard}--\textsc{Lindelöf} theorem.%
+\footnote{%
+        \cite{arnold1973ordinary} \textsc{Arnol'd}, \S7.3, p.50
+}
 Clearly the velocity of the fluid at such a fixed point $x$ must depend on the motion of the fluid particle.
 The nature of his dependency is however not immediately apparent.
 To this end, we consider the integral curves of the fluid velocity vector field $\uvec$ charted by $\xvec$.
 Such an integral curve we may in general label $\cvec(t)$, and are defined by its derivative coinciding with the velocity field at each point.
 These are not necessarily constrained by an initial condition, but do correspond with the flow when they are.
 Although we shall not do so, it may be shown that flows actually constitute a diffeomorphism group $\mathscr{G}$, a group of differentiable flows whose inverses exist and are differentiable. Upon inspection, the group action reveals itself to be map composition.
-The flow from some initial time by some increment of time will obviously constitute the same chronology when flowing therefrom to some other increment of time, should the flow start from the very same position and be carried to the sum of the two considered time increments.
-We conclude that tracing the same path of the flow backwards constitutes applying the inverse flow map, yielding the composition of the flow with the inverse flow, being the identity operator. We label the derivative of the flow with respect to time the particle velocity $\uvec_{\cvec}$, representing the material frame of reference.
-Fixing some $\xvec$, it is now clear that the spatial frame of reference is equivalent to the expression $\uvec \uvec_{\cvec} \circ \cvec^{-1}(\xvec)$.
+The flow from some initial time by some increment of time will obviously constitute the same chronology when flowing therefrom to some other increment of time, should the flow start from the very same commencing position and be carried to the sum of the two considered time increments.
+We conclude that tracing the same path of the flow backwards constitutes applying the inverse flow map, yielding the composition of the flow with the inverse flow, being the identity operator.
+We label the derivative of the flow with respect to time the particle velocity $\uvec_{\cvec}$, representing the material frame of reference.
+Fixing some $\xvec$, it is now clear that the velocity in the spatial frame of reference is given by the expression $\uvec = \uvec_{\cvec} \circ \cvec^{-1}(\xvec)$.
 Should an explicit formula for this relationship be established, equations of motion may be derived from Newtonian principles and deliberation of dynamics, as we would possess the constitutive acceleration.
 We shall, however, explore another avenue through Hamiltonian mechanics.
 Considerable amount of such work can be done from very minimal physical considerations, as is shown in Vladimir \textsc{Arnol'd}’s works.%
@@ -26,7 +30,7 @@ Considerable amount of such work can be done from very minimal physical consider
         \cite{arnold1966geometrie} \textsc{Arnol'd} (1966)
 }\textsuperscript{,}%
 \footnote{%
-        \cite{arnold2011topological} \textsc{Arnol'd} \& \textsc{Xesin}, ch.X
+        \cite{arnold2011topological} \textsc{Arnol'd} \& \textsc{Hesin}, ch.X
 }
 Although the results of these works are magnificent, the process by which the are derived are beyond the scope of this work, and indeed the writer at the present time.
 We shall therefore draw from other monographs as sources on connexions and symplectic forms to present these results.
@@ -45,10 +49,10 @@ We get the following theorem.%
 }
 
 \begin{theorem}[\textsc{Darboux}]
-  Let $\frak{h}$ be a closed, nondegenerate bivector on some manifold of even dimension.
+  Let $\mathfrak{h}$ be a closed, nondegenerate bivector on some manifold of even dimension.
   Then every point $\xvec$ has some neighborhood on which we can find a coordinate system $(x^1,\dots,p_1,\dots)$, with
   \begin{equation}
-        \frak{h} = \dee p_i \wedge \dee x^i.
+        \mathfrak{h} = \dee p_i \wedge \dee x^i.
   \end{equation}
 \end{theorem}
 
@@ -75,7 +79,7 @@ The symplectic form is preserved along the flow.
   Let $\uvec$ be a vector field on the manifold $\Omega$, and $\cvec$ the flow.
   For an arbitrary $\afrak \in \Lambda^{k}\Omega$, the \textsc{Lie} derivative of $\afrak$ by $\uvec$ is
   \[
-        \lieder{\uvec} \afrak = \dee(\uvec\iprod\afrak) + \uvec\iprod\dee\afrak.
+        \lieder{\uvec} \afrak = \deet \vert_{t = 0} \cvec^{\ast} \afrak = \dee(\uvec\iprod\afrak) + \uvec\iprod\dee\afrak.
   \]
   The vector field $\uvec$ is symplectic if $\lieder{\uvec}\afrak = 0$ for a symplectic form $\afrak$.
   For a vector field $\mathbf{v}$, the \textsc{Lie} derivative is defined to be
@@ -100,7 +104,7 @@ The symplectic form is preserved along the flow.
 \end{theorem}
 A curve is called geodesic if $\nabla_{\dot{\cvec}}\dot{\cvec} = 0$.
 
-The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ metric on the diffeomorphism group, where the pressure is the constraining force orthogonal to the diffeomorphism group.\footnote{\cite{xesin2025universal} \textsc{Xesin} \& \textsc{Modin} (2025), Remark 2.3}\textsuperscript{,}\footnote{\cite{izosimov2024geometry} \textsc{Izosimov} \& \textsc{Xesin} (2024)}
+The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ metric on the diffeomorphism group, where the pressure is the constraining force orthogonal to the diffeomorphism group.\footnote{\cite{hesin2025universal} \textsc{Hesin} \& \textsc{Modin} (2025), Remark 2.3}\textsuperscript{,}\footnote{\cite{izosimov2024geometry} \textsc{Izosimov} \& \textsc{Hesin} (2024)}
 %\[
 %    \Dee_t U^i = \deet U^i + \Gwamma_{jk}^{i} U^{j} \deet\phi^{k}
 %\]
@@ -110,7 +114,7 @@ The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ 
 %\]
 %
 %\[
-%        \strain = \lieder{\uvec}\mathfrak{\metrictensor}
+%        \strain = \lieder{\uvec}\mathmathfrak{\metrictensor}
 %\]
 
 \begin{subequations}\label{eq:Navier-Stokes-full}
@@ -124,6 +128,14 @@ The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ 
           \density \deet \ufrak + \density\lieder{\uvec} \ufrak = -\dee p + \mu\Delta \ufrak + \varrho\vgravity, \qquad \codee\ufrak = 0
         \end{equation}
 \end{subequations}
+
+\begin{theorem}[\textsc{Reynolds} transport]
+  Let $\uvec$ be the vector field generated by the diffeomorphism $\cvec$, and $\afrak \in \Lambda^k \Omega$.
+  Then,
+  \begin{equation}
+        \deet \vert_{t = 0} \int_{\cvec(\Omega)} \afrak = \int_{\Omega} \lieder{\uvec} \afrak.
+  \end{equation}
+\end{theorem}
 
 %\[
 %        \deet p + \mathrm{ad}^{\ast}p = 0.

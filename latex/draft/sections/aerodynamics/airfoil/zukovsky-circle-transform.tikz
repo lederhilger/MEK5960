@@ -32,15 +32,15 @@
 	}
 	\makeatother
 	\begin{scope}[scale = 1]
-		\def\enn{16}
-		\def\rmax{\enn*\rmin}
+		\pgfmathsetmacro\enn{16}
+		\pgfmathsetmacro\rmax{\enn*\rmin}
 		\pgfsettransformnonlinearflatness{1pt}
 		\pgftransformnonlinear{\zukovskijtransform}
 		\foreach \kay in {2, 3, ..., \enn}{%
 			 \draw (O) circle (\kay*\rmin);
 		}
-		\def\EN{32}
-		\foreach \kay in {1, 2, ..., \EN}{%
+		\pgfmathsetmacro\EN{32}
+		\foreach \kay in {0, 2, ..., \EN}{%
 			 \draw ({\rmin*cos(deg(\kay*2*pi/\EN))},{\rmin*sin(deg(\kay*2*pi/\EN))})--({\rmax*cos(deg(\kay*2*pi/\EN))},{\rmax*sin(deg(\kay*2*pi/\EN))});
 		}
 	\end{scope}

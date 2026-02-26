@@ -1,4 +1,4 @@
-$ENV{'TEXINPUTS'}='.//:'. $ENV{'TEXINPUTS'};
+$ENV{'TEXINPUTS'}='../../../../_latexmk//:'. $ENV{'TEXINPUTS'};
 $pdf_mode = 4;
 $postscript_mode = $dvi_mode = 0;
 $aux_dir = 'compile';
