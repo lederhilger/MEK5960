@@ -14,7 +14,7 @@
 \title{Draft}
 \subtitle{\textit{\headcourse}}
 \author{\textsc{Simon Lederhilger}}
-\date{December 8\textsuperscript{th} 2025}
+\date{\today}
 
 %%%%%% DEFINES THE HEADER TITLE %%%%%%
 \makeatletter
@@ -27,9 +27,14 @@
 %\subfile{SECTIONS/FOREWORD/foreword.tex}
 \newpage\tableofcontents
 
+\newpage
+\printunsrtglossary[type=symbols,style=topicmcols]
 %\newpage
 %\section*{Preface}
 %\subfile{sections/preface/preface.tex}
+
+\newpage
+\subfile{sections/alphabets/alphabets.tex}
 
 \newpage
 \section{Introduction}
@@ -39,10 +44,14 @@
 \section{Vector fields}
 \subfile{sections/vectors/vectors.tex}
 
-\section[Panel Methods]{Boundary Element Method}
+\section{Aerodynamics}
+\subfile{sections/aerodynamics/aerodynamics.tex}
+
+\section[Boundary element method]{Boundary element method}
 \subfile{sections/panel/panel.tex}
 
-\section{Numerical Implementation}
+\section{Numerical implementation}
+\subfile{sections/numerical/numerical.tex}
 
 \section{Conclusion}
 \subfile{sections/conclusion/conclusion.tex}
