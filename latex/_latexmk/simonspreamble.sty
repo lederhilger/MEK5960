@@ -154,7 +154,7 @@
 \RequirePackage[%
   symbols, nomain, record, stylemods = {topic}, nostyles
 ]{glossaries-extra}
-
+\renewcommand{\glstopicSubNameFont}[1]{#1}
 \renewcommand{\glstopicMarker}[1]{%
  \pdfbookmark[2]{\glsentryname{#1}}{\currentglossary.#1}%
 }
