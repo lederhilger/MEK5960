@@ -21,11 +21,17 @@
 \edef\headtitle{\@title}
 \makeatother
 
+\pagenumbering{roman}
 \begin{document}
-\maketitle\thispagestyle{fancy}
+\maketitle\thispagestyle{empty}
+
+%\newpage
 %\section{Foreword}
-%\subfile{SECTIONS/FOREWORD/foreword.tex}
-\newpage\tableofcontents
+%\subfile{sections/foreword/foreword.tex}
+
+\newpage
+\thispagestyle{fancy}
+\tableofcontents
 
 \newpage
 \printunsrtglossary[type=symbols,style=topicmcols]
@@ -37,6 +43,7 @@
 \subfile{sections/alphabets/alphabets.tex}
 
 \newpage
+\pagenumbering{arabic}
 \section{Introduction}
 \subfile{sections/introduction/introduction.tex}
 
@@ -46,6 +53,9 @@
 
 \section{Aerodynamics}
 \subfile{sections/aerodynamics/aerodynamics.tex}
+
+\section{Spherical functions}
+\subfile{sections/spherical/spherical.tex}
 
 \section[Boundary element method]{Boundary element method}
 \subfile{sections/panel/panel.tex}
