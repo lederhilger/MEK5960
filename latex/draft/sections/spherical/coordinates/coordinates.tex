@@ -1,0 +1,22 @@
+For a moment we consider the Cartesian coördinates $x^{i}$ in $\euclidean^{d}$.
+The transform to hyperspherical coördinates takes the form%
+\footnote{%
+  \cite{blumenson1960derivation} \textsc{Blumenson} (1960)
+}
+
+\begin{align}
+  \begin{split}
+    x^1 & = r \cos{\alpha^1};\\
+    \vspace{2em}
+    x^{j} & = r \cos{\alpha^j} \prod_{k = 1}^{j - 1} \sin{\alpha^k};\\
+    \vspace{2em}
+    x^{d-1} & = r \sin{\alpha^{0}} \prod_{k = 1}^{d - 2} \sin{\alpha^k};\\
+    \vspace{2em}
+    x^{d} & = r \cos{\alpha^{0}} \prod_{k = 1}^{d - 2} \sin{\alpha^{k}},
+  \end{split}
+\end{align}
+
+\noindent
+where $j \in \{ 2, \dots, d-2 \}$ for $d \geq 4$.
+Nevermind the indexing, as we shall reïndex.
+For three-dimensional Euclidean space, we have $\xvec = (r\cos{\alpha^1}, r\sin{\alpha^0}\sin{\alpha^1}, r\sin{\alpha^0}\cos{\alpha^1})$

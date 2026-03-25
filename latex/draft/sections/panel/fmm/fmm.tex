@@ -1,5 +1,28 @@
+The fast multipole method was developed by Leslie \textsc{Greengard} and Vladimir \textsc{Rohlin} in their seminal paper \emph{A Fast Algorithm for Particle Simulations}.%
+\footnote{%
+        \cite{greengard1987fast} \textsc{Greengard} \& \textsc{Rohlin} (1987)
+}
+The idea is to systematically evaluate the influence of faraway panels on a point by aggregating their influence, and calculating them in bulk.
+This is done through space octree partitioning.
+Whatever influence an aggregate of panels children nodes have are passed onto the parent, and the influence of the parent is calculated instead.
+This is efficient computationally because a lot of the required calculation for each panel is already done.
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[scale = 3]{bem_influence.pdf}
+    \caption{Direct interactions.}
+  \end{subfigure}
+  \begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[scale = 3]{fmm_influence.pdf}
+    \caption{Tree-based interactions.}
+  \end{subfigure}
+  \caption{The difference in number of interactions for the direct and tree-based approaches.}
+\end{figure}
+
 The fast multipole method calculates the velocity at some point $\bzhe$ using a sum of values using the methods of equation (?) for near field $\xvec$ and values using the multipole method.
-A local coordinate system is adopted, requiring translation and rotation of the origin, at which point a multipole expansion can be made.
+A local coördinate system is adopted, requiring translation and rotation of the origin, at which point a multipole expansion can be made.
 We suppose a dipole panel
 \[
   \Phi(\bzhe) = -\frac{1}{4\pi} \int_S \frac{\mathbf{\mu} \cdot \mathbf{r}}{r^3} \,\dee S,
@@ -9,6 +32,6 @@ where $\mathbf{\mu}$ is the dipole strength vector.
 \begin{figure}[h]
         \centering
         \scalebox{1}{\includegraphics{panel_coordinates.pdf}}
-        \caption{Panel coordinates}
+        \caption{Panel coördinates}
         \label{fig:panel_coordinates}
 \end{figure}

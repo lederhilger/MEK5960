@@ -1,0 +1,54 @@
+We shall digress but for a brief moment to introduce functions upon spheres.
+A more thorough discussion of the topic immediately at hand is of course to be found in any monograph on the topic.
+The purpose of this digression is to clearly illustrate for what reasons and by which means we expand the \textsc{Green} function into representations in terms of spherical functions.
+Let $\nu$ be a positive semiïnteger, meaning that $2\nu \in \naturals^{+}$, and let $n$ be a positive integer.
+The \textsc{Gegenbauer} ultraspherical polynomials $\gls{gegenbauer}(x)$ then constitute a complete orthonormal basis for the $L^2$-space on the unit interval, with respect to the measure ${(1 - x^2)}^{\nu - \sfrac{1}{2}}\,\dee x$, indexed in $n$.%
+\footnote{%
+  \cite{takeuchi1994modern} \textsc{Takeuchi}, p.222
+}
+%
+The significance of this measure is not immediately apparent.
+Alternatively to the above definition as generating functions, we have the definition through the hypergeometric function, as a solution to a special case of the hypergeometric equation,%
+\footnote{%
+  \cite{takeuchi1994modern} \textsc{Takeuchi}, p.194
+}
+
+\begin{equation}
+  \gegenbauer_n^{\nu} (x) = \frac{\Gamma(2\nu + n)}{\gls{factorial}\Gamma(2\nu)} \hypergeometric{\Big( 2\nu + n,\, -n;\, \nu + \sfrac{1}{2};\, \sfrac{1}{2} - \sfrac{x}{2} \Big)},
+\end{equation}
+
+\noindent
+The hypergeometric function is a special function, whose full treatment is far beyond the scope of this work, but whose definition nonetheless warrants a mention for the sake of completion:%
+\footnote{%
+  \cite{abramowitz1965handbook} \textsc{Oberhettinger}, eq.15.1.1, p.556
+}
+
+\begin{equation}
+  \hypergeometric(a, b; c; \ezh) = \frac{\Gamma(c)}{\Gamma(a)\Gamma(b)} \sum_{k = 0}^{\infty} \frac{\Gamma(a + k) \Gamma(b + k)}{\Gamma(c + k)} \frac{\ezh^k}{k!}
+\end{equation}
+
+\noindent
+The ultraspherical functions are related to the associated \textsc{Legendre} spherical function%
+\footnote{%
+  \cite{abramowitz1965handbook} \textsc{Hochstrasser}, eq.22.5.60, p.780
+}
+
+\begin{equation}
+  \gegenbauer_n^{\nu} (x) = \frac{\Gamma(\nu + \sfrac{1}{2}) \Gamma(2\nu + n)}{n! \Gamma(2\nu)} {\left( \frac{x^2 - 1}{4} \right)}^{\frac{1 - 2\nu}{4}} \legendre_{n + \nu - \sfrac{1}{2}}^{\sfrac{1}{2} - \nu} (x).
+\end{equation}
+
+\noindent
+Definition of associated \textsc{Legendre} functions%
+\footnote{%
+  \cite{abramowitz1965handbook} \textsc{Stegun}, eq.8.1.2, p.332
+}
+
+\begin{equation}
+  \legendre_{n}^{m} (\ezh) = \frac{1}{\Gamma(1 - m)} {\Bigg( \frac{\ezh + 1}{\ezh - 1} \Bigg)}^{\sfrac{m}{2}} \hypergeometric{\Big( -n,\, n + 1;\, 1 - m;\, \sfrac{1}{2} - \sfrac{\ezh}{2} \Big)}
+\end{equation}
+
+\noindent
+For $\nu = \sfrac{1}{2}$, we have that $m = 0$, where $\legendre_{k}^{0} = \legendre_{k}$ is the $k$\textsuperscript{th} \textsc{Legendre} polynomial.%
+\footnote{%
+  \cite{abramowitz1965handbook} \textsc{Stegun}, pp.332--353
+}

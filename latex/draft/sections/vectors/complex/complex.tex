@@ -1,5 +1,52 @@
-An unbounded fluid, whose flow is invariant in a plane, will be perfectly described by considering only the directions in which the fluid does vary.
+An unbounded fluid, whose flow is invariant in a plane, will obviously be perfectly described by considering only the directions in which the fluid does vary.
 Examples of such flow are the cross section of an infinitely long cylinder, or any plane bisection a finite axisymmetric shape aligned with the flow.
+In any case, there are undoubtedly situations to which the application of solutions granted by consideration of two-dimensional problems to ones in apparently three dimensions is perfectly in order.
+It is such problems wherein the employment of complex analysis is of exceedingly great convenience.
+The formalism of the complex numbers may indeed be approached through the foundation laid in the previous section on exterior calculus.
+
+\begin{definition}[Almost complex manifold]
+  \footnote{%
+    \cite{kobayashi1996foundationsII} \textsc{Kobayashi} \& \textsc{Nomizu}, p.121
+  }
+  Consider the real pseudo-\textsc{Riemann} manifold of even dimension $\Omega$, and its tangent bundle $\Tangent\Omega$.
+  An almost complex structure is a skew-involute endomorphism $\mathrm{J}$ on the tangent space at any point in $\Omega$, meaning $\mathrm{J}\circ\mathrm{J} = -\id$.
+  A manifold equipped with such an almost complex structure is an almost complex manifold.
+\end{definition}
+
+\noindent
+This definition is in many ways completely unhelpful to anyone not already familiar with the matter of complex numbers.
+First and foremost is the inclusion of demarkation that the manifold be \emph{real} in some way.
+Indeed, Euclidean space upon which we base our notion of structure is complete, and indeed constructed by the real number line.
+One must surely agree when pressed that the field of real numbers is not algebraically closed, as the polynomial equation $x^2 + 1 = 0$, for instance, has no solution.
+Much like the rational numbers may be extended through irrational numbers, we extend the real numbers.
+Label then either one of the two solutions to this polynomial equation $i$, and consider the algebraic closure of the real numbers, the field of complex numbers \gls{complexes}.
+We shall in general denote an element therein $\ezh$.
+Consider now $\complexes^n$, the complex space of $n$-tuples of complex numbers $\bezh = (\ezh^1, \dots, \ezh^n)$.
+It is clear that by writing that for any index $k$,
+\[
+  \ezh^k = x^k + iz^k, \qquad x^k, z^k \in \reals,
+\]
+there is a correspondence between the complex numbers and the plane.
+That is, there is an isomorphism $\reals^2 \simeq \complexes$.
+
+Second, is the elusiveness of the complex structure $\mathrm{J}$.
+Extending the tangent bundle through complexification 
+
+The complex structure then takes the form
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    \mathrm{J} \partial_{x^k} = \partial_{z^k}, \qquad \mathrm{J} \partial_{z^k} = -\partial_{x^k}
+  \end{equation}
+\end{subequations}
+
+The complex conjugate is given by $\ezh^{\ast} = x - iz$.
+$\dee\ezh = \dee x + i \dee z$.
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+      \partial_{\ezh} = \sfrac{1}{2} \big( \deex - i\deez \big), \qquad \partial_{\ezh^{\ast}} = \sfrac{1}{2} \big( \deex + i\deez \big)
+  \end{equation}
+\end{subequations}
+      
 \begin{figure}[h]
   \centering
   \begin{subfigure}{.45\textwidth}

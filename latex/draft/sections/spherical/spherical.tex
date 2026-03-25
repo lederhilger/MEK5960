@@ -1,1 +1,62 @@
-For some function $f(r, \theta, \alpha)$.
+It is perhaps self-evident that standard procedure for dealing with the calculations involving the \textsc{Green} function consists of expressing it in terms of spherical harmonics.
+The proverbial radius is in the very expression, after all.
+It is nevertheless the case that it shall be crucial in the development of the fast multipole method.
+We shall not digress completely into the group theory of the projective spaces of hyperspherical functions, but we shall lay some foundation to motivate our representation of functions in terms of spherical harmonics.
+To somewhat motivate our motivation to this end, we consider the points $\xvec$ and $\bzhe$ on the $d$-dimensional manifold $\Omega$, whose angle between them, of the triangle in the plane described by them and the origin, is denoted $\alpha$.
+For although these points lie in $d$-dimensional space, we know them to form a unique plane, within which the angle $\alpha$ may be defined.
+The points themselves may be given in terms of spherical coördinates, so that the distance between the points $\xvec$ and $\bzhe$, may be written in terms of the law of cosines,%
+\footnote{%
+  \cite{collins2011law} \textsc{Collins} \& \textsc{Osler} (2011)
+}
+
+\begin{equation}
+  r = \sqrt{\absl{\xvec}^2 - 2\absl{\xvec}\absl{\bzhe}\cos{\alpha} + \absl{\bzhe}^2}.
+\end{equation}
+
+\noindent
+Now the \textsc{Green} function is written
+
+\begin{subequations}\label{eq:hypersphere_green}
+  \begin{equation}\tag{\theequation{a, b, c}}
+    \green(\xvec; \bzhe) = \frac{c \absl{\xvec}^{2-d}}{{\big( 1 + \varepsilon^2 - 2\varepsilon\cos{\alpha} \big)}^{\nu}}, \qquad \varepsilon = \frac{\absl{\bzhe}}{\absl{\xvec}}, \qquad c = \frac{2\nu d \pi^{\sfrac{d}{2}}}{\Gamma(\sfrac{d}{2} + 1)}.
+  \end{equation}
+\end{subequations}
+
+\noindent
+Here we have defined a new parameter $\nu = \sfrac{d}{2}-1$ for the sake of consistency with forthcoming notation.
+Concerning the constant term $c$ in equation \subeqref{\ref{eq:hypersphere_green}}[c], the reader is referred to a text on differential equations in higher dimensions---it encodes the volume of the unit ball in $d$ dimensions, and reduces to the familiar reciprocal of $4\pi$ for the three-dimensional case.
+\gls{gamma-function} is the gamma function.
+Through a binomial series expansion, a power series of equation \subeqref{\ref{eq:hypersphere_green}}[a] can be found, the coëfficients of which some authors then define a set of functions to ascribe.%
+\footnote{%
+  \cite{avery1989hyperspherical} \textsc{Avery}, eq.3.5, p.26
+}
+
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    \green(\xvec; \bzhe) = c {\absl{\xvec}}^{2-d} \sum_{k = 0}^{\infty} \varepsilon^k \gegenbauer_{k}^{\nu}(\cos{\alpha}), \quad \varepsilon < 1,
+  \end{equation}
+\end{subequations}
+
+\noindent
+Indeed, in terms of generating functions assuming the form $f_k$, so that%
+\footnote{%
+  \cite{abramowitz1965handbook} \textsc{Hochstrasser}, \S22.9, p.783
+}
+
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    g(R) = \sum_{k = 0}^{\infty} a_k f_k(x) \varepsilon^k, \qquad R = \sqrt{1 - 2x\varepsilon + \varepsilon^2},
+  \end{equation}
+\end{subequations}
+
+\noindent
+the so-called \textsc{Gegenbauer} ultraspherical functions generate functions of the form $g(R) = R^{-2\alpha}$.
+
+\subsection{Ultraspherical functions}
+\subfile{ultraspherical/ultraspherical.tex}
+
+\subsection{Spherical coördinates}
+\subfile{coordinates/coordinates.tex}
+
+\subsection{Spherical harmonics}
+\subfile{harmonics/harmonics.tex}

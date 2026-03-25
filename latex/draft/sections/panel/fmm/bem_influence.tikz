@@ -1,0 +1,24 @@
+\begin{tikzpicture}[bezier bounding box]
+  \begin{scope}[scale = 2]
+    \pgfmathtruncatemacro\N{16}
+    \pgfmathsetmacro\circrad{.005}
+    \foreach \n in {1, 2, ..., \N}{
+      \coordinate (P\n) at ({(\n-1)/(\N-1)}, 0);
+      \draw[fill = black] (P\n) circle (\circrad);
+    }
+    \pgfmathsetmacro\height{1}
+    \pgfmathtruncatemacro\EN{\N-2}
+    \def\prosent{.15}
+    \foreach \k in {1, 2, ..., \EN}{
+      \pgfmathtruncatemacro\M{\N-\k}
+      \foreach \n[evaluate = \n as \m using \n+\k] in {1, 2, ..., \M}{
+        \pgfmathsetmacro\heighthere{\height*(1-\M/\N)}
+	\pgfmathsetmacro\inwards{\prosent/\k}
+	\coordinate (beziercontrolleft) at ($\inwards*(P\m) - \inwards*(P\n) + (0,\heighthere)$);
+	\coordinate (beziercontrolright) at ($\inwards*(P\n) - \inwards*(P\m) + (0,\heighthere)$);
+	\draw[very thin] (P\n) .. controls ($(P\n) + (beziercontrolleft)$) and ($(P\m) + (beziercontrolright)$) .. (P\m);
+      }
+    }
+    \draw[very thin] (P1) .. controls ($(P1) + (0,{\height*(1-1/\N)})$) and ($(P\N) + (0,{\height*(1-1/\N)})$) .. (P\N);
+  \end{scope}
+\end{tikzpicture}

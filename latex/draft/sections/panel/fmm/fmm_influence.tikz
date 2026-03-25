@@ -1,0 +1,37 @@
+\begin{tikzpicture}[bezier bounding box]
+  \begin{scope}[scale = 2]
+    \pgfmathtruncatemacro\N{16}
+    \pgfmathsetmacro\height{1}
+    \pgfmathsetmacro\prosent{.20}
+    \foreach \n in {1, 2, ..., \N}{
+      \coordinate (P1\n) at ({(\n-1)/(\N-1)}, 0);
+      \draw[fill = black] (P1\n) circle (.005);
+    }
+    \pgfmathtruncatemacro\EN{log2(\N)+1}
+    \foreach \k in {2, 3, ..., \EN}{
+      \pgfmathtruncatemacro\M{2*\N/2^\k}
+      \pgfmathsetmacro\magick{2^(-(\EN - \k + 2)))}
+      \foreach \n in {1, 2, ..., \M}{
+        \pgfmathtruncatemacro\oddn{2*\n - 1}
+	\pgfmathtruncatemacro\evenn{2*\n}
+	\pgfmathtruncatemacro\km{\k - 1}
+	\coordinate (P\k\n) at ($.5*(P\km\oddn) + .5*(P\km\evenn) + (0,{(3*\height/4)*\magick})$);
+	\draw[fill = black] (P\k\n) circle (.005);
+      }
+    }
+    \foreach \k in {1, 2, ..., \EN}{
+      \pgfmathtruncatemacro\M{\N/2^(\k)}
+      \foreach \n in {1, ..., \M}{
+        \pgfmathsetmacro\kp{\k+1}
+	\pgfmathsetmacro\magick{2^(-(\EN - \kp + 2))}
+        \pgfmathsetmacro\heighthere{\height*\magick}
+	\pgfmathtruncatemacro\oddn{2*\n - 1}
+	\pgfmathtruncatemacro\evenn{2*\n}
+	\pgfmathsetmacro\inwards{\prosent/\k}
+        \coordinate (beziercontrolleft) at ($\inwards*(P\k\evenn) - \inwards*(P\k\oddn) + (0,\heighthere)$);
+	\coordinate (beziercontrolright) at ($\inwards*(P\k\oddn) - \inwards*(P\k\evenn) + (0,\heighthere)$);
+	\draw[very thin] (P\k\oddn) .. controls ($(P\k\oddn)+(beziercontrolleft)$) and ($(P\k\evenn)+(beziercontrolright)$) .. (P\k\evenn);
+      }
+    }
+  \end{scope}
+\end{tikzpicture}

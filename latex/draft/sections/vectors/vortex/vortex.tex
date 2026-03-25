@@ -1,3 +1,7 @@
+Classical aerodynamics will study the effects of vortical motion in a fluid otherwise bereft thereof.
+A thorough exposition of that matter shall be handled in a later section, though the discussion of the influence vortices on fluids in general shall be accounted for promptly.
+We shall in this section examine how the \textsc{Biot}--\textsc{Savart} equation arises as a solution to the problem of a completely vortical fluid.
+
 In order to study the effects of vortices on the velocity field, we define the vorticity $\vorticityfrak = \star\dee\ufrak$, with the relation $\vorticityfrak^{\sharp} = \vorticity$.
 We consider the vorticity equation, obtained by taking the curl of the \textsc{Navier}--\textsc{Stokes} equation \subeqref{\ref{eq:Navier-Stokes}}[a].
 \begin{subequations}\label{eq:vorticity-equation}
@@ -19,15 +23,15 @@ or \textsc{Modin} \emph{et al}.%
 }
 The question at hand is whether the vorticity is useful in the representation of the fluid flow we are interested in modeling.
 For any structure interacting with a fluid inducing a perturbed velocity, this velocity ought to not propagate indefinitely.
-In other words, it should be evanescent.
+In other words, it should be evanescent, a condition of regularity.
 Such vector fields may be described by decomposition into constituent \textsc{Helmholtz} components, wherein
 \begin{subequations}\label{eq:Helmholtz_decomposition}
         \begin{equation}\tag{\theequation{a, b}}
             \uvec = \nabla \Phi + \nabla \times \mathbf{\Psi}, \qquad \mathbf{\Psi} = \psi \nabla A.
         \end{equation}
 \end{subequations}
-We understand from the above discussion that this is just a special case of the \textsc{Hodge} decomposition, where $\Phi$ is a sharped zero-form, and $\mathbf{\Psi}$ is a sharped one-form.
-Indeed, as the curl operator is simply $\star\dee$, any choice of bivector $\vfrak$ such that $\star\vfrak = \Psi_i\,\dee x^i$ will be approporiate, revealing the familiar \textsc{Hodge} decomposition of theorem \ref{thm:Hodge_decomposition}.
+In terms of the vernacular of differential forms, the so-called scalar potential $\Phi$ is a zero-form, and the vector potential $\mathbf{\Psi}$ is a sharped one-form.
+Indeed, as the curl operator is simply $\star\dee$, any choice of bivector $\vfrak$ such that $\star\vfrak = \Psi_i\,\dee x^i$ will be approporiate, revealing the familiar \textsc{Hodge} decomposition of theorem (\ref{thm:Hodge_decomposition}).
 Such a choice of representation of the vector potential is called a gauge, and the gauge chosen in equation \subeqref{\ref{eq:Helmholtz_decomposition}}[b] is that of \textsc{Gumerov} \& \textsc{Duraiswami},%
 \footnote{%
         \cite{gumerov2006fast} \textsc{Gumerov} \& \textsc{Duraiswami} (2006)
@@ -55,7 +59,7 @@ This is a \textsc{Poisson} equation, which is solved by the convolution $\star\v
 \footnote{%
         \cite{taylor2023partial} \textsc{Taylor}, \S3.4
 }
-where $\green$ is the familiar \textsc{Green} function, expressed in local coordinates as
+where $\green$ is the familiar \textsc{Green} function, expressed in local coördinates as
 \[
         \Psi_i(\xvec) = -\int_{\Omega(\bzhe)} w_i \green \,\dee V, \qquad \green(\xvec, \bzhe) = \frac{1}{4\pi \absl{\xvec - \bzhe}}.
 \]
@@ -63,9 +67,9 @@ Since it is the velocity $\ufrak = \Div\vfrak$ we wish to find, we may simply ca
 Note that integration is done with respect to the variable $\bzhe$, whilst the exterior derivative will be taken with respect to $\xvec$.
 To that end, we have $\partial_i \vorticityfrak(\bzhe)\dee x^{i} = 0$, so that by the graded product rule, we only differentiate the \textsc{Green} function.
 We then find the velocity vector field in terms of the vorticity, such that
-\[
+\begin{equation}
         \ufrak(\xvec) = -\int_{\Omega} \star\dee(\vorticityfrak \green) = -\int_{\Omega} \star\big( \mathfrak{w}\wedge\dee\green \big).
-\]
+\end{equation}
 
 \noindent
 The above expression seems to hold water,%
@@ -76,6 +80,8 @@ as a similar result was obtained by \textsc{Hesin}.%
 \footnote{%
         \cite{hesin2012symplectic} \textsc{Hesin} (2012)
 }
+The proof in the latter is somewhat different and more rigorously involved, as the vorticity is given as the two-form $\star\vorticityfrak$, yielding a componentwise \textsc{Poisson} equation $\Delta u^i = \star(\dee x^{i} \wedge \star \codee \star \vorticityfrak)$.
+
 As was noted above, the condition of evanescence of the velocity is a result of this formulation.%
 \footnote{%
         cite
@@ -87,7 +93,7 @@ Expressing this in terms of vectors, we have the generalized \textsc{Biot}--\tex
         \uvec(\xvec) = -\frac{1}{4\pi}\int_{\Omega} \frac{ \vorticity \times (\xvec - \bzhe) }{ {\absl{ \xvec - \bzhe }}^3 } \,\dee V.
 \end{equation}
 
-\newpage
+
 Introduce circulation, such that the vorticity is given along vortex filaments, $\vorticityfrak = \Gamma\mathfrak{t}$.
 Gives compact support, etc. so integrals converge nicely.
 Provide definition of circulation.

@@ -33,26 +33,9 @@ Fixing the radius, and squaring each of the equations of \eqref{eq:zukovsky_elli
 Equation \subeqref{\ref{eq:ellipse_equations}}[a] does indeed constitute the equation of an ellipse with foci $\pm2c$, wherein $a$ is the major semiaxis, and $b$ the minor semiaxis.
 Fixing instead the angular variable in equations \eqref{eq:zukovsky_ellipse} corresponds to rays emanating from the origin.
 Much the same procedure yields an expression in terms of the difference of squares in
-\begin{equation}\label{eq:zukovsky_hyperbola}
-        \frac{x^2}{4 c^2 \cos^2{\theta}} - \frac{y^2}{4 c^2 \sin^2{\theta}} = 1.
-\end{equation}
-
-\noindent
-Equation \eqref{eq:zukovsky_hyperbola} is the equation for a hyperbola with semiaxes $2c\cos{\theta}$ and $2c\sin{\theta}$, confocal to the above ellipses.
-Such mapping of concentric circles to confocal ellipses is illustrated explicitly in figure \ref{fig:polar-conformal-map}.
-A more visually pleasant, and perhaps more enlightening presentation of the \textsc{Žukovskij} transform is found in terms of the complex variable defined by the relation
-\begin{subequations}
-        \begin{equation}\tag{\theequation{a, b}}
-                \ezh^{\prime} = c e^{\ze}, \qquad \ze = \zhe + i\che.
-        \end{equation}
-\end{subequations}
-
-\noindent
-By simple calculation through the rules of arithmetic of the natural logarithm, the real and imaginary parts of this new complex variable are found to respectively be $\zhe = \ln{\sfrac{r}{c}}$ and $\che = \theta$.
-Thus we find that the \textsc{Žukovskij} transform of equation \eqref{eq:zukovsky_ellipse} may be equivalently cast as the map
-\begin{subequations}
+\begin{subequations}\label{eq:zukovsky_hyperbola}
         \begin{equation}\tag{\theequation{a, b, c}}
-                                     \ezh = c \cosh{\ze}, \qquad x = c \cosh{\zhe} \cos{\che}, \qquad z = c \sinh{\zhe} \sin{\che}.
+                \frac{x^2}{{a^{\prime}}^2} - \frac{y^2}{{b^{\prime}}^2} = 1, \qquad a^{\prime} = 2 c \cos{\theta}, \qquad b^{\prime} = 2 c \sin{\theta}
         \end{equation}
 \end{subequations}
 
@@ -77,17 +60,68 @@ Thus we find that the \textsc{Žukovskij} transform of equation \eqref{eq:zukovs
   \label{fig:polar-conformal-map}
 \end{figure}
 
+\noindent
+Equation \eqref{eq:zukovsky_hyperbola} is the equation for the hyperbola with semiaxes $a^{\prime}$ and $b^{\prime}$, confocal to the above ellipses.
+Such mapping of concentric circles to confocal ellipses is illustrated explicitly in figure \ref{fig:polar-conformal-map}.
+A more visually pleasant, and perhaps more enlightening presentation of the \textsc{Žukovskij} transform is found in terms of the complex variable defined by the relation
+\begin{subequations}
+        \begin{equation}\tag{\theequation{a, b}}
+                \ezh^{\prime} = c e^{\ze}, \qquad \ze = \zhe + i\che.
+        \end{equation}
+\end{subequations}
 
+\noindent
+By simple calculation through the rules of arithmetic of the natural logarithm, the real and imaginary parts of this new complex variable are found to respectively be $\zhe = \ln{\sfrac{r}{c}}$ and $\che = \theta$.
+Thus we find that the \textsc{Žukovskij} transform of equation \eqref{eq:zukovsky_map} may be equivalently cast as the map
+\begin{subequations}
+        \begin{equation}\tag{\theequation{a, b, c}}
+                                     \ezh = 2c \cosh{\ze}, \qquad x = 2c \cosh{\zhe} \cos{\che}, \qquad z = 2c \sinh{\zhe} \sin{\che},
+        \end{equation}
+\end{subequations}
+
+\noindent
+though this will not be of much use for the purposes of our analysis except perhaps enlightening the behavior of the map.
+A more thorough treatment on the matter of elliptic coördinates is given in \textsc{Kennard}'s monograph on irrotational fluids.%
+\footnote{%
+        \cite{kennard1967irrotational} \textsc{Kennard}, \S\S61,81--82
+}
+Nevertheless, the connexion between the transform at hand and the blades of a wind turbine is not these confocal ellipses from concentric circles of the origin.
+For shifting the center of a circle everso slightly away from the origin reveals the very airfoil of figure \labelcref{subfig:zukovsky_foil}.
+Consider a circle of radius $a$ with center at the imaginary number $s$, whose perimeter intersects both the real numbers $\pm c$.
+Consider then the complex numbers $\ezh \pm c$ originating from $\pm c$, such that they both intersect the circle.
+The angle at the point of incidence with the circle of the resulting triangle we name $\vartheta$, it being the difference in argument of the two complex numbers $\ezh \pm c$.
+Transforming each of these complex numbers using \eqref{eq:zukovsky_map}, we find that
+
+\begin{equation}
+  \frac{\ezh - 2c}{\ezh + 2c} = \frac{{(\ezh^{\prime} - c)}^2}{{(\ezh^{\prime} + c)}^2},
+\end{equation}
+
+\noindent
+and thus $\vartheta^{\prime} = 2\vartheta$, where $\vartheta^{\prime}$ is the difference in argument of the transformed values.
+For any point of intersection, $\vartheta$ will remain constant,%
+\footnote{%
+        \cite{euclid1558elements} \textsc{Euclid}, prop.\textsc{XXI}, lib.\textsc{iii}, p.71
+}
+so that the circle is mapped to a circular arc between the focal points $\pm2c$ under the \textsc{Žukovskij} transform.
+Let the angle from either points $\pm c$ to the center $s$ be named $\beta$, whose value is evidently given by $\beta = \sfrac{\pi}{2} - \vartheta$.
+By the above double angle relationship of the interior angle to its image under the \textsc{Žukovskij} transform, the angle between the tangent of the resulting circular arc and the chord is $2\beta$.
+Denote the radius of the circle, whose segment constitutes the chord of the circular arc, $A$, and let the camber of the circular arc---the measure of its deviation from the chord---be denoted $C$.
+We then have the following.%
+\footnote{%
+        \cite{kennard1967irrotational} \textsc{Kennard}, p.178
+}
+\begin{equation}
+        A = \frac{a^2}{\sqrt{a^2 - c^2}}, \qquad C = \frac{\tan{\beta}}{2}
+\end{equation}
+Adding a real part to the center $s$ will yield the airfoil shape we are after.
+Construct a circle whose perimeter coïncides with $c$ and encompasses $-c$.
+
+
+\noindent
 The airfoils of \textsc{von Kármán} \& \textsc{Trefftz} are generalizations of those of \textsc{Žukovskij}.%
 \footnote{%
         \cite{prandtl1957applied} \textsc{Prandtl} \& \textsc{Tietjens}, \S106, pp.182--185
 }
-
-\begin{equation}
-  \frac{\ezh - 2c}{\ezh + 2c} = \frac{{(\ezh^{\prime} - c)}^2}{{(\ezh^{\prime} + c)}^2}
-\end{equation}
-
-\noindent
 It can be shown%
 \footnote{%
         \cite{milne-thomson1958aerodynamics} \textsc{Milne-Thomson}, pp.125--128
