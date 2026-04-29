@@ -7,9 +7,9 @@ Author: Simon Lederhilger
 
 Institution: Department of Mathematics, Faculty of Mathematics and Natural Sciences,  University of Oslo
 
-##Compilation
+## Compilation
 
-Compiling the thesis using TeX Live:
+Compiling the thesis from draft/ using TeX Live:
 ```sh
 latexmk main.tex
 ```
