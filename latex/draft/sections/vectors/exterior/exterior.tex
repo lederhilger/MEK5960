@@ -1,29 +1,49 @@
 The majority of the theoretical background in this work will hinge almost in its entirety on the validity of the equations \eqref{eq:divergence_curl}, and theory sufficient for understanding their applications will be discussed in this section.
 
-\begin{definition}[Pseudo-\textsc{Riemann} manifold]
+\begin{definition}[\textsc{Riemann} manifold]
   An $n$-dimensional manifold \gls{manifold} is a topological space locally similar to Euclidean space $\gls{euclidean}^n$, in  a smooth sense.
-  It is said to be of the pseudo-\textsc{Riemann} kind if it is equipped with the non-degenerate \textsc{Riemann} metric $\gls{riemann-metric}$.
+  It is said to be of the \textsc{Riemann} kind if it is equipped with the positive definite \textsc{Riemann} metric $\gls{riemann-metric} = \metricg_{ij}$.
 \end{definition}
 
 \noindent
 The \textsc{Riemann} metric is left purposefully unspecified, as it depends on the representation of the manifold chosen.
-Throughout this work, we shall work the pesudo-\textsc{Riemann} manifold $\Omega$ of dimension 3, but we shall for the moment consider one of dimension $n$ so as to speak of the details in general.
-The intrinsic smoothness of the manifold reveals something about its differentiability, which is defined by the tangent space of some point in the manifold, $\Tangent_p\Omega$.
-A tangent space $\Tangent_p\Omega$ is technically a local space containing all tangent vectors at some point $p \in \Omega$,%
+Throughout this work, we shall work on the oriented \textsc{Riemann} manifold $\Omega$ of dimension three, Euclidean space in particular, but we shall for the moment consider one of dimension $n$ so as to speak of the details in general.
+The intrinsic smoothness of the manifold reveals something about its differentiability, which is defined by the tangent space $\Tangent_p\Omega$ of some point $p$ on the manifold.
+We shall then admit the definition that a vector field on $\Omega$ to be a smooth section of the tangent bundle \gls{tangent-bundle}, the disjoint union of the tangent spaces on the manifold.
+At each point $p \in \Omega$, the value of such a vector field then lies in the tangent space.%
 \footnote{%
   \cite{flanders1989differential} \textsc{Flanders}, p.54
-}
-so we shall introduce the \emph{tangent bundle} as the disjoint union of such spaces for all points on the manifold, $\gls{tangent-bundle} = \sqcup_p\Tangent_p\Omega$,%
+}\textsuperscript{,}%
 \footnote{%
   \cite{jost2011riemannian} \textsc{Jost}, p.12
-}
-equipped with a natural projection $\Pi \colon \Tangent\Omega\to\Omega$, such that vector fields $\uvec \in \Tangent_p\Omega$ are mapped to $\Pi(\uvec) = p$.%
+}\textsuperscript{,}%
 \footnote{%
   \cite{morita2001geometry} \textsc{Morita}, pp.169--171
 }
-Defining an inner product on this space, $\langle \avec, \bvec \rangle = [\mathfrak{g}]_{ij} a^{i} b^{j}$, where \textsc{Einstein} summation is implied, induces the metric.
+We shall make no distinction in notation between the tangent bundle or sections thereof.
+Defining an inner product on the space of vector fields, $\langle \avec, \bvec \rangle = \metricg_{ij} a^{i} b^{j}$, where \textsc{Einstein} summation is implied, induces the metric.
+Definition of inclusion.%
+\footnote{
+  \cite{morita2001geometry} \textsc{Morita}, pp.34--35,72
+}
 
-In order to construct a meaningful notion of operations on the tangent bundle, we endow its dual, the cotangent bundle \gls{cotangent-bundle}, the exterior product \gls{exterior-product}, forming the exterior algebra \gls{exterior-algebra}.
+\begin{definition}[Inclusion map]
+  Let $M \subset \Omega$ be an imbedded submanifold.
+  The inclusion is defined as the map
+  \begin{equation}
+    \iota_{M} : M \hookrightarrow \Omega, \qquad \iota_{M}(p) = p.
+  \end{equation}
+  The \emph{pushforward} ${(\iota_{M})}_{\ast}: \Tangent_p M \to \Tangent_{\iota_{M}(p)} \Omega$ regards the tangent vector in $M$ a tangent vector in $\Omega$.
+  Let $\afrak \in \Lambda^k \Omega$, and denote the \emph{pullback} as
+  \begin{equation}
+    {(\iota_{M}^{\ast} \afrak)}_p \big( \uvec_1, \dots, \uvec_k \big) = \afrak_{\iota_{M}(p)} \big( {(\iota_M)}_{\ast} \uvec_1, \dots, {(\iota_M)}_{\ast} \uvec_k \big), \qquad \uvec_i \in \Tangent_p M,
+  \end{equation}
+  restricting $\afrak$ to $M$.
+\end{definition}
+
+\noindent
+We shall not find the fundamental theorem of multivariate calculus in sections of the tangent bundle.
+Instead, we endow its dual, the cotangent bundle $\Lambda\Omega \equiv \gls{cotangent-bundle}$, the exterior product \gls{exterior-product}.
 The exterior product may appear obtuse when first presented in the abstract manner we will shortly do, but rest assured it does indeed have a geometric interpretation.
 For, in an effort to unite the exterior algebra of Hermann \textsc{Grassmann}%
 \footnote{%
@@ -37,15 +57,14 @@ William Kingdon \textsc{Clifford} laid the foundation on which the theory of the
 \footnote{%
   \cite{clifford1878applications} \textsc{Clifford} (1878)
 }
-On such algebras, the exterior product of $k$ covectors is understood to be the oriented volume of the $k$-paralellotope bound by them,%
+On such algebras, the exterior product of $k$ covectors is understood to be the oriented volume of the $k$-parallelotope bound by them,%
 \footnote{%
   \cite{grassmann1878lineale} \textsc{Grassmann}, pp.50--51
 }
 and is just one part of the so-called \emph{geometric product}, which provides a coherent definition of a vector product in general.
 We shall only draw from this intuition at a later point, as we shall focus on the properties of the exterior product with respect to objects on sections of the cotangent bundle.
 
-Labeling the projection of a covector field $\ufrak \in \Tangent^{\ast}\Omega$ in the same manner as a vector field, $\Pi^{\ast}(\ufrak) = p$, we define the section to be its inverse operation, uniquely returning the point to the covector field.
-The repeated application of the exterior product however admits higher grade covector fields.
+The repeated application of the exterior product admits higher grade covector fields.
 We will therefore use for a grade $k$ monomial section of the exterior algebra $\afrak \in \Lambda^{k}\Omega$ a $k$-form, and avoid the terminology of covectors altogether, as forms serve a much broader purpose to our end.
 The exterior product is alternating in the sense that for $\afrak_i \in \Lambda\Omega$, given a permutation $\sigma$ of the positive integers up to $k$, we have $\afrak_{\sigma(1)}\wedge\cdots\wedge\afrak_{\sigma(k)} = \signum{(\sigma)} \, \big( \afrak_{1}\wedge\cdots\wedge\afrak_{k} \big)$.
 The sign of a permutation $\signum(\sigma)$ is $1$ if the number of transpositions from the identity permutation is even, and $-1$ if the number of transpositions is odd.
@@ -58,25 +77,20 @@ This alternating property further reduces to the two properties that
 \end{subequations}
 
 \noindent
-for any forms $\afrak, \bfrak$, of the same or different grade.
-To summarize, then:
+for any one-forms $\afrak, \bfrak$.
+In summary, we define the exterior algebra.
 
 \begin{definition}[Exterior algebra]
-  Let $\Tangent\Omega$ be a tangent bundle with basis $\partial_i$, and let $\wedge$ denote the product of the algebra $\Lambda\Omega = \Tangent^{\ast}\Omega$.
-  Then the members of the algebra
-  \[
-        \dee x^{i} = {\Big( {[\mathfrak{g}]}^{ij}\partial_{j} \Big)}^{\flat}
-  \]
-  form a basis for the cotangent bundle.
-  When $\wedge: \Lambda^{k}\Omega \times \Lambda^{l}\Omega \to \Lambda^{k + l}\Omega$ satisfies the conditions of bilinearity and associativity, in addition to the modified alternating condition of equation \subeqref{\ref{eq:exterior_product}}[b]
+  Let $\Omega$ be an $n$-dimensional \textsc{Riemann} manifold.
+  Let furthermore $\Tangent\Omega$ be its tangent bundle with basis $\partial_i$, and $\Lambda\Omega = \Tangent^{\ast}\Omega$ the cotangent bundle with basis $\dee x^{i}$.
+  Endow it the exterior product $\wedge: \Lambda^{k}\Omega \times \Lambda^{l}\Omega \to \Lambda^{k + l}\Omega$ satisfying the conditions of bilinearity and associativity, in addition to the modified alternating condition of equation \subeqref{\ref{eq:exterior_product}}[b]
   \begin{equation}
-    \afrak \wedge \bfrak = {(-1)}^{kl} \bfrak \wedge \afrak,
+    \afrak \wedge \bfrak = {(-1)}^{kl} \bfrak \wedge \afrak.
   \end{equation}
-  it is an exterior product, and $\Lambda^{k + l}\Omega$ is an exterior algebra.
+  Then the direct sum of bundles $\Lambda^k \Omega$ for $0 \leq k \leq n$  is the exterior algebra of $\Omega$.
 \end{definition}
 
 \noindent
-Vector fields, then, as far as this work is concerned, are sections of the tangent space, though we will not notationally distinguish them.
 The notion of a tangent space is inherently connected to some sense of differentiability.
 Thus, given a differentiable curve on the manifold, the tangent vector at a point is described by this differentiability, and the partial derivative operators form a basis for the tangent space with respect to local coördinates on the manifold.
 We may choose for it some local basis $\{ \evec_j \}$, such that a vector field may be expressed $\uvec = u^{j}\evec_{j}$.
@@ -96,8 +110,8 @@ This notation however tends to clutter expressions and is cumbersome to read, an
 As the astute reader may have noticed, we already readily distinguish between elements of the cotangent and tangent spaces by denoting the former with a fraktur typeface, and the latter with an italic bold.
 Thus it should be clear from context whichever of the two is meant at any given time.
 
-We note the above expression implies the basis covectors, and indeed reiterate the fact that $k$-forms themselves are functions of vectors fields.
-In fact, when $\afrak\in\Lambda\Omega$, we have that $\afrak(\uvec) = a_i u^j$, which is a zero-form, or scalar.
+We note the above expression implies the basis covectors, and indeed reiterate the fact that $k$-forms themselves are multilinear functions of $k$ vector fields.
+In fact, when $\afrak\in\Lambda\Omega$, we have that $\afrak(\uvec) = a_i u^i$, which is a zero-form, or scalar.
 This generalizes to higher grade forms, with the introduction of the interior product, acting as a contraction in the usual sense of the term.
 
 \begin{definition}[Interior product]
@@ -129,7 +143,7 @@ To that end, we introduce the \textsc{Hodge} star-operator.
 
 \noindent
 With the exterior derivative, we may describe the volume of the space with respect to local coördinates.
-In particular, for a manifold $\Omega$ of dimension $n$, $\dee V \equiv \sqrt{\absl{\mathfrak{g}}} \dee x^{1} \wedge \cdots \wedge \dee x^{n}$, where $\absl{\mathfrak{g}}$ is the determinant of the local metric.
+In particular, for a manifold $\Omega$ of dimension $n$, $\dee V \equiv \sqrt{\det{(\metrictensor)}} \dee x^{1} \wedge \cdots \wedge \dee x^{n}$, where $\det{(\metrictensor)}$ is the determinant of the local metric tensor.
 We find from the definition of the \textsc{Hodge} star above that $\star\dee V = 1$.
 
 In order to study the exterior derivative under the \textsc{Hodge} operator, we define the \emph{codifferential}, given as follows.%
@@ -163,7 +177,7 @@ For illustrative purposes, the relationship between the exterior derivative, cod
   \end{tikzpicture}
 \end{figure}
 
-\noindent As we have noted, we are strictly speakning not performing these operations on the space $\Lambda^{k}\Omega$, but rather sections of it.
+\noindent As we have noted, we are strictly speaking not performing these operations on the space $\Lambda^{k}\Omega$, but rather sections of it.
 On these sections we may define an inner product that should be familiar,
 \begin{equation}\label{eq:L2-norm}
         (\afrak, \bfrak) = \int_{\Omega} \langle \afrak, \bfrak \rangle \,\dee V = \int_{\Omega} \afrak \wedge \star \bfrak.
@@ -171,11 +185,11 @@ On these sections we may define an inner product that should be familiar,
 We have of course not defined what the integral of a differential form actually is.
 Still, assuming inheritance from our familiar notion of the integral as a linear operator, we find that it does indeed constitute an integral analogous to that of the $L^2$ inner product.
 This inner product is symmetric, and is the inner product with respect to which the codifferential is adjoint to the exterior derivative, in the sense that $( \dee\afrak, \bfrak ) = ( \afrak, \codee\bfrak )$.
-For proofs and further discussion on the codifferential operator, the reader is again refered to \textsc{Morita}'s monograph.\footnote{\cite{morita2001geometry} \textsc{Morita}, pp.153--155}
+For proofs and further discussion on the codifferential operator, the reader is again referred to \textsc{Morita}'s monograph.\footnote{\cite{morita2001geometry} \textsc{Morita}, pp.153--155}
 
 We are now nearing the revelation of the fundamental theorem of multivariate calculus, and with it the end of this section.
 Before this, however, we ought to finally apply the operators to these differential forms to get a sense of the reason for which they were introduced to begin with.
-Consider the Euclidean vector field $\uvec^{\flat} = u\,\dee x + v\,\dee y + w\dee z$.
+We shall as an example consider the Euclidean vector field $\uvec^{\flat} = u\,\dee x + v\,\dee y + w\dee z$.
 Upon calculating its exterior derivative $\dee\ufrak$, one finds that
 \[
         \dee\ufrak = \big( \deex v - \deey u \big)\,\dee x \wedge \dee y + \big( \deez u - \deex w \big)\,\dee z \wedge \dee x + \big( \deey w - \deez v \big)\,\dee y \wedge \dee z.
@@ -224,10 +238,10 @@ The proof for this theorem is beyond the scope of the present work, so it will o
 \end{theorem}
 
 \noindent The convergence of integrals of the form \eqref{eq:ftmc} only makes sense for an unbounded fluid domain should the differential form $\ufrak$ evanesce sufficiently fast.
-This is clear from the condition that $\ufrak$ shall have compact support, meaning it would need to be a distribution.
+This is clear from the condition that $\ufrak$ shall have compact support.
 Such liberties are not ones we may always take, so we will make a concession in our definition of the manifold $\Omega$.
 Suppose $\partial\Omega = S \cup \Sigma$, such that $\Sigma$ encloses $\Omega$, whilst $S$ excises it, as is shown in figure \ref{fig:manifold}.
-We may now extend $\Sigma$ in such a way that $\Omega$ remains compact, and the general properties of $\ufrak$ are conserved, now only requiring sufficiently rapid evanescence.
+We may now extend $\Sigma$ in such a way that the general properties of $\ufrak$ are conserved, now only requiring sufficiently rapid evanescence.
 
 \begin{figure}
   \centering

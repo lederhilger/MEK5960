@@ -1,4 +1,4 @@
-In our effort to mathematically describe natural fluid flow, our work shal be inspired by the principles of nature.
+In our effort to mathematically describe natural fluid flow, our work shall unsurprisingly be inspired by the principles of nature.
 The discussion that follows will elucidate to which extent our modeling actually reflects real fluids.
 Studying the physics of fluids is in large part shared by the consideration of the forces applied---dynamics---and the resulting motion---kinematics.
 It is the fluid kinematics we shall study first.
@@ -9,7 +9,7 @@ The material frame of reference follows some specific fluid particle, whilst the
 }
 Consider some particle $\xvec_0 \in \Omega_0$, which is carried by some flow onto the point $\xvec \in \Omega$ at time $t$.
 Distinguishing $\Omega_0$ is a formality---for our purposes it is the very same manifold as we otherwise consider, and the flow is an automorphism.
-This configuration describes nothing less than the dynamical system $\xvec = \cvec(\xvec_0, t)$, $\xvec_0 = \cvec(\xvec_0, t)$, a solution of which is guaranteed locally by the \textsc{Picard}--\textsc{Lindelöf} theorem.%
+This configuration describes nothing less than the dynamical system $\xvec = \cvec(\xvec_0, t)$, $\xvec_0 = \cvec(\xvec_0, 0)$, a solution of which is guaranteed locally by the \textsc{Picard}--\textsc{Lindelöf} theorem.%
 \footnote{%
         \cite{arnold1973ordinary} \textsc{Arnol'd}, \S7.3, p.50
 }
@@ -37,57 +37,15 @@ We shall therefore draw from other monographs as sources on connexions and sympl
 Thus we cannot motivate all steps in the derivations to come.
 The geometric formulation of hydrodynamics developed in the periphery of these named works of \textsc{Arnol'd} do indeed build upon the Hamiltonian formalism using the theory of groups mentioned above.
 They consider variations of fluid paths, and seek to minimize their effort by means of observing the extrema of the so-called \emph{action}.
-Considering the kinetic energy $\mathscr{L}(t) = \sfrac{1}{2}(\deet\cvec, \deet\cvec)$.
-\begin{equation}
-        \updelta J = \frac{\dee}{\dee \epsilon}
-\end{equation}
 
-\noindent
-We get the following theorem.%
+Another, perhaps more abstracted, albeit mathematically equivalent, perspective is considering a \textsc{Lie}--\textsc{Poisson} system, expounding upon the aforementioned diffeomorphism group rather directly.
+Should this group $\mathscr{G}$ consist of volumepreserving diffeomorphisms, it is denoted $\mathscr{G}_{\mathrm{vol}}$.
+The kinetic energy is right invariant on the cotangent space $\Tangent^{\ast}\mathscr{G}_{\mathrm{vol}}$, yielding a Hamiltonian system on the \textsc{Poisson} manifold $\mathscr{X}^{\ast}_{\mathrm{vol}}$, being the space of solenoidal vector fields tangent to $\partial\Omega$.%
 \footnote{%
-        \cite{jost2011riemannian} \textsc{Jost}, p.79
+        \cite{marsden1983coadjoint} \textsc{Marsden} \& \textsc{Weinstein} (1983)
 }
-
-\begin{theorem}[\textsc{Darboux}]
-  Let $\mathfrak{h}$ be a closed, nondegenerate bivector on some manifold of even dimension.
-  Then every point $\xvec$ has some neighborhood on which we can find a coordinate system $(x^1,\dots,p_1,\dots)$, with
-  \begin{equation}
-        \mathfrak{h} = \dee p_i \wedge \dee x^i.
-  \end{equation}
-\end{theorem}
-
-\noindent
-The meaning of this theorem is that we can not only guarantee that $\mathfrak{h}$ is closed, but also that it is exact, since we can write $\dee p_{i} \wedge \dee x^{i} = \dee\pfrak$.
-Consider the projection $\Pi: \Tangent^{\ast}\Omega\to\Omega$ such that the pullback is defined by $\dee\Pi = \Pi_{\ast}: \Tangent\Tangent^{\ast}\Omega \to \Tangent\Omega$.
-Then some tangent vector $\avec \in \Tangent_{(\xvec,\pfrak)}\Omega$ is given as $\avec = a^{i}\partial_{x^i} + b_{j}\partial_{p_j}$, and $\Pi_{\ast}\avec = a^{i}\partial_{x^i} \in \Tangent_{x}\Omega$.
-
-\begin{definition}[Symplectic manifold]
-  A symplectic structure on a differentiable manifold of even dimension is a closed, nondegenerate bivector.
-  The pair is a symplectic manifold.
-\end{definition}
-
-\[
-        \uvec \iprod \mathfrak{h} = -\dee\hamilton.
-\]
-The symplectic form is preserved along the flow.
-
-\[
-        \frac{\partial x^{i}}{\partial t} = \frac{\partial \hamilton}{\partial p_{i}}, \qquad \frac{\partial p_{i}}{\partial t} = -\frac{\partial \hamilton}{\partial x^{i}}
-\]
-
-\begin{definition}[\textsc{Lie} derivative]
-  Let $\uvec$ be a vector field on the manifold $\Omega$, and $\cvec$ the flow.
-  For an arbitrary $\afrak \in \Lambda^{k}\Omega$, the \textsc{Lie} derivative of $\afrak$ by $\uvec$ is
-  \[
-        \lieder{\uvec} \afrak = \deet \vert_{t = 0} \cvec^{\ast} \afrak = \dee(\uvec\iprod\afrak) + \uvec\iprod\dee\afrak.
-  \]
-  The vector field $\uvec$ is symplectic if $\lieder{\uvec}\afrak = 0$ for a symplectic form $\afrak$.
-  For a vector field $\mathbf{v}$, the \textsc{Lie} derivative is defined to be
-  \[
-        \lieder{\uvec} \mathbf{v} = [\uvec, \mathbf{v}].
-  \]
-\end{definition}
-
+Such are the exact properties an ideal fluid flow ought to have, thus providing one with an \emph{ad hoc} intuition on what the nature of ideal fluids are.
+We shall briefly define a connexion, followed by a theorem for illustrative purposes.
 
 \begin{definition}[\textsc{Levi-Civita} connexion]
   Let $\uvec \in \Tangent\Omega$ and $\afrak$ be a section of some vector bundle.
@@ -100,52 +58,50 @@ The symplectic form is preserved along the flow.
 \end{definition}
 
 \begin{theorem}[Fundamental thoerem of pseudo-Riemannian geometry]
-  Every pseudo-Riemannian manifold has a unique \textsc{Levi-Civita} connexion.
+  Every Riemannian manifold has a unique \textsc{Levi-Civita} connexion.
 \end{theorem}
+
+\noindent
 A curve is called geodesic if $\nabla_{\dot{\cvec}}\dot{\cvec} = 0$.
-
-The \textsc{Euler} equation is a geodesic equation of the right-invariant $L^2$ metric on the diffeomorphism group, where the pressure is the constraining force orthogonal to the diffeomorphism group.\footnote{\cite{hesin2025universal} \textsc{Hesin} \& \textsc{Modin} (2025), Remark 2.3}\textsuperscript{,}\footnote{\cite{izosimov2024geometry} \textsc{Izosimov} \& \textsc{Hesin} (2024)}
-%\[
-%    \Dee_t U^i = \deet U^i + \Gwamma_{jk}^{i} U^{j} \deet\phi^{k}
-%\]
-%We define the mass of the fluid occupying the manifold $\Omega$ in terms of the integral
-%\[
-%        m(t) = \int_{\Omega} \star\density(\xvec, t).
-%\]
-%
-%\[
-%        \strain = \lieder{\uvec}\mathmathfrak{\metrictensor}
-%\]
-
-\begin{subequations}\label{eq:Navier-Stokes-full}
-        \begin{equation}\tag{\theequation{a, b}}
-                \density \Dee_t \uvec = \nabla\cdot\stress + \varrho\vgravity, \qquad  \Dee_t \density = -\density \nabla \cdot \uvec
-        \end{equation}
-\end{subequations}
+The insight of \textsc{Arnol'd} leads to the satisfying conclusion that the \textsc{Euler} equation simply is a geodesic equation of the right-invariant $L^2$ metric on the diffeomorphism group, where the pressure is the constraining force orthogonal to the diffeomorphism group.%
+\footnote{%
+  \cite{hesin2025universal} \textsc{Hesin} \& \textsc{Modin} (2025), Remark 2.3
+}\textsuperscript{,}%
+\footnote{%
+  \cite{izosimov2024geometry} \textsc{Izosimov} \& \textsc{Hesin} (2024)
+}
+Upon adding a viscous diffusion term, we have the incompressible \textsc{Navier}--\textsc{Stokes} equation with no external forces,
 
 \begin{subequations}\label{eq:Navier-Stokes}
         \begin{equation}\tag{\theequation{a, b}}
-          \density \deet \ufrak + \density\lieder{\uvec} \ufrak = -\dee p + \mu\Delta \ufrak + \varrho\vgravity, \qquad \codee\ufrak = 0
+          \density \deet \ufrak + \density\lieder{\uvec} \ufrak = -\dee p + \mu\Delta \ufrak, \qquad \codee\ufrak = 0.
         \end{equation}
 \end{subequations}
 
-\begin{theorem}[\textsc{Reynolds} transport]
-  Let $\uvec$ be the vector field generated by the diffeomorphism $\cvec$, and $\afrak \in \Lambda^k \Omega$.
-  Then,
+\noindent
+The material derivative is here instead expressed as the pointwise derivative in time, in addition to the derivative with respect to the flow.
+We define it as follows.
+
+\begin{definition}[\textsc{Lie} derivative]
+  Let $\uvec$ be a vector field on the manifold $\Omega$, and $\cvec$ the flow.
+  For an arbitrary $\afrak \in \Lambda^{k}\Omega$, the \textsc{Lie} derivative of $\afrak$ by $\uvec$ is
+  \[
+        \lieder{\uvec} \afrak = \deet \big\vert_{t = 0} \cvec^{\ast} \afrak = \dee(\uvec\iprod\afrak) + \uvec\iprod\dee\afrak.
+  \]
+  The vector field $\uvec$ is symplectic if $\lieder{\uvec}\afrak = 0$ for a symplectic form $\afrak$.
+  For a vector field $\mathbf{v}$, the \textsc{Lie} derivative is defined to be
+  \[
+        \lieder{\uvec} \mathbf{v} = [\uvec, \mathbf{v}].
+  \]
+\end{definition}
+
+\noindent
+We end the discussion on the nature of fluids as it pertains to this work with a rather illuminating theorem.
+
+\begin{theorem}[\textsc{Reynolds} transport]\label{thm:reynolds-transport}
+  Let $\uvec$ be the vector field generated by the diffeömorphism $\cvec$ on the manifold $\Omega(t) = \cvec_t(\Omega_0)$.
+  Let furthermore $\afrak(t) \in \Lambda^k \Omega(t)$.
   \begin{equation}
-        \deet \vert_{t = 0} \int_{\cvec(\Omega)} \afrak = \int_{\Omega} \lieder{\uvec} \afrak.
+        \frac{\dee}{\dee t} \int_{\Omega} \afrak = \int_{\Omega} \deet \afrak + \lieder{\uvec} \afrak.
   \end{equation}
 \end{theorem}
-
-%\[
-%        \deet p + \mathrm{ad}^{\ast}p = 0.
-%\]
-
-%Discussion on the \textsc{Mach} number and the \textsc{Reynolds} number.
-%\[
-%        \mu\nabla^2 \uvec = \mu \nabla (\nabla\cdot\uvec) + \mu \nabla \times (\nabla\times\uvec).
-%\]
-
-%For steady density, such that $\deet\varrho = 0$, a sufficient condition for the density convection to be negligible is that the flow be relatively small compared to the celerity of pressure waves in the fluid.
-%That is, we may have densiy variations in the fluid, but we will assume that is not the case.
-%Considering high \textsc{Reynolds} numbers, the flow will in large part be inviscid---the influence of viscosity is reduced to thin boundary layers.\footnote{show or cite.}

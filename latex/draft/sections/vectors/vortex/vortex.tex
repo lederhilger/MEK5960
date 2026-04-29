@@ -1,8 +1,9 @@
 Classical aerodynamics will study the effects of vortical motion in a fluid otherwise bereft thereof.
 A thorough exposition of that matter shall be handled in a later section, though the discussion of the influence vortices on fluids in general shall be accounted for promptly.
 We shall in this section examine how the \textsc{Biot}--\textsc{Savart} equation arises as a solution to the problem of a completely vortical fluid.
+For this purpose, we define the vorticity $\vorticityfrak = \star\dee\ufrak$, with the relation $\vorticityfrak^{\sharp} = \vorticity$.
+Should the fluid be otherwise nonvortical, we restrict the vorticity to the boundary.
 
-In order to study the effects of vortices on the velocity field, we define the vorticity $\vorticityfrak = \star\dee\ufrak$, with the relation $\vorticityfrak^{\sharp} = \vorticity$.
 We consider the vorticity equation, obtained by taking the curl of the \textsc{Navier}--\textsc{Stokes} equation \subeqref{\ref{eq:Navier-Stokes}}[a].
 \begin{subequations}\label{eq:vorticity-equation}
          \begin{equation}\tag{\theequation{a, b}}
@@ -27,7 +28,7 @@ In other words, it should be evanescent, a condition of regularity.
 Such vector fields may be described by decomposition into constituent \textsc{Helmholtz} components, wherein
 \begin{subequations}\label{eq:Helmholtz_decomposition}
         \begin{equation}\tag{\theequation{a, b}}
-            \uvec = \nabla \Phi + \nabla \times \mathbf{\Psi}, \qquad \mathbf{\Psi} = \psi \nabla A.
+            \uvec = \nabla \Phi + \nabla \times \mathbf{\Psi}, \qquad \mathbf{\Psi} = \xvec\chi.
         \end{equation}
 \end{subequations}
 In terms of the vernacular of differential forms, the so-called scalar potential $\Phi$ is a zero-form, and the vector potential $\mathbf{\Psi}$ is a sharped one-form.
@@ -43,32 +44,42 @@ It ought to be noted that the condition of evanescence is not one which applies 
 Should the fluid happen to interact with a structure, it is only near the surface the effects of viscosity are apparent.
 A formulation, then, wherein the vorticity is nonzero only on the boundary of the object, we may be able to proceed with a potential flow formulation in the rest of the fluid domain.
 Nevertheless, the laplacian term in the \textsc{Navier}--\textsc{Stokes} equation may be expanded in terms of equation \eqref{eq:Hodge_laplacian} so as to reveal that
+
 \begin{equation}\label{eq:Laplace_vector_definition}
-\mu\Delta \uvec = \mu\nabla(\nabla \cdot \uvec) - \mu \nabla \times \vorticity.
+  \mu\Delta \uvec = \mu\nabla(\nabla \cdot \uvec) - \mu \nabla \times \vorticity.
 \end{equation}
+
+\noindent
 This immediately yields the biharmonic equation for the potential function $\Phi$ when the vorticity is zero, which has been discussed by \textsc{Gumerov} and \textsc{Duraiswami} in terms of implementation through fast multipole methods.\footnote{\emph{ibid}.}
 For we know the divergence of the velocity field to be zero, so that the Laplacian is equal to the curl of the vorticity.
 The connexion is immediately apparent between that of viscous effects encoded in the Laplacian term, and the vorticity of the fluid.
 Thus our motivation is plainly laid out before us---we wish to imitate the viscous effects that the fluid exhibits through a potential formulation.
 Employing the above \textsc{Helmholtz} decomposition of equation \eqref{eq:Helmholtz_decomposition}, we find that by taking the laplacian thereof and substituting in the value of the vorticity of equation \eqref{eq:Laplace_vector_definition},
+
 \[
   -\nabla \times \vorticity = \nabla \times \Delta \mathbf{\Psi}.
 \]
-We are free to equate the two arguments of the curl so that the vorticity equals the negative laplacian of the vector field $\mathbf{\Psi}$, or in terms of differential forms, $\Delta\star\vfrak = -\vorticityfrak$.
+
+\noindent
+We are free to equate the two arguments of the curl so that the vorticity equals the negative laplacian of the vector field $\mathbf{\Psi}$, or in terms of differential forms, $\Delta \!\star\! \vfrak = -\vorticityfrak$.
 This is a \textsc{Poisson} equation, which is solved by the convolution $\star\vfrak = -\mathfrak{w} \ast \green$,%
 \footnote{%
         \cite{taylor2023partial} \textsc{Taylor}, \S3.4
 }
 where $\green$ is the familiar \textsc{Green} function, expressed in local coördinates as
+
 \[
         \Psi_i(\xvec) = -\int_{\Omega(\bzhe)} w_i \green \,\dee V, \qquad \green(\xvec, \bzhe) = \frac{1}{4\pi \absl{\xvec - \bzhe}}.
 \]
+
+\noindent
 Since it is the velocity $\ufrak = \Div\vfrak$ we wish to find, we may simply calculate it from the above expression by taking the curl.
 Note that integration is done with respect to the variable $\bzhe$, whilst the exterior derivative will be taken with respect to $\xvec$.
 To that end, we have $\partial_i \vorticityfrak(\bzhe)\dee x^{i} = 0$, so that by the graded product rule, we only differentiate the \textsc{Green} function.
 We then find the velocity vector field in terms of the vorticity, such that
+
 \begin{equation}
-        \ufrak(\xvec) = -\int_{\Omega} \star\dee(\vorticityfrak \green) = -\int_{\Omega} \star\big( \mathfrak{w}\wedge\dee\green \big).
+        \ufrak(\xvec) = -\int_{\Omega} \star\dee(\vorticityfrak \green) \,\dee V = -\int_{\Omega} \star\big( \mathfrak{w}\wedge\dee\green \big) \,\dee V.
 \end{equation}
 
 \noindent
@@ -80,33 +91,103 @@ as a similar result was obtained by \textsc{Hesin}.%
 \footnote{%
         \cite{hesin2012symplectic} \textsc{Hesin} (2012)
 }
-The proof in the latter is somewhat different and more rigorously involved, as the vorticity is given as the two-form $\star\vorticityfrak$, yielding a componentwise \textsc{Poisson} equation $\Delta u^i = \star(\dee x^{i} \wedge \star \codee \star \vorticityfrak)$.
-
-As was noted above, the condition of evanescence of the velocity is a result of this formulation.%
+The proof in the latter is somewhat different and more involved, as the vorticity is defined to be the two-form $\star\vorticityfrak$, yielding a componentwise \textsc{Poisson} equation $\Delta u^i = \star(\dee x^{i} \wedge \star \codee \!\star\! \vorticityfrak)$.
+This formulation results in the very same final equation, meaning the derivation, although novel to the present author, does not lend an unfamiliar approach to this common result.
+It does, however, lend credence to the result as valid in the formulation with which we have chosen to utilize.
+Barely predating that article is also a thorough investigaiton into vortex dynamics in fourdimensional space by \textsc{Shashikanth}.%
 \footnote{%
-        cite
+        \cite{shashikanth2012vortex} \textsc{Shashikanth} (2012), \S{IV}
+}
+The reader already intimately familiar with the subject, will undoubtedly adduce the classic \textsc{Marsden} \& \textsc{Weinstein} article on incompressible fluids,%
+\footnote{%
+        \cite{marsden1983coadjoint} \textsc{Marsden} \& \textsc{Weinstein} (1983)
+}
+which does indeed mention---albeit not exactly analogous to the problem at hand---selfinducing velocity by a vortex filament in terms of the structures on the group of volumepreserving diffeömorphisms.
+Indeed, \textsc{Hesin} considers higherdimensional vortex filaments $C^{n-2} \subset \reals^n$, referred to therein as membranes.
+We shall define strength of such a filament as follows.%
+\footnote{%
+        \cite{shashikanth2012vortex} \textsc{Shashikanth} (2012), def.3.1
 }
 
-We note the relation between the \textsc{Hodge} star of the exterior product of two 1-forms and the cross product of two vectors; $\star(\afrak \wedge \bfrak) = (\avec \times \bvec)$, up to musical isomorphism.
-Expressing this in terms of vectors, we have the generalized \textsc{Biot}--\textsc{Savart} equation,
-\begin{equation}
-        \uvec(\xvec) = -\frac{1}{4\pi}\int_{\Omega} \frac{ \vorticity \times (\xvec - \bzhe) }{ {\absl{ \xvec - \bzhe }}^3 } \,\dee V.
+\begin{definition}[Circulation]\label{def:circulation}
+  Let $C$ be a vortex filament, and $D$ a transversal disk, intersecting $C$ once.
+  The strength of $C$ is then given by
+  \[
+    \gls{circulation} = \int_{D} \iota_{D}^{\ast} \star\!\vorticityfrak = \int_{\partial D} \iota_{\partial D}^{\ast} \ufrak.
+  \]
+\end{definition}
+
+\noindent
+We shall now explore the manner in which we may construct vorticity supported on such a vortex filament.
+We denote by $\varepsilon$ the radius of the transversal disk $D_\varepsilon$ enclosing the filament.
+Let the vortex filament be a line parametrized by the arclength $s$, such that the unit tangent vector is given by $\tvec(s) = \xvec^{\prime}(s)$, an element of the tangent space on the filament.
+The following procedure is perhaps reminiscent of classical treatments of the matter of vortex tubes.%
+\footnote{%
+  \cite{truesdell1954kinematics} \textsc{Truesdell}, \S43, pp.82--84
+}
+It is clear from definition \ref{def:circulation} that the circulation is the very same as the flux of vorticity through the disk transversal to the filament.
+Upon the filament we construct an orthonormal coördinate system wherein we define a diffeömorphism from the parameter space and the the disk, onto the tube $T_{\varepsilon}$ enclosing the filament, requiring the radius of the disk to be small.
+Thus, the tube on which the vorticity shall have support must have a cross-sectional area that is nonzero.
+We must have that at any point on the line the diffeömorphism maps identically in the parameter space onto $\xvec(s)$, and that the pushforward of the partial derivative $\partial_s$ must be the tangent vector $\tvec(s)$.
+Thus, we define the local coördinate functions $n^i$ on $D_{\varepsilon}$ to be such that $\dee n^i(\partial_{n^j}) = \delta_j^i$, their values being zero coïnciding with the filament.
+On the filament, the interior product of the tangent vector and the Euclidean volume form must then be the area form on the normal plane on the filament, $\tvec \iprod \dee V = \dee n^1 \wedge \dee n^2$.
+This coördinate system is defined such that there is no intrinsic connexion between the vorticity and the radius of the disk.
+Clearly the above definition of the circulation makes no distinction of how great the readius of the disk shall be, and so the support of the vorticity shall need to be somehow dependent on the disk radius.
+For this, we introduce the mollifier $\varphi$, in the sense that $\varphi \in C_{\mathrm{c}}^{\infty}(\reals^2)$, and $\varphi \geq 0$, with compact support on the unit disk.
+We regularize it such that
+
+\begin{equation}\label{eq:mollifier-regularization}
+  \int_{\reals^2} \varphi(n^i) \, \dee n^1 \wedge \dee n^2 = 1.
 \end{equation}
 
+\noindent
+The regularization of equation \eqref{eq:mollifier-regularization} admits $\varphi_\varepsilon = \varepsilon^{-2} \varphi(\sfrac{n^i}{\varepsilon})$, now with support on $D_{\varepsilon}$.
+We can now define locally the vorticity two-form and associated one-form, with compact support on the disk,
 
-Introduce circulation, such that the vorticity is given along vortex filaments, $\vorticityfrak = \Gamma\mathfrak{t}$.
-Gives compact support, etc. so integrals converge nicely.
-Provide definition of circulation.
-\[
-  \Gamma = \oint_{C} \uvec \cdot \dee\mathbf{s} = \int_{S} \vorticity \cdot \nhat \,\dee S.
-\]
-We can derive the circulation theorem.
-\[
-  \Dee_t \Gamma = 0.
-\]
-We will derive how boundary layers may be approximated by vortex sheets.
+\begin{equation}
+  \star\vorticityfrak_{\varepsilon} \equiv \Gamma \varphi_{\varepsilon} \tvec \iprod \dee V, \qquad \vorticityfrak_{\varepsilon} = \Gamma \varphi_{\varepsilon} \tvec^{\flat},
+\end{equation}
 
-The \textsc{Biot}--\textsc{Savart} formulation of the disturbance velocity field at any point by the filamtent $C$ is then given by%
+\noindent
+when pulled back.
+As we noted earlier, at the centerline of tube coïnciding with the filament, the pushforward of the tangent partial derivative to the ambient space is the very tangent vector $\tvec$.
+Away from the center, however, this is not necessarily true, and the difference is $O(\absl{n^i}) \leq O(\varepsilon)$.
+Let now $s$ vary such that the disk $D_{\varepsilon}(s)$ is the corresponding transversal disk thereat, as in definition \ref{def:circulation}.
+We then have
+
+\begin{equation}
+  \int_{D_{\varepsilon}(s)} \iota_{D_{\varepsilon}(s)}^{\ast} \!\star\! \vorticityfrak_{\varepsilon} = \Gamma \int_{D_{\varepsilon}} \varphi_{\varepsilon} \,\dee n^1 \wedge \dee n^2 = \Gamma,
+\end{equation}
+
+\noindent
+having pulled back the vorticity two-form using the diffeömorphism.
+Evidently, the vorticity flux along the length of the filament is constant, equal to $\Gamma$.
+We shall now see that the supported vorticity $\star\vorticityfrak_{\varepsilon}$ converges in a weak sense to a current supported on the filament, which is sufficient for our purposes.
+To that end, we let $\afrak$ be a one-form to test against, and consider the $L^2$ inner product ${(\afrak, \vorticityfrak_{\varepsilon})}_{\Omega}$.
+We have that for small $\varepsilon$, the support of $\star\vorticityfrak_{\varepsilon}$ is contained in $T_{\varepsilon}$, so that the domain of integration is restricted to the tubular neighborhood around the filament.
+The integrand is then the pullback of the expression $\afrak \wedge \star\vorticityfrak_{\varepsilon}$.
+That is,
+
+\begin{equation}
+  {(\afrak, \vorticityfrak_{\varepsilon})}_{\Omega} = \int_{\Omega} \afrak \wedge \star\vorticityfrak_{\varepsilon} = \Gamma \int_{C} \tvec \iprod \afrak_{\xvec(s)} \,\dee s + O(\varepsilon).
+\end{equation}
+
+\noindent
+This is essentially identical to the reuslt presented by \textsc{Hesin},%
+\footnote{%
+  \cite{hesin2012symplectic} \textsc{Hesin} (2012), \S\S2.2, 6.1
+}
+stating that vorticity two-form is a $\delta$-function with support on the filament.
+The procedure is not as crude as simply inserting the vorticity one-form in the above \textsc{Biot}--\textsc{Savart} equation, for it converges weakly.
+We must now consider $\ufrak_{\varepsilon}$, and the limit as the radius evanesces.
+
+\begin{equation}
+  \ufrak_{\varepsilon}(\bzhe) = -\int_{\Omega} \star \big( \vorticityfrak_{\varepsilon} \wedge \dee \green \big) \,\dee V = -\Gamma \int_{C} \int_{D_{\varepsilon}} \star \big( \tvec^{\flat} \wedge \dee \green \big) \varphi_{\varepsilon} \,\dee n^1 \dee n^2 \,\dee s.
+\end{equation}
+
+\noindent
+Fixing a point $\bzhe \notin C$, it is clear that the kernel is smooth, and that we may perform the limit process.
+Finally, we have the \textsc{Biot}--\textsc{Savart} formulation of the induced velocity field%
 \footnote{%
         \cite{deng2020acceleration} \textsc{Deng} \emph{et al.} (2020), eq.6
 }%
@@ -115,7 +196,14 @@ The \textsc{Biot}--\textsc{Savart} formulation of the disturbance velocity field
         \cite{schlichting1967aerodynamiki} \textsc{Schlichting} \& \textsc{Truckenbrodt}, p.98, eq.2.161
 }
 \begin{equation}\label{eq:Biot-Savart}
-  \uvec(\bzhe) = \frac{1}{4\pi} \int_{C} \Gamma(\xvec)\frac{\xvec - \bzhe}{r^3} \times \dee\mathbf{s}.
+  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \int_{C} \frac{\xvec - \bzhe}{r^3} \times \dee\svec.
 \end{equation}
 
 \noindent
+The great ambition of this subsection was to derive the vortex filament formulation of the \textsc{Biot}--\textsc{Savart} equation in a novel manner, employing the tools of differential geometry.
+This was unfortunately thwarted by greater minds at times greatly preceeding it, and as such it only serves as a point of comparison of the mastery of these tools.
+
+\begin{theorem}[The circulation theorem]
+  Consider an inviscid fluid, such that the righthand side of \subeqref{\ref{eq:vorticity-equation}}[a] is zero.
+  By theorem \ref{thm:reynolds-transport}, there can be no change in circulation.
+\end{theorem}

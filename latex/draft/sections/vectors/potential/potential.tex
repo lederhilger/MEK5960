@@ -1,5 +1,7 @@
-The generation of lift is undoubtedly a viscous phenomenon, fully realized by the well known \textsc{Navier}--\textsc{Stokes} and continuity equations.
-
+The physical generation of lift is undoubtedly a viscous phenomenon, fully realized by the well known \textsc{Navier}--\textsc{Stokes} and continuity equations.
+As the measure of selfadhesion, viscosity naturally induces vortical motion in the fluid.
+Yet, a quasipotential formulation in which the effects of viscosity are realized, without the resulting motion being vortical, is what we shall utilize henceforth.
+Assume then, that the fluid we investigate is inviscid, and that the fluid velocity is small such that the \textsc{Mach} number is small.
 Upon assuming conservative body forces, the \textsc{Navier}--\textsc{Stokes} equation then reduces to the \textsc{Euler} and incompressibility equations\footnote{discuss \textsc{Mach} number, incompressibility is very relevant here.}
 \begin{subequations}\label{eq:Euler_Incompressible}
   \begin{equation}\tag{\theequation{a, b}}
@@ -7,53 +9,53 @@ Upon assuming conservative body forces, the \textsc{Navier}--\textsc{Stokes} equ
   \end{equation}
 \end{subequations}
 A vector field satisfying \subeqref{\ref{eq:Euler_Incompressible}}[b] is called solenoidal.
-From the \textsc{Hodge} decomposition theorem, we may express the fluid velocity field as the sum of 
-\begin{equation}
-        \uvec^{\flat} = \dee\Phi + \codee\vfrak
-\end{equation}
-It is apparent that the curl of the \textsc{Euler} equation \eqref{eq:Euler_Incompressible} is zero, such that the vector field describing the fluid flow is harmonic.
+From the \textsc{Hodge} decomposition theorem, we may express the fluid velocity field as the sum $\uvec^{\flat} = \dee\Phi + \codee\vfrak$.
+It is apparent that the curl of the \textsc{Euler} equation \subeqref{\ref{eq:Euler_Incompressible}}[a] is zero, such that the vector field describing the fluid flow is harmonic.
 \begin{equation}\label{eq:Laplace_equation}
   \Delta \Phi = 0, \qquad \xvec \in \Omega
 \end{equation}
-This representation of the fluid is manageable and allows for powerful tools with which to investigate it.
-It is known that the effects of viscosity are negligible for flow at large scale should the fluid not interact with an object.
+This representation of the fluid is manageable and allows for powerful tools with which to investigate it, of which we shall promptly become aware.
+For we shall no longer consider the differential equation above, but instead an integral formulation more fitting for computeraided solving.
 
-\noindent
 Consider two harmonic scalar functions $\phi$ and $\varphi$.
-Since all zero-forms are co-closed,%
+Since all zero-forms are coclosed,%
 \footnote{%
         The proof is trivial.
         $\codee\phi = \star\dee{\star}\phi = \dee\phi\wedge\dee V$, since the volume form is closed.
         The grade of $\codee\phi$ is then not congruent with the dimension of the manifold, and thus vanishes.
 }
 the \textsc{Hodge}--\textsc{Laplace} operator acting on zero-forms is equivalent to the familiar definition $\Delta\phi = \Div\Grad{\phi}$ of vector calculus.
-Consider the expressions $\codee\phi\dee\varphi$ and $\codee\varphi\dee\phi$.
+Consider furthermore the expressions $\codee\phi\dee\varphi$ and $\codee\varphi\dee\phi$, the codifferential working on the product.
 We take first the former, and expand the codifferential into its constituent stars and differential.
 From the definition of the \textsc{Hodge} star, we know it to be impotent acting on a scalar field.
 Thus,
 \[
-        \codee\phi\dee\varphi = \star \langle \dee \phi , \dee \varphi \rangle \,\dee V + \phi \Delta \varphi = \star \langle \dee \varphi , \dee \phi \rangle \,\dee V = \codee\varphi\dee\phi.
+        \codee\phi\dee\varphi = \star \langle \dee \phi , \dee \varphi \rangle \,\dee V + \phi \Delta \varphi = \star \langle \dee \varphi , \dee \phi \rangle \,\dee V = \codee\varphi\dee\phi,
 \]
-
+following from the symmetry of the inner product.
+Indeed, upon integrating their difference over the domain on which they are harmonic, we are free to exploit the fundamental theorem of multivariate calculus.
+Remarkably, the behavior of harmonic functions is entirely determined by their boundary data.
+This is in the special case of harmonic functions what is referred to as \textsc{Green}'s second identity, which in the notation of vector calculus, can be denoted
 \begin{equation}\label{eq:Greens_second_identity}
-  \int_{\partial\Omega} \big( \phi \nabla\psi - \psi \nabla\phi \big)\cdot\nhat \,\dee S = 0.
+  \int_{\partial\Omega} \big( \phi \nabla\varphi - \varphi \nabla\phi \big)\cdot\nhat \,\dee S = 0,
 \end{equation}
-This result is often referred to as \textsc{Green}'s second identity.
+
+\noindent
 Constructing now a \textsc{Green} function defined to be harmonic everywhere, with the exception at some point $\bzhe \in \Othal$, we may recast equation \eqref{eq:Greens_second_identity} in terms of the \textsc{Cauchy} principal value.\footnote{explain}
 For the case of three dimensional flow, the \textsc{Green} function is given by
 \begin{subequations}\label{eq:Green_function_3D}
   \begin{equation}\tag{\theequation{a, b}}
-    \green(\xvec; \bzhe) = r^{-1}, \qquad r = \absl{\xvec - \bzhe}.
+    \green(\xvec; \bzhe) = \frac{1}{4\pi r}, \qquad r = \absl{\xvec - \bzhe}.
   \end{equation}
 \end{subequations}
 We confirm that $\Delta \green(\xvec; \bzhe) = \delta(\xvec - \bzhe)$, where $\delta$ is the \textsc{Dirac} delta function, meaning the \textsc{Green} function of equation \subeqref{\ref{eq:Green_function_3D}}[a] is harmonic almost everywhere.
-We may insert this function for $\psi$ in equation \eqref{eq:Greens_second_identity}, with the appropriate adjustments to the right-hand side.
+We may insert this function for $\varphi$ in equation \eqref{eq:Greens_second_identity}, with the appropriate adjustments to the right-hand side.
 By integrating around the singularity at $\bzhe$, we find that
 \begin{equation}\label{eq:integral_equation}
-  \principalvalue \int_{\partial\Omega} \big( \Phi \partial_{\nhat} \green - \green \partial_{\nhat} \Phi \big) \,\dee S = k\pi \Phi(\bzhe), \qquad k = \begin{cases}
-                  2, & \bzhe \in \partial\Omega\\
-                  4, & \bzhe \in \Omega\\
-                  0, & \text{otherwise}
-  \end{cases}.
+  \principalvalue \int_{\partial\Omega} \big( \phi \nabla_{\nhat} \green - \green \nabla_{\nhat} \phi \big) \,\dee S = c\phi(\bzhe),
 \end{equation}
-For the directional derivative, we mean $\partial_{\nhat} = \nhat \cdot \nabla$.
+
+\noindent
+where $c$ is some constant dependent on the location of $\bzhe$.
+For the directional derivative, we mean $\nabla_{\nhat} = \nhat \cdot \nabla$.
+This is the basis for the boundary element method, the numerical implementation of which this thesis seeks to employ.
