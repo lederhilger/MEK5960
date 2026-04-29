@@ -8,7 +8,7 @@ while ($mk_root ne dirname($mk_root) && !-d "$mk_root/_latexmk") {
 die "Could not find mk root containing _latexmk\n"
     unless -d "$mk_root/_latexmk";
 $ENV{'TEXINPUTS'} =
-    "$mk_root/_latexmk//:$main_root/sections//:" . ($ENV{'TEXINPUTS'} // '');
+    "$mk_root/_latexmk//:$main_root/sections//:$main_root/figures//:" . ($ENV{'TEXINPUTS'} // '');
 ensure_path('BIBINPUTS', "$mk_root/_latexmk//");
 
 $pdf_mode = 4;
