@@ -1,0 +1,47 @@
+\begin{tikzpicture}
+	\def\thefocus{.5}
+	\foreach \kay in {-2, 2}{%
+		 \draw[fill = black] (\kay*\thefocus,0) circle (.025);
+	}
+	\def\rmin{.15}
+	\coordinate (O) at (0,0);
+	\pgfmathsetmacro\majoraxis{%
+		\rmin + \thefocus*\thefocus / \rmin
+	}
+	\pgfmathsetmacro\minoraxis{%
+		abs(%
+			\rmin - \thefocus*\thefocus / \rmin
+		)
+	}
+	\draw[thick] (O) ellipse (\majoraxis cm and \minoraxis cm);
+	\makeatletter
+	\def\zukovskijtransform{%
+		\pgfmathsetmacro{\modulussquared}{(\pgf@x/1cm)^2 + (\pgf@y/1cm)^2}%
+		\ifdim\modulussquared pt=0pt
+			%
+		\else
+			\pgfmathsetmacro{\xprime}{%
+				(\pgf@x/1cm)*(1 + (\thefocus^2)/\modulussquared)*1cm
+			}%
+			\pgfmathsetmacro{\yprime}{%
+				(\pgf@y/1cm)*(1 - (\thefocus^2)/\modulussquared)*1cm
+			}%
+			\pgf@x=\xprime pt%
+			\pgf@y=\yprime pt%
+		\fi
+	}
+	\makeatother
+	\begin{scope}[scale = 1]
+		\pgfmathsetmacro\enn{16}
+		\pgfmathsetmacro\rmax{\enn*\rmin}
+		\pgfsettransformnonlinearflatness{1pt}
+		\pgftransformnonlinear{\zukovskijtransform}
+		\foreach \kay in {2, 3, ..., \enn}{%
+			 \draw (O) circle (\kay*\rmin);
+		}
+		\pgfmathsetmacro\EN{32}
+		\foreach \kay in {0, 2, ..., \EN}{%
+			 \draw ({\rmin*cos(deg(\kay*2*pi/\EN))},{\rmin*sin(deg(\kay*2*pi/\EN))})--({\rmax*cos(deg(\kay*2*pi/\EN))},{\rmax*sin(deg(\kay*2*pi/\EN))});
+		}
+	\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,63 @@
+\tdplotsetmaincoords{80}{20}
+\begin{tikzpicture}[tdplot_main_coords]
+	\begin{scope}[scale = 3]
+		\def\myradius{.025}
+		\def\exdis{.2}
+		\def\xix{0}
+		\def\xiy{3}
+		\def\xiix{3}
+		\def\xiiy{-1}
+		\node[%
+			label = {[below = .75em]$\bzhe$}
+		] (O) at (0,0,0) {};
+		\node[%
+			label = {[above = .05em]$\xvec^{\romani}$}
+		] (xi) at (\xix,\xiy,0) {};
+		\node[%
+			label = {[above right]$\xvec^{\romanii}$}
+		] (xii) at (\xiix,\xiiy,0) {};
+		\node[%
+			label = {[above]$\xvec(s)$}
+		] (x) at ($(xi)!\exdis!(xii)$) {};
+		\draw[thick] ($(x)+(0,0,\myradius)$)--($(x)-(0,0,\myradius)$);
+		\draw[thick] (xi.center)--(xii.center);
+		\draw[dashed] (O.center)--(xi.center);
+		\draw[dashed] (O.center)--(xii.center);
+		\draw[dashed] (O.center)--(x.center);
+		\draw[%
+			tdplot_screen_coords,
+			fill = black
+		] (O.center) circle[radius = \myradius];
+		\draw[%
+			tdplot_screen_coords,
+			fill = black
+		] (xi.center) circle[radius = \myradius];
+		\draw[%
+			tdplot_screen_coords,
+			fill = black
+		] (xii.center) circle[radius = \myradius];
+		\draw[-latex, thick] (O.center)--($(O) + (0,0,.75)$);
+		\node[%
+			label = {[above]$\dee\svec$}
+		] (ds) at ($(xi)!{\exdis+.2}!(xii)$) {};
+		\draw[very thick, -latex] (x.center)--(ds.center);
+		\pgfmathsetmacro{\dx}{\xiix-\xix}
+		\pgfmathsetmacro{\dy}{\xiiy-\xiy}
+		\pgfmathsetmacro{\s}{sqrt(\dx*\dx+\dy*\dy)}
+		\pgfmathsetmacro{\xperp}{-\dy/\s}
+		\pgfmathsetmacro{\yperp}{\dx/\s}
+		\def\arcrad{.05}
+		\node[%
+			label = {[below left = {\arcrad+.2em}]$\Gamma$}
+		] (Gamma) at ($(xi)!{\exdis+.4}!(xii)$) {};
+		\begin{scope}[%
+			shift = {(Gamma)},
+			x = {(\xperp, \yperp, 0)},
+			y = {(0,0,1)}
+		]
+			\def\startangle{15}
+			\def\endangle{315}
+			\draw[-latex] ({\arcrad*cos(\startangle)}, {\arcrad*sin(\startangle)}) arc[start angle = \startangle, end angle = \endangle, radius = \arcrad];
+		\end{scope}
+	\end{scope}
+\end{tikzpicture}

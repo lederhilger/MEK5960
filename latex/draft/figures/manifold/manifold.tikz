@@ -1,0 +1,56 @@
+\begin{tikzpicture}
+  \begin{scope}[scale = 1.75]
+    \coordinate (1) at (-2, 0);
+    \coordinate (2) at (-1.725, .6);
+    \coordinate (3) at (-1, .975);
+    \coordinate (4) at (0, 1.175);
+    \coordinate (5) at (.975, .975);
+    \coordinate (6) at (1.825, .625);
+    \coordinate (7) at (2.125, 0);
+    \coordinate (8) at (1.675, -.5);
+    \coordinate (9) at (1.275, -.75);
+    \coordinate (10) at (0, -.875);
+    \coordinate (11) at (-.875, -.725);
+    \coordinate (12) at (-1.475, -.525);
+    \coordinate (a) at (.575, 0);
+    \coordinate (b) at (0, .15);
+    \coordinate (c) at (-.4, 0);
+    \coordinate (d) at (0,0);
+    \draw[pattern = north west lines, even odd rule] (1)
+    		  to [in = -150, out = 105, looseness = .75] (2)
+    		  to [in = -180, out = 30] (3)
+		  to [in = -180, out = 0] (4)
+		  to [in = -180, out = 0] (5)
+		  to [in = 165, out = 0, looseness = .75] (6)
+		  to [in = 90, out = -15, looseness = .75] (7)
+		  to [in = 30, out = -90, looseness = .75] (8)
+		  to [in = 15, out = -150] (9)
+		  to [in = 15, out = -165] (10)
+		  to [in = 0, out = -165, looseness = 1.25] (11)
+		  to [in = -60, out = -180] (12)
+		  to [in = -75, out = 120] cycle (c)
+		  to [in = -180, out = 90, looseness = .75] (b)
+		  to [in = 165, out = 0] (a)
+		  to [in = 15, out = 165] (d)
+		  to [in = -90, out = -165, looseness = .75] cycle;
+    \node at ($(6) + (-.1, .2)$) {$\Sigma$};
+    \coordinate (S) at ($(a) + (-.2, .25)$);
+    \node at (S) {\textpdfrender{
+    	  TextRenderingMode = FillStrokeClip,
+	  LineWidth = .25em,
+	  FillColor = black,
+	  StrokeColor= white,
+	  MiterLimit = 1
+	   }{$S$}};
+    \node at (S) {$S$};
+    \coordinate (Omega) at (-1.25,.5);
+    \node at (Omega) {\textpdfrender{
+    	  TextRenderingMode = FillStrokeClip,
+	  LineWidth = .25em,
+	  FillColor = black,
+	  StrokeColor= white,
+	  MiterLimit = 1
+	   }{$\Omega$}};
+    \node at (Omega) {$\Omega$};
+  \end{scope}
+\end{tikzpicture}
