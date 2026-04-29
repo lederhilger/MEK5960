@@ -10,9 +10,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% MATH TYPESETTING PACKAGES %%%%%%%%%%%%%%%%%%%
 \RequirePackage{mathtools}
-\RequirePackage{amsmath}
-\RequirePackage{amsfonts}
-\RequirePackage{amssymb}
 \RequirePackage{unicode-math}
 \unimathsetup{mathbf = sym, math-style = ISO, bold-style = ISO}
 \ExplSyntaxOn
@@ -25,16 +22,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% LANGUAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[russian, greek, japanese,  main = english]{babel}
+\RequirePackage[%
+  russian,
+  greek,
+  japanese,
+  gothic,
+  chinese,
+  main = english
+]{babel}
 \RequirePackage{luatexja-fontspec}
 \ltjsetparameter{jacharrange={-2,-3}}
+\setmainjfont{Noto Serif CJK JP}
+\newjfontfamily\jjp{Noto Serif CJK JP}
+\newjfontfamily\jsc{Noto Serif CJK SC}
 \RequirePackage{newcomputermodern}
 \RequirePackage{textalpha}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% ALLOWING FOR OTHER FONTS %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{fontspec}
+\RequirePackage{accsupp}
+\newfontfamily\gothicfont{Ulfilas}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% GRAPHICS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}
@@ -45,7 +53,6 @@
 \RequirePackage{tikz-3dplot}
 \RequirePackage{pdfrender}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,3 +78,5 @@
     (\hyperref[\temp]{#1#2})%
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{mathglyphs}
+
