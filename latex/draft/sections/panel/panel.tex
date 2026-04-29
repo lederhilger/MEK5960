@@ -1,18 +1,13 @@
 The boundary element method is a method of calculating values related to the fluid velocity through the second kind \textsc{Fredholm} integral equation \eqref{eq:integral_equation}, whereby the boundary is discretized into quadrilateral panels.
 As has been established, the conditions under which the solution is unique is determined at the boundary, here being the \textsc{Neumann} boundary condition of impermeability,
 \begin{equation}\label{eq:impermeability}
-  \partial_{\nhat} \Phi(\xvec) = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega.
+  \nabla_{\nhat} \Phi(\xvec) = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega,
 \end{equation}
 
 \noindent
+where $\Uvec$ is the freestream velocity of the fluid.
 We can now solve for the potential function $\Phi$ of equation \eqref{eq:Laplace_equation} by the means we see fit.
-The alternative construction is to consider distributions of simple and double sources over the boundary.
-The potential at the point $\xvec$ due to simple or double sources are given respectively by
-\begin{subequations}\label{eq:distribution_representation}
-  \begin{equation}\tag{\theequation{a ,b}}
-    \Phi(\bzhe) = \int_S \frac{\sigma(\xvec)}{r} \,\dee S, \qquad \Phi(\bzhe) = \int_S \frac{\mu(\xvec) \cos{\alpha}}{r^2} \,\dee S.
-  \end{equation}
-\end{subequations}
+
 This is valid for any square integrable vector field.%
 \footnote{%
         \cite{byhovskij1960orthogonal} \textsc{Byhovskij} \& \textsc{Smirnov} (1960)

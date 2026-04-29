@@ -1,12 +1,59 @@
+With the metric tensor at hand, we may express the \textsc{Hodge}--\textsc{Laplace} operator with respect to hyperspherical coördinates.
+For zero-forms, we know the operator to be $\codee\dee f = \star\dee\!\star\!\dee f$.
+We shall denote for brevity $\dee V = \sqrt{\det{(\metrictensor)}}\afrak$, such that $\star\dee f = \sqrt{\det{(\metrictensor)}} \metricg^{ij} \partial_i f \partial_j \iprod \afrak$.
+Clearly $\dee(\partial_j\iprod\afrak) = 0$, meaning
+\[
+  \dee\!\star\!\dee f = \dee \Big( \sqrt{\det{(\metrictensor)}} \metricg^{ij} \partial_i f \Big) \wedge \partial_j \iprod \afrak = \partial_k \Big( \sqrt{\det{(\metrictensor)}} \metricg^{ij} \partial_i f \Big) \dee x^k \wedge \partial_j \iprod \afrak.
+\]
+
 \noindent
+We know $\dee x^k \wedge \partial_j \iprod \afrak = \delta_{j}^{k} \afrak$, removing all terms of index $k \neq j$.
+Applying the \textsc{Hodge} star operator once more to the expression above, we get the following expression for the \textsc{Hodge}--\textsc{Laplace} operator in local coördinates.%
+\footnote{%
+  \cite{nishikawa2002variational} \textsc{Nishikawa}, p.116
+}
+
+\begin{equation}\label{eq:Hodge-Laplace-scalar}
+  \Delta f = \frac{1}{\sqrt{\det(\metrictensor)}} \frac{\partial}{\partial x^j} \left( \sqrt{\det(\metrictensor)} \metricg^{ij} \frac{\partial f}{\partial x^i} \right)
+\end{equation}
+
+\noindent
+It is known that the \textsc{Hodge}--\textsc{Laplace} operator on $\euclidean^{d+1}$ may be decomposed so as to separate the dependence of the radial distance from the origin, and the placement of the point of evaluation on the unit hypersphere $\mathbb{S}^d$.%
+\footnote{%
+  \cite{chavel1984eigenvalues} \textsc{Chavel}, pp.33--36
+}
+%
+This is a digestible result once one considers the projection of a point from the origin, through the unit hypersphere, unto the designated radius.
+This is obviously something we can show using equation \eqref{eq:hyperspherical-metric-tensor}, but shall not do.
+Thus we have the following representation the \textsc{Hodge}--\textsc{Laplace} operator.
+
+\begin{equation}
+  \Delta_{\euclidean^{d+1}} f = r^{-d} \partial_r \big( r^d \partial_r f \big) + r^{-2} \Delta_{\mathbb{S}^d} f \big( \mathbb{S}(r) \big)
+\end{equation}
+
+\noindent
+To obtain fundamental solutions to the \textsc{Laplace} equation, we investigate its eigenfunctions through solutions to the \textsc{Helmholtz} equation:
+
+\begin{subequations}\label{eq:Helmholtz-equation}
+  \begin{equation}\tag{\theequation{a, b}}
+    \Delta\Phi = -\kappa^2 \Phi, \qquad \Phi \in L^2(\reals\times\mathbb{S}^{d-1})
+  \end{equation}
+\end{subequations}
+
+\noindent
+is a result of the spectral theorem, which we shall
+
 For the two-sphere, the spherical harmonics%
 \footnote{%
   \cite{cheng1999fast} \textsc{Cheng}, \textsc{Greengard}, \& \textsc{Rohlin}  (1999), eq.4
+}\textsuperscript{,}%
+\footnote{%
+  \cite{gumerov2003recusrions} \textsc{Gumerov} \& \textsc{Duraiswami} (2003), eq.2.5
 }
 
 \begin{subequations}\label{eq:sphericalharmonics}
-  \begin{equation}
-    \spherical_{n}^{m}(\alpha^{1}, \alpha^{2}) = c \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^2)}, \qquad c = \sqrt{\frac{(n - \absl{m})!}{(n + \absl{m})!}}
+  \begin{equation}\tag{\theequation{a, b}}
+    \spherical_{n}^{m}(\alpha^{1}, \alpha^{2}) = c \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^2)}, \qquad c = {(-1)}^m \sqrt{\frac{2n+1}{4\pi} \frac{(n - \absl{m})!}{(n + \absl{m})!}}
   \end{equation}
 \end{subequations}
 
@@ -15,3 +62,12 @@ constitute a complete orthonormal basis when $n \geq m$.%
 \footnote{%
   \cite{takeuchi1994modern} \textsc{Takeuchi}, p.223
 }
+
+\begin{theorem}
+  Let $\legendre_n$ denote the \textsc{Legendre} polynomial of order $n$, $\spherical_{n}^{m}$ be a spherical harmonic, and $\xvec_1$, $\xvec_2$ be points on the unit two-sphere, such that $\xvec_i = (\sin{\alpha_{i}^{1}} \cos{\alpha_{i}^{2}}, \sin{\alpha_{i}^{1}} \sin{\alpha_{i}^{2}}, \cos{\alpha_{i}^{2}})$.
+  Then,
+  \begin{equation}
+    \legendre_n(\cos{\theta}) = \frac{4\pi}{2n+1} \sum_{m = -n}^{n} \spherical_{n}^{m}(\alpha_{1}^{1}, \alpha_{2}^{2}) \spherical(\alpha_{2}^{1}, \alpha_{2}^{2}),
+  \end{equation}
+  where $\theta$ is the angle between the points.
+\end{theorem}

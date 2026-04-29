@@ -8,7 +8,7 @@ The \textsc{Gegenbauer} ultraspherical polynomials $\gls{gegenbauer}(x)$ then co
 }
 %
 The significance of this measure is not immediately apparent.
-Alternatively to the above definition as generating functions, we have the definition through the hypergeometric function, as a solution to a special case of the hypergeometric equation,%
+Alternatively to the above definition as generating functions, we have the definition through the hypergeometric function,%
 \footnote{%
   \cite{takeuchi1994modern} \textsc{Takeuchi}, p.194
 }
@@ -18,17 +18,22 @@ Alternatively to the above definition as generating functions, we have the defin
 \end{equation}
 
 \noindent
-The hypergeometric function is a special function, whose full treatment is far beyond the scope of this work, but whose definition nonetheless warrants a mention for the sake of completion:%
+The hypergeometric function $\hypergeometric(a,b;c;\ezh)$ is a special function, whose full treatment is far beyond the scope of this work.
+It warrants mentioning that it may either be defined in terms of a power series,%
 \footnote{%
   \cite{abramowitz1965handbook} \textsc{Oberhettinger}, eq.15.1.1, p.556
 }
+or more relevant for our purposes, as the unique real analytic of the hypergeometric equation
 
-\begin{equation}
-  \hypergeometric(a, b; c; \ezh) = \frac{\Gamma(c)}{\Gamma(a)\Gamma(b)} \sum_{k = 0}^{\infty} \frac{\Gamma(a + k) \Gamma(b + k)}{\Gamma(c + k)} \frac{\ezh^k}{k!}
-\end{equation}
+\begin{subequations}\label{eq:hypergeometric}
+  \begin{equation}\tag{\theequation{a, b}}
+    \ezh(1 - \ezh)\frac{\dee^2 f}{\dee\ezh^2} + \big( c - (a+b+1)\ezh \big) \frac{\dee f}{\dee\ezh} - ab f = 0, \qquad \absl{\ezh} < 1.
+  \end{equation}
+\end{subequations}
 
 \noindent
-The ultraspherical functions are related to the associated \textsc{Legendre} spherical function%
+This equation will reappear in an impending subsection, as a direct consequence of the theory for which we seek a foundation.
+The ultraspherical functions are related to the associated \textsc{Legendre} spherical function through the following expression.%
 \footnote{%
   \cite{abramowitz1965handbook} \textsc{Hochstrasser}, eq.22.5.60, p.780
 }
@@ -38,7 +43,7 @@ The ultraspherical functions are related to the associated \textsc{Legendre} sph
 \end{equation}
 
 \noindent
-Definition of associated \textsc{Legendre} functions%
+Through algebraic manipulations, the definition of the associated \textsc{Legendre} functions are found to be%
 \footnote{%
   \cite{abramowitz1965handbook} \textsc{Stegun}, eq.8.1.2, p.332
 }

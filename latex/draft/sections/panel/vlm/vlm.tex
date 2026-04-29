@@ -1,10 +1,60 @@
-The vortex lattice method exchanges the doublet source panels of the boundary element method for vortex filaments along their boundaries.
+The vortex lattice method was in name introduced by \textsc{Falkner} in a series of papers during the tailend of the 1940s.%
+\footnote{%
+        \cite{falkner1946accuracy} \textsc{Falkner} (1946)
+}%
+\textsuperscript{,}%
+\footnote{%
+        \cite{falkner1953solution} \textsc{Falkner} (1947)
+}%
+\textsuperscript{,}%
+\footnote{%
+        \cite{falkner1952scope} \textsc{Falkner} (1949)
+}
+%
+This formulation, however, is entirely unsuited for unsteady vortex systems, as he therein postulates the vortex system to assume the form of \textsc{Prandtl}'s steady horseshoe vortex system.
+It is formulated as follows.
+Consider a wing, be it swept or not, and section it spanwise with respect to the unswept axis into segments of ideally equal width.
+Place so, according to constant proportion of the chord, lines from root to tip of the wing at one quarter and three quarters of the chord, measured from leading edge to trailing edge, orthogonally to the segmentation of the wing.
+Draw then a vortex filament between the edges of the segments, through the quarterchord line for each segment.
+Emanating therefrom, along the edges of the segments towards the trailing edge and beyond to infinity, are vortex filaments.
+At infinity, we consider filaments meeting each of these emanating filaments, forming a closed vortex loop for each segment.
+The collection of these loops is what is known as the vortex lattice.
+At the threequarterschord, one will find the induced velocity of the vortex system, enforcing impermeability.
+For illustrative purposes, the unimaginative reader is referred to figure 1 in \textsc{Falkner}'s 1947 report.
+
+The reader would be remiss to not consider this business of extending the vortex filaments along the edges to infinity initially suspect in a discussion on unsteady aerodynamic schemes.
+For it is indeed the case that this initial formulation of the vortex lattice method is inherently steady.
+We have already discussed the fact that the inviscid formulation of the interaction between fluid flow and some solid object cannot account for the generation of vortical motion.
+As an \emph{ad hoc} heuristic, the matter is often explained away by the prior shedding of a vortex, now carried downstream to infinity.
+Thus by the circulation theorem,\footnote{Is that what I call it?} the vorticity in the vicinity of the solid object must be of equal but negative magnitude, so that the total circulation of the system remains constant.
+Whence the vortex filament at infinity.
+Confer with the explanation of \textsc{Newman}.%
+\footnote{%
+        \cite{newman2017marine} \textsc{Newman}, \S5.1, pp.169--172
+}
+
+This peculiar placement of the bound vortex filament and control point for the evaluation of the downwash was first introduced in an article by \textsc{Pistolesi},%
+\footnote{%
+        \cite{deyoung1976historical} \textsc{DeYoung} (1976)
+}
+which is unfortunately completely unavailable to the author.
+These placements were later shown to be optimal, even for wings of multiple chordwise panels, the vortex being placed at the quarterpoint, and the collocation point at the threequarterspoint.%
+\footnote{%
+        \cite{scholz1950beitrage} \textsc{Scholz} (1950)
+}%
+\textsuperscript{,}%
+\footnote{%
+        \cite{byrd1951erganzung} \textsc{Byrd} (1951)
+}
+
+
+The vortex lattice method exchanges the doublet source panels of the boundary element method for vortex filaments along their boundaries.%
+\footnote{%
+        I don't believe this to be the case anymore\dots
+}
 Multiple authors%
 \footnote{%
         \cite{deng2020acceleration} \textsc{Deng} \emph{et al.} (2020)
-}\textsuperscript{,}%
-\footnote{%
-        cite another
 }
 have cited \textsc{Hess} \& \textsc{Smith}'s monumental work \emph{Calculation of Potential Flow about Arbitrary Bodies}%
 \footnote{%
@@ -17,7 +67,10 @@ Rather, rather a relationship was demonstrated by \textsc{Hess}%
         \cite{hess1972calculation} \textsc{Hess} (1972), Appendix A
 }
 between the velocity induced by a distribution of dipoles and that induced by a certain vortex distribution.
-
+Furthermore, \textsc{Morino} has proved the very same.%
+\footnote{%
+        \cite{morino1993boundary} \textsc{Morino} (1993), Appendix C
+}
 Some form of interpolation is done for the circulation on each filament, for which we choose a constant value.
 Thus,
 \[
@@ -28,18 +81,22 @@ In order to reduce clutter, we drop the index indicating filament.
 \begin{figure}[h]
         \centering
         \scalebox{1}{\includegraphics{line_integral.pdf}}
-        \caption{Line integral}
+        \caption{The calculation of the induced velocity from the vortex filament parametrized by $\xvec(s)$.}
         \label{fig:line_integral}
 \end{figure}
 
-We consider the parametrization of the line\footnote{\cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013)} such that $\dee\svec = \sfrac{1}{2}(\xvec^{\romani} - \xvec^{\romanii})\,\dee s$.
+We consider the parametrization of the vortex filament.%
+\footnote{%
+  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013)
+}
+
 \begin{subequations}\label{eq:line_parametrization}
         \begin{equation}\tag{\theequation{a, b}}
-                \xvec = \kha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii}), \qquad \kha = \frac{x^{\romani} + x^{\romanii}}{2}
+                \xvec = \bkha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii}), \qquad \bkha = \frac{\xvec^{\romani} + \xvec^{\romanii}}{2}
         \end{equation}
 \end{subequations}
 
 \begin{equation}\label{eq:Biot-Savart_projection}
-  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{\mathbf{r}^{\romani} \times \mathbf{r}^{\romanii}}{r^{\romani} r^{\romanii} + \mathbf{r}^{\romani} \cdot \mathbf{r}^{\romanii}} \left( \frac{1}{r^{\romani}} + \frac{1}{r^{\romanii}} \right), \qquad \mathbf{r}_i = \bzhe - \xvec_i, \qquad \xvec_i \in \partial C_i.
+  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{\mathbf{r}^{\romani} \times \mathbf{r}^{\romanii}}{r^{\romani} r^{\romanii} + \mathbf{r}^{\romani} \cdot \mathbf{r}^{\romanii}} \left( \frac{1}{r^{\romani}} + \frac{1}{r^{\romanii}} \right)
 \end{equation}
         

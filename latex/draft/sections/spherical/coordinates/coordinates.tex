@@ -1,22 +1,120 @@
 For a moment we consider the Cartesian coördinates $x^{i}$ in $\euclidean^{d}$.
-The transform to hyperspherical coördinates takes the form%
+The parametrization hyperspherical coördinates takes the form%
 \footnote{%
   \cite{blumenson1960derivation} \textsc{Blumenson} (1960)
 }
 
-\begin{align}
-  \begin{split}
-    x^1 & = r \cos{\alpha^1};\\
-    \vspace{2em}
-    x^{j} & = r \cos{\alpha^j} \prod_{k = 1}^{j - 1} \sin{\alpha^k};\\
-    \vspace{2em}
-    x^{d-1} & = r \sin{\alpha^{0}} \prod_{k = 1}^{d - 2} \sin{\alpha^k};\\
-    \vspace{2em}
-    x^{d} & = r \cos{\alpha^{0}} \prod_{k = 1}^{d - 2} \sin{\alpha^{k}},
-  \end{split}
-\end{align}
+\begin{subequations}\label{eq:spherical-coordinates-product}
+  \begin{equation}\tag{\theequation{a, b}}
+    x^{j} = r \cos{\alpha^j} \Pi_{j-1}, \qquad \Pi_n = \prod_{k = 1}^{n} \sin{\alpha^k};
+  \end{equation}
+\end{subequations}
+
+\begin{subequations}\label{eq:spherical-coordinates}
+  \begin{equation}\tag{\theequation{a, b, c}}
+    x^1 = r \cos{\alpha^1}, \qquad x^{d-1} = r \sin{\alpha^{0}} \Pi_{d-2}, \qquad x^{d} = r \cos{\alpha^{0}} \Pi_{d-2}.
+  \end{equation}
+\end{subequations}
 
 \noindent
 where $j \in \{ 2, \dots, d-2 \}$ for $d \geq 4$.
-Nevermind the indexing, as we shall reïndex.
-For three-dimensional Euclidean space, we have $\xvec = (r\cos{\alpha^1}, r\sin{\alpha^0}\sin{\alpha^1}, r\sin{\alpha^0}\cos{\alpha^1})$
+Nevermind the indexing, as we shall reïndex at a later point.
+From the twodimensional construction of polar coördinates in $\alpha^0$, upon defining $\Pi_0 = 1$, we may iteratively construct the coördinates of the hypersphere.
+These polar coördinates relate the abscissa and ordinate of a point in the plane to the angle $\alpha^0$ between them, free to range from zero to $2\pi$.
+Raising this point into threedimensional space, an azimuthal angle $\alpha^1$ is necessarily introduced.
+It is evident that the position of the point is completely described when this azimuthal angle varies from zero to $\pi$.
+We thus have in threedimensional space $\xvec = (r\cos{\alpha^1}, r\sin{\alpha^0}\sin{\alpha^1}, r\sin{\alpha^0}\cos{\alpha^1})$.
+Drawing forth ever more azimuthal angles in ever higher dimensions, the parametrization above becomes evident.
+
+For such hyperspherical coördinates, we wish to derive the \textsc{Hodge}--\textsc{Laplace} operator for the analysis of harmonic functions.
+This we do by pulling back the Cartesian metric tensor in Euclidean space $\metrictensor^{\prime}$, effectively performing a coördinate transformation.
+Let the parametrization \eqref{eq:spherical-coordinates-product}, \eqref{eq:spherical-coordinates} be given by $\phi$, such that $\metricg_{ij} = {(\phi^{\ast} \metricg^{\prime})}_{ij}$.
+Note that $x^{k} = r \upsilon^{k}$, where $\upsilon^k$ is the corresponding angular part of the parametrization.
+We know the Cartesian metric to be the identity matrix, so the spherical representation of the metric tensor $\metrictensor$ can be simplified as follows.
+
+\begin{equation}\label{eq:spherical-metric-tensorI}
+  \metricg_{ij} = \metricg^{\prime}_{k\ell}\frac{\partial x^{k}}{\partial\alpha^i} \frac{\partial x^{\ell}}{\partial\alpha^j} = \frac{\partial x^{k}}{\partial\alpha^i} \frac{\partial x_{k}}{\partial\alpha^j} = r^2 \frac{\partial\upsilon^{k}}{\partial\alpha^{i}} \frac{\partial\upsilon_{k}}{\partial\alpha^{j}}
+\end{equation}
+
+\noindent
+The indexing is arbitrary, as we have not accounted for the entries concerning $r$ and $\alpha^{0}$ of equation \eqref{eq:spherical-coordinates}, though it is costumary to place $r$ at the first and $\alpha^0$ at the last indices.
+To calculate the expression $\partial_i \upsilon^k$, we shall need to find the derivative $\partial_i \Pi_{k-1}$, of which we may identify two possibilities.
+Consider for the moment $\partial_i \Pi_j$ such that $j < 1$.
+It is evident that the expression does not depend on $\alpha^i$, and that the result is zero.
+Conversely, for $j \geq i$, we differentiate the $i$\textsuperscript{th} term in the product \subeqref{\ref{eq:spherical-coordinates-product}}[b], amounting to multiplying by the cotangent.
+That is, $\partial_i \Pi_j = \cot{\alpha^i} \Pi_j$.
+Thus we have that $\partial_i \upsilon^k = \cos{\alpha^k} \partial_i\Pi_{k-1} - \sin{\alpha^k} \Pi_{k-1} \delta_{i}^{k}$, where $k \in \{1, \dots, d-2\}$, can be written
+\begin{equation}\label{eq:upsilon-derivative}
+  \partial_i \upsilon^k = \begin{cases}
+    0, & k < i\\
+    -\Pi_i, & k = i\\
+    \upsilon^k \cot{\alpha^i}, & k > i
+  \end{cases}.
+\end{equation}
+
+\noindent
+It is clear that we need not consider terms $k < j$ in the calculation of the metric tensor of equation \eqref{eq:spherical-metric-tensorI}.
+Using, then, the derivatives of \eqref{eq:upsilon-derivative}, we find the offdiagonal terms to be
+
+\begin{equation}\label{eq:spherical-metric-tensor-offdiagonal}
+  \metricg_{ij} = -r^2 \upsilon^j \cot{\alpha^i} \Pi_j + r^2 \cot{\alpha^i} \cot{\alpha^j} \sum_{k = j+1}^{d} {(\upsilon^k)}^2, \qquad i \neq j.
+\end{equation}
+
+\noindent
+The rightmost sum in equation \eqref{eq:spherical-metric-tensor-offdiagonal} we may evaluate now evaluate using the the following two facts.
+First, the \textsc{Euler} identity states that $\sin^2{\alpha^\ell} + \cos^2{\alpha^\ell} = 1$.
+Recall that according to equation \subeqref{\ref{eq:spherical-coordinates}}[b, c], $\upsilon^{d-1} = \sin{\alpha^0}\Pi_{d-2}$ and $\upsilon^d = \cos{\alpha^0}\Pi_{d-2}$.
+Second, we know $\Pi_{k-1} = \csc{\alpha^k}\Pi_{k}$.
+Thus,
+
+\[
+  \sum_{k = j+1}^{d} {(\upsilon^k)}^2 = {(\Pi_{d-2})}^2 + \sum_{k = j+1}^{d-2} (1-\sin^2{\alpha^k}) {(\Pi_{k-1})}^2 = {(\Pi_{d-2})}^2 + \sum_{k = j+1}^{d-2} {(\Pi_{k-1})}^2 - {(\Pi_{k})}^2.
+\]
+
+\noindent
+The nature of the sum is clearly \emph{telescoping}, subsequent terms in the series canceling preceding terms.%
+\footnote{%
+  \cite{lindstrom2017spaces} \textsc{Lindstrøm}, p.141
+}
+In fact, we the only term remaining is ${\Pi_j}^2$.
+The leftmost term in equation \eqref{eq:spherical-metric-tensor-offdiagonal} is the case where $j = k$.
+This we also rewrite, using \subeqref{\ref{eq:spherical-coordinates-product}}[a], so that the offdiagonal entries of the metric tensor is 
+
+\[
+  \metricg_{ij} = -r^2 \cot{\alpha^j} \cot{\alpha^i} {(\Pi_j)}^2 + r^2 \cot{\alpha^i} \cot{\alpha^j} {(\Pi_j)}^2 = 0, \qquad i \neq j.
+\]
+
+\noindent
+We find that the first and last columns and rows of the matrix to also be zero, when accounting for $r$ and $\alpha^0$---only diagonal entries exist for the metric tensor.
+The interior diagonal entries are
+\begin{equation}
+  \metricg_{ii} = r^2 \big( 1 + \cot^2{\alpha^i} \big) {(\Pi_i)}^2 = r^2 \csc^2{\alpha^i} {(\Pi_i)}^2 = r^2 \prod_{k = 1}^{i-1} \sin^2{\alpha^k}.
+\end{equation}
+
+\noindent
+As for the first and the last entries of the matrix, the radial term is easily remedied.
+Clearly $\partial_r x^k = \upsilon^k$, so that $\metricg_{rr} = \delta_{k\ell} \upsilon^k \upsilon^\ell = 1$.
+For nonzero values of $k$, the derivatives $\partial_0 \upsilon^k$ are zero.
+We then have
+
+\begin{equation}
+  \metricg_{00} = r^2 \partial_0 \upsilon^k \partial_0 \upsilon^k = r^2 {(\upsilon^{d})}^2 + r^2 {(\upsilon^{d-1})}^2 = r^2 \prod_{k = 1}^{d - 2} \sin^2{\alpha^k}.
+\end{equation}
+
+\noindent
+Assembling the full metric tensor, we have in matrix form
+
+\begin{subequations}\label{eq:hyperspherical-metric-tensor}
+\begin{equation}\tag{\theequation{a, b}}
+  \metrictensor = \begin{pmatrix}
+    \hspace{.5em}
+    1 &  &  &  & \\\vspace{1em}
+    & \ddots &  &  & \\\vspace{1em}
+    &  & \displaystyle{r^2 \prod_{k = 1}^{i-2} \sin^2{\alpha^k}} &  & \\\vspace{1em}
+    &  &  & \ddots & \\\vspace{1em}
+    &  &  &  & \displaystyle{r^2 \prod_{k = 1}^{d-2} \sin^2{\alpha^k}}
+    \hspace{.5em}
+  \end{pmatrix},
+  \qquad \sqrt{\det{(\metrictensor)}} = r^{d-1} \prod_{i = 1}^{d-2} \sin^{d-1-i}{\alpha^i}.
+\end{equation}
+\end{subequations}
