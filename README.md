@@ -1,4 +1,4 @@
-# Fast multipole methods
+# On Accelerating Inviscid Vortical Calculations
 ## Draft of master's thesis in fluid mechanics
 
 Credits: 60 ECTS
