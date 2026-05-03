@@ -1,7 +1,7 @@
 The boundary element method is a method of calculating values related to the fluid velocity through the second kind \textsc{Fredholm} integral equation \eqref{eq:integral_equation}, whereby the boundary is discretized into quadrilateral panels.
 As has been established, the conditions under which the solution is unique is determined at the boundary, here being the \textsc{Neumann} boundary condition of impermeability,
 \begin{equation}\label{eq:impermeability}
-  \nabla_{\nhat} \Phi(\xvec) = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega,
+  \nhat \iprod \dee\Phi = 0, \qquad \nhat \iprod \dee \Phi^{\prime} = - \nhat \cdot \Uvec, \qquad \xvec \in S_{\mathrm{b}}
 \end{equation}
 
 \noindent
@@ -27,7 +27,6 @@ Confer with \textsc{Hess} \& \textsc{Smith}.%
 \footnote{%
         \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
 }
-This distribution can now be inserted into equation \subeqref{\ref{eq:distribution_representation}}[a] to find the potential.
 
 \subsection{The vortex lattice method}
 \subfile{vlm/vlm.tex}

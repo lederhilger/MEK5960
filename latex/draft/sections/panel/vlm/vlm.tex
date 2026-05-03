@@ -76,8 +76,10 @@ Thus,
 \[
   \uvec(\bzhe) \approx \frac{1}{4\pi} \sum_{i = 1}^{4} \Gamma_i \int_{C_i} \frac{\xvec - \bzhe}{r^3} \times \dee\svec.
 \]
-For each filament, we can calculate the induced velocity.
+For each filament, we can calculate the induced velocity analytically.
 In order to reduce clutter, we drop the index indicating filament.
+The procedure of evaluating for one filament in a lattice is illustrated in figure \ref{fig:line_integral}.
+
 \begin{figure}[h]
         \centering
         \scalebox{1}{\includegraphics{line_integral.pdf}}
@@ -85,18 +87,36 @@ In order to reduce clutter, we drop the index indicating filament.
         \label{fig:line_integral}
 \end{figure}
 
-We consider the parametrization of the vortex filament.%
+\noindent
+We consider the parametrization of the vortex filament with respect to the midpoint $\bkha$, with endpoints $\xvec^\romani$ and $\xvec^{\romanii}$.%
 \footnote{%
-  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013)
+  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013), Appendix B.1
 }
-
-\begin{subequations}\label{eq:line_parametrization}
-        \begin{equation}\tag{\theequation{a, b}}
-                \xvec = \bkha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii}), \qquad \bkha = \frac{\xvec^{\romani} + \xvec^{\romanii}}{2}
-        \end{equation}
-\end{subequations}
+In contrast to the earlier treatment of parametrization of filaments, the arclength shall not serve as the parameter, us rather choosing $s \in [-1,1]$.
+Since the filament is a straight line, we have that $\xvec = \bkha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii})$.
+It can then be shown that the velocity induced by a straight vortex filament is given by
 
 \begin{equation}\label{eq:Biot-Savart_projection}
-  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{\mathbf{r}^{\romani} \times \mathbf{r}^{\romanii}}{r^{\romani} r^{\romanii} + \mathbf{r}^{\romani} \cdot \mathbf{r}^{\romanii}} \left( \frac{1}{r^{\romani}} + \frac{1}{r^{\romanii}} \right)
+  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{\rvec^{\romani} \times \rvec^{\romanii}}{r^{\romani} r^{\romanii} + \rvec^{\romani} \cdot \rvec^{\romanii}} \left( \frac{1}{r^{\romani}} + \frac{1}{r^{\romanii}} \right),
 \end{equation}
-        
+
+\noindent
+where $\rvec^\romani = \bzhe - \xvec^\romanii$, and so on.
+Thus, the induced velocity at any point not on the filament can be calculated analytically.
+As the point of evaluation approaches the vortex filament, the scalar product in equation \eqref{eq:Biot-Savart_projection} approaches $-r^\romani r^\romanii$, yielding infinite induced velocity, corresponding to the \textsc{Biot}--\textsc{Savart} kernel being singular.
+A remedy for the implementation for such an expression is to add a small correction proportional to the difference in the denominator,%
+\footnote{%
+  \cite{kebbie-anthony2019fast} \textsc{Kebbie-Anthony} \emph{et al.} (2019), \S{II.C}
+}
+or implementing a smoothing kernel for the vorticity two-form.%
+\footnote{%
+  \cite{vatistas1991simpler} \textsc{Vatistas}, \textsc{Kozel} \& \textsc{Mih} (1991)
+}
+Opting for the latter, one will write
+
+\begin{equation}
+  \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{(\rvec^{\romani} \times \rvec^{\romanii}) (r^{\romani} + r^{\romanii})}{r^{\romani}r^{\romanii}(r^{\romani} r^{\romanii} + \rvec^{\romani} \cdot \rvec^{\romanii}) + {(\varepsilon \absl{\rvec^{\romanii} - \rvec^{\romani}})}^2},
+\end{equation}
+
+\noindent
+where $\varepsilon$ is the smoothing parameter.
