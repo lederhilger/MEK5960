@@ -17,7 +17,7 @@
 			label = {[above right]$\xvec^{\romanii}$}
 		] (xii) at (\xiix,\xiiy,0) {};
 		\node[%
-			label = {[above]$\xvec(s)$}
+			label = {[above]$\xvec(t)$}
 		] (x) at ($(xi)!\exdis!(xii)$) {};
 		\draw[thick] ($(x)+(0,0,\myradius)$)--($(x)-(0,0,\myradius)$);
 		\draw[thick] (xi.center)--(xii.center);

@@ -1,0 +1,37 @@
+The matter of the translation and rotation of the spherical harmonic functions is treated in its entirety by \textsc{Gumerov} \& \textsc{Duraiswami} in a plethora of articles on the topic of multipole expansions and their swift evaluation by the fast multipole method.
+Chief among them is the paper wherein these rotations and translations are derived in detail,%
+\footnote{%
+  \cite{gumerov2003recursions} \textsc{Gumerov} \& \textsc{Duraiswami} (2003)
+}
+their book on the fast multipole method applied to the \textsc{Helmholtz} equation in particular serving as a readable alternative.%
+\footnote{%
+  \cite{gumerov2004fast} \textsc{Gumerov} \& \textsc{Duraiswami}, \S3
+}
+We shall however address first the matter of the result of the preceding text.
+We shall insert into equation \eqref{eq:hypersphere_green} the relation \eqref{eq:gegenbauer-legendre} for the threedimensional case, yielding
+
+\begin{equation}
+  \green(\xvec; \bzhe) = \frac{1}{4\pi\absl{\bzhe}} \sum_{k = 0}^{\infty} \varepsilon^k \legendre_k(\cos{\alpha}).
+\end{equation}
+
+\noindent
+We shall exploit the fact that the \textsc{Gegenbauer} functions evaluated at the inner product between two higherdimensional vectors can be written as a superposition of products of the spherical harmonics.%
+\footnote{%
+  \cite{avery2018hyperspherical} \textsc{Avery} \& \textsc{Avery}, \S3.2
+}
+This result simplifies further to what the literature on fast multipole calculations often labels the addition theorem for three dimensions, and is given as follows.
+
+\begin{theorem}
+  Let $\legendre_n$ denote the \textsc{Legendre} polynomial of order $n$, $\spherical_{n}^{m}$ be a spherical harmonic, and $\xvec_1$, $\xvec_2$ be points on the unit two-sphere, such that $\xvec_i = (\cos{\alpha_{i}^{1}}, \sin{\alpha_{i}^{0}} \sin{\alpha_{i}^{1}}, \cos{\alpha_{i}^{0}} \sin{\alpha_{i}^{1}})$.
+  Then,
+  \begin{equation}
+    \legendre_n(\cos{\alpha}) = \frac{4\pi}{2n+1} \sum_{m = -n}^{n} \spherical_{n}^{m}(\alpha_{1}^{0}, \alpha_{1}^{1}) {\spherical_n^m}^{\dag}(\alpha_{2}^{0}, \alpha_{2}^{1}),
+  \end{equation}
+  where $\alpha$ is the angle between the points.
+\end{theorem}
+
+\noindent
+We may now address the translation directly.
+It shall promtply become apparent that we seek local and distal expansions of the \textsc{Green} function.
+Relative to some new origin $O^{\prime}$ with vector $\ovec$ from the absolute origin, we write the point of evaluation $\bzhe^{\prime} = \bzhe - \ovec$.
+The local and distal expansions shall respectively regular and singular at this new origin.

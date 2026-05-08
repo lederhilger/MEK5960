@@ -1,32 +1,49 @@
-The boundary element method is a method of calculating values related to the fluid velocity through the second kind \textsc{Fredholm} integral equation \eqref{eq:integral_equation}, whereby the boundary is discretized into quadrilateral panels.
-As has been established, the conditions under which the solution is unique is determined at the boundary, here being the \textsc{Neumann} boundary condition of impermeability,
-\begin{equation}\label{eq:impermeability}
-  \nhat \iprod \dee\Phi = 0, \qquad \nhat \iprod \dee \Phi^{\prime} = - \nhat \cdot \Uvec, \qquad \xvec \in S_{\mathrm{b}}
-\end{equation}
+The boundary element method is a family of numerical methods wherein one discretizes the boundary upon which a calculation is to be made.
+For our intents and purposes, this entails calculating values related to the fluid velocity through the \textsc{Fredholm} integral equation of the second kind, equation \eqref{eq:integral_equation} in particular.
+As has been established, the conditions under which the solution is unique is determined at the boundary, here being the \textsc{Neumann} boundary condition of impermeability,%
+\footnote{%
+  \cite{belishev2008dirichlet} \textsc{Belišev} \& \textsc{Šarafutdinov} (2008), \S3
+}
+
+\begin{subequations}\label{eq:impermeability}
+  \begin{equation}\tag{\theequation{a, b, c}}
+    \Phi(\xvec) = \Uvec\cdot\xvec + \Phi^{\prime}, \qquad \star\dee\Phi = 0, \qquad \star\dee\Phi^{\prime} = -\star\mathfrak{U},
+  \end{equation}
+\end{subequations}
 
 \noindent
-where $\Uvec$ is the freestream velocity of the fluid.
-We can now solve for the potential function $\Phi$ of equation \eqref{eq:Laplace_equation} by the means we see fit.
-
-This is valid for any square integrable vector field.%
+where $\Uvec$ is the freestream velocity of the fluid, and $\mathfrak{U}$ is its corresponding one-form.
+Pulling back through $\iota_{\mathrm{b}} \colon S_{\mathrm{b}} \hookrightarrow \Omega$, where the boundary $S_{\mathrm{b}}$ is the \textsc{Lipschitz} boundary of the impermeable body, is where we get equality in \subeqref{\ref{eq:impermeability}}[a, b].
+The orientation is induced by the outwardly pointing normal vector.
+We may then solve for the disturbance potential function $\Phi^{\prime}$ through equation \eqref{eq:Laplace_equation} by the means we see fit.
+For any square integrable vector field, we seldom choose any other methods than the integral equation representation of equation \eqref{eq:integral_equation}.%
 \footnote{%
         \cite{byhovskij1960orthogonal} \textsc{Byhovskij} \& \textsc{Smirnov} (1960)
 }\textsuperscript{,}%
 \footnote{%
         \cite{morino1993boundary} \textsc{Morino} (1993)
-}
-
-Imposing the condition of impermeability of equation \eqref{eq:impermeability} on the simple pole distribution, we find an integral equation for the source distribution.
-It can be shown that equation \eqref{eq:impermeability} can be recast in terms of an integral equation for te simple source distribution,
-\[
-  -2\pi \sigma + \int_S \sigma \partial_{\nhat} r^{-1} \,\dee S = \nhat \cdot \Uvec, \qquad \xvec \in \partial\Omega.
-\]
-
-\noindent
-Confer with \textsc{Hess} \& \textsc{Smith}.%
+}\textsuperscript{,}%
 \footnote{%
         \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
 }
+Many do insist, however, on the representation of the potential through a distribution of simple poles in the boundary, much in the same manner of our earlier treatment of the vorticity.
+This distribtuion is integrated against the \textsc{Green} function over the boundary to produce the value of the potential at some evaluation point, yielding an integral equation for the density through equation \eqref{eq:integral_equation}.
+The advantage of this approach to the problem of aerodynamic interaction between a body and the fluid is the automatic satisfaction of the \textsc{Laplace} equation for the disturbance away from the surface, and its evanescence.
+The source density is then a mechanism through which we enforce the impermeability condition, effectively acting as the instigator for fluid streamline displacement.
+Discretizing the body into qudrilateral panels, one then obtains algebraic equations, the numerical treatments of which consists of solving some integral through quadrature, and inverting an influence coëfficient matrix.
+Early treatments, pioneered in large part by \textsc{Hess} and \textsc{Smith},%
+\footnote{%
+  \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
+}
+insisted on normal vectors coïnciding with their equivalent placements on the actual body before discretization.
+Thus, illfitting panels with incongruent edge nodes were sources of numerical errors.
+
+The actual displacement of the fluid due to the existence of the wind turbine is not something of interest to us.
+In fact, we shall altogether ignore even the crassitude of the wind turbine blades, employing to some extent the thin wing approximation, and considering only the lifting surface that is the discretized mean camber line.
+The lifting surface we then treat as a cut on the manifold, now being the boundary.
+Doubtless, the potential cannot be expected to be continuous across the boundary here.
+Pulling back the potential from the boundary on either side should then reveal a scalar difference, which we shall label $q_{\mathrm{b}}$.
+This jump in potential is merely in the nature of the dipole that is the integral of the exterior derivative of the \textsc{Green} function over the opposite sides of the lifting surface.
 
 \subsection{The vortex lattice method}
 \subfile{vlm/vlm.tex}
@@ -36,6 +53,3 @@ Confer with \textsc{Hess} \& \textsc{Smith}.%
 
 \subsection{The fast multipole method}
 \subfile{fmm/fmm.tex}
-%\begin{figure}[h]
-%  \input{surface_figure.tex}
-%\end{figure}

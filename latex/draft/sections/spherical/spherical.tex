@@ -18,7 +18,7 @@ Now the \textsc{Green} function is written
 
 \begin{subequations}\label{eq:hypersphere_green}
   \begin{equation}\tag{\theequation{a, b, c}}
-    \green(\xvec; \bzhe) = \frac{c \absl{\xvec}^{2-d}}{{\big( 1 + \varepsilon^2 - 2\varepsilon\cos{\alpha} \big)}^{\nu}}, \qquad \varepsilon = \frac{\absl{\bzhe}}{\absl{\xvec}}, \qquad c = \frac{2\nu d \pi^{\sfrac{d}{2}}}{\Gamma(\sfrac{d}{2} + 1)}.
+    \green(\xvec; \bzhe) = \frac{c \absl{\bzhe}^{2-d}}{{\big( 1 + \varepsilon^2 - 2\varepsilon\cos{\alpha} \big)}^{\nu}}, \qquad \varepsilon = \frac{\absl{\xvec}}{\absl{\bzhe}}, \qquad c = \frac{\Gamma(\sfrac{d}{2} + 1)}{2\nu d \pi^{\sfrac{d}{2}}}.
   \end{equation}
 \end{subequations}
 
@@ -33,7 +33,7 @@ Through a binomial series expansion, a power series of equation \subeqref{\ref{e
 
 \begin{subequations}
   \begin{equation}\tag{\theequation{a, b}}
-    \green(\xvec; \bzhe) = c {\absl{\xvec}}^{2-d} \sum_{k = 0}^{\infty} \varepsilon^k \gegenbauer_{k}^{\nu}(\cos{\alpha}), \quad \varepsilon < 1,
+    \green(\xvec; \bzhe) = c {\absl{\bzhe}}^{2-d} \sum_{k = 0}^{\infty} \varepsilon^k \gegenbauer_{k}^{\nu}(\cos{\alpha}), \quad \varepsilon < 1,
   \end{equation}
 \end{subequations}
 
@@ -60,3 +60,6 @@ the so-called \textsc{Gegenbauer} ultraspherical functions generate functions of
 
 \subsection{Spherical harmonics}
 \subfile{harmonics/harmonics.tex}
+
+\subsection{Translation of harmonics}
+\subfile{translation/translation.tex}

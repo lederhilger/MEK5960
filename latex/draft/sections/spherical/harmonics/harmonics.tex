@@ -1,5 +1,5 @@
 With the metric tensor at hand, we may express the \textsc{Hodge}--\textsc{Laplace} operator with respect to hyperspherical coördinates.
-For zero-forms, we know the operator to be $\codee\dee f = \star\dee\!\star\!\dee f$.
+For zero-forms, we know the operator to be $\codee\dee f = -\star\dee\!\star\!\dee f$.
 We shall denote for brevity $\dee V = \sqrt{\det{(\metrictensor)}}\afrak$, such that $\star\dee f = \sqrt{\det{(\metrictensor)}} \metricg^{ij} \partial_i f \partial_j \iprod \afrak$.
 Clearly $\dee(\partial_j\iprod\afrak) = 0$, meaning
 \[
@@ -18,7 +18,7 @@ Applying the \textsc{Hodge} star operator once more to the expression above, we 
 \end{equation}
 
 \noindent
-It is known that the \textsc{Hodge}--\textsc{Laplace} operator on $\euclidean^{d+1}$ may be decomposed so as to separate the dependence of the radial distance from the origin, and the placement of the point of evaluation on the unit hypersphere $\mathbb{S}^d$.%
+It is known that the \textsc{Hodge}--\textsc{Laplace} operator on $\euclidean^{d+1}$ may be decomposed so as to separate the dependence of the radial distance from the origin, and the placement of the point of evaluation on the unit hypersphere \gls{dsphere}.%
 \footnote{%
   \cite{chavel1984eigenvalues} \textsc{Chavel}, pp.33--36
 }
@@ -27,47 +27,78 @@ This is a digestible result once one considers the projection of a point from th
 This is obviously something we can show using equation \eqref{eq:hyperspherical-metric-tensor}, but shall not do.
 Thus we have the following representation the \textsc{Hodge}--\textsc{Laplace} operator.
 
-\begin{equation}
-  \Delta_{\euclidean^{d+1}} f = r^{-d} \partial_r \big( r^d \partial_r f \big) + r^{-2} \Delta_{\mathbb{S}^d} f \big( \mathbb{S}(r) \big)
+\begin{equation}\label{eq:hyperspherical-laplacian}
+  \Delta_{\euclidean^{d+1}} f = r^{-d} \partial_r \big( r^d \partial_r f \big) + r^{-2} \Delta_{\dsphere^d} f \big( \dsphere(r) \big);
+\end{equation}
+
+\begin{equation}\label{eq:angular-hyperspherical-laplacian}
+  \Delta_{\dsphere^j} f = \sin^{1-j}{(\alpha^{d-j+1})} \partial_{\alpha^{d-j+1}} \big( \sin^{j-1}{(\alpha^{d-j+1})} \partial_{\alpha^{d-j+1}} f \big) + \csc^{2}{(\alpha^{d-j+1})} \Delta_{\dsphere^{j-1}} f.
 \end{equation}
 
 \noindent
-To obtain fundamental solutions to the \textsc{Laplace} equation, we investigate its eigenfunctions through solutions to the \textsc{Helmholtz} equation:
+Here we have used the recurrence relation of the submatrix determinants of equation \subeqref{\ref{eq:hyperspherical-metric-recurrence}}[b].
+To obtain the eigenfunctions of the \textsc{Laplace} equation, we seek solutions to the \textsc{Helmholtz} equation
 
 \begin{subequations}\label{eq:Helmholtz-equation}
   \begin{equation}\tag{\theequation{a, b}}
-    \Delta\Phi = -\kappa^2 \Phi, \qquad \Phi \in L^2(\reals\times\mathbb{S}^{d-1})
+    \Delta_{\euclidean^{d+1}}\Phi = -\kappa^2 \Phi, \qquad \Phi \in L^2(\euclidean^{d+1}).
   \end{equation}
 \end{subequations}
 
 \noindent
-is a result of the spectral theorem, which we shall
+From equation \eqref{eq:hyperspherical-laplacian}, we find through multiplying by $r^2$ the confinement of $\kappa$ to the radial part of the equation, perhaps lending some credence to an eigenvalue problem in the angular part separately.
+Indeed, since the unit hypersphere is compact, the angular part of the equation has a discrete spectrum.
+According to the spectral theorem,%
+\footnote{%
+  \cite{grigoryan2009heat} \textsc{Grigor'jan}, thm.10.13; thm.10.20
+}
+the resolvent operator ${(\mathrm{id} - \Delta_{\dsphere^d})}^{-1}$ is compact and selfadjoint,%
+\footnote{%
+  \cite{conway2007course} \textsc{Conway}, prop.3.9; prop.4.13; thm.5.1
+}
+with a countable spectral decomposition and the same eigenspace as the angular part of the hyperspherical \textsc{Hodge}--\textsc{Laplace} operator, yielding orthonormal basis with which to expand the operator in.
+That is, the full \textsc{Hodge}--\textsc{Laplace} operator preserves the eigenspace of the angular part.
+We may then construct the eigenspace iteratively by considering ever higherdimensional unit hyperspheres on which we solve the eigenvalue problem.
+For $\alpha^0$, the operator is simply the second derivative, and the eigenvalue problem is the simple harmonic oscillator,
 
-For the two-sphere, the spherical harmonics%
+\begin{equation}
+  \partial_{\alpha^0}^2 \spherical_{m_0} = - {(m_{0})}^2 \spherical_{m_0}, \qquad \spherical_{m_0}(\alpha^0) = \exp{(i m_{0} \alpha^0)}.
+\end{equation}
+
+\noindent
+By the construction of the hyperspherical coördinates, in the sense that $\dsphere^1 \subset \dots \subset \dsphere^d$, the ever hyperior hyperspherical harmonics, so to speak, are eigenfunctions for the lowerdimensional spaces as well.
+For higherdimensional operators, we write $\spherical_{m_{j-1}}^{m_{j-2}, \dots, m_0}$.
+By equation \eqref{eq:angular-hyperspherical-laplacian}, we get the following \textsc{Sturm}--\textsc{Liouville} problem for $j = 2$ when substituting $x = \cos{\alpha^{d-1}}$.
+
+\begin{equation}
+  (1 - x^2) F^{\prime\prime} - 2x F^{\prime} + \left( \lambda - \frac{{(m_0)}^2}{1 - x^2} \right) F = 0,
+\end{equation}
+
+\noindent
+where $\spherical_{m_1}^{m_0} = F \spherical_{m_0}$.
+This is the associated \textsc{Legendre} equation, obtained by a substitution in the hypergeometric equation \eqref{eq:hypergeometric}.
+We force regular solutions at $x = \pm 1$, yielding the eigenvalues $\lambda = m_1(m_1 + 1)$, such that $m_1 = \absl{m_0} + k$ for all nonegative integers $k$.
+In general, we have that the angular hyperspherical eigenvalue problem through equation \eqref{eq:angular-hyperspherical-laplacian} takes the form of a \textsc{Gegenbauer} equation, with solutions in the \textsc{Gegenbauer} polynomials times a sinusoidal function.%
+\footnote{%
+  \cite{avery2018hyperspherical} \textsc{Avery} \& \textsc{Avery}, \S3.5
+}
+It is customary to favor simple idices over the index chain for the hyperspherical harmonics, so that the upper index is $m$, and the lower index is $n$.
+We seek solutions in threedimensional Euclidean space, meaning we want the spherical harmonics on the two-sphere, which are%
 \footnote{%
   \cite{cheng1999fast} \textsc{Cheng}, \textsc{Greengard}, \& \textsc{Rohlin}  (1999), eq.4
 }\textsuperscript{,}%
 \footnote{%
-  \cite{gumerov2003recusrions} \textsc{Gumerov} \& \textsc{Duraiswami} (2003), eq.2.5
+  \cite{gumerov2003recursions} \textsc{Gumerov} \& \textsc{Duraiswami} (2003), eq.2.5
 }
 
 \begin{subequations}\label{eq:sphericalharmonics}
   \begin{equation}\tag{\theequation{a, b}}
-    \spherical_{n}^{m}(\alpha^{1}, \alpha^{2}) = c \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^2)}, \qquad c = {(-1)}^m \sqrt{\frac{2n+1}{4\pi} \frac{(n - \absl{m})!}{(n + \absl{m})!}}
+    \spherical_{n}^{m}(\alpha^{0}, \alpha^{1}) = c \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^0)}, \qquad c = {(-1)}^m \sqrt{\frac{2n+1}{4\pi} \frac{(n - \absl{m})!}{(n + \absl{m})!}}
   \end{equation}
 \end{subequations}
 
 \noindent
-constitute a complete orthonormal basis when $n \geq m$.%
+These constitute a complete orthonormal basis when $n \geq \absl{m}$.%
 \footnote{%
   \cite{takeuchi1994modern} \textsc{Takeuchi}, p.223
 }
-
-\begin{theorem}
-  Let $\legendre_n$ denote the \textsc{Legendre} polynomial of order $n$, $\spherical_{n}^{m}$ be a spherical harmonic, and $\xvec_1$, $\xvec_2$ be points on the unit two-sphere, such that $\xvec_i = (\sin{\alpha_{i}^{1}} \cos{\alpha_{i}^{2}}, \sin{\alpha_{i}^{1}} \sin{\alpha_{i}^{2}}, \cos{\alpha_{i}^{2}})$.
-  Then,
-  \begin{equation}
-    \legendre_n(\cos{\theta}) = \frac{4\pi}{2n+1} \sum_{m = -n}^{n} \spherical_{n}^{m}(\alpha_{1}^{1}, \alpha_{2}^{2}) \spherical(\alpha_{2}^{1}, \alpha_{2}^{2}),
-  \end{equation}
-  where $\theta$ is the angle between the points.
-\end{theorem}

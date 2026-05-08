@@ -26,7 +26,7 @@ The reader would be remiss to not consider this business of extending the vortex
 For it is indeed the case that this initial formulation of the vortex lattice method is inherently steady.
 We have already discussed the fact that the inviscid formulation of the interaction between fluid flow and some solid object cannot account for the generation of vortical motion.
 As an \emph{ad hoc} heuristic, the matter is often explained away by the prior shedding of a vortex, now carried downstream to infinity.
-Thus by the circulation theorem,\footnote{Is that what I call it?} the vorticity in the vicinity of the solid object must be of equal but negative magnitude, so that the total circulation of the system remains constant.
+Thus by the circulation theorem \ref{thm:circulation-theorem}, the vorticity in the vicinity of the solid object must be of equal but negative magnitude, so that the total circulation of the system remains constant.
 Whence the vortex filament at infinity.
 Confer with the explanation of \textsc{Newman}.%
 \footnote{%
@@ -48,29 +48,18 @@ These placements were later shown to be optimal, even for wings of multiple chor
 }
 
 
-The vortex lattice method exchanges the doublet source panels of the boundary element method for vortex filaments along their boundaries.%
-\footnote{%
-        I don't believe this to be the case anymore\dots
-}
-Multiple authors%
-\footnote{%
-        \cite{deng2020acceleration} \textsc{Deng} \emph{et al.} (2020)
-}
-have cited \textsc{Hess} \& \textsc{Smith}'s monumental work \emph{Calculation of Potential Flow about Arbitrary Bodies}%
-\footnote{%
-        \cite{hess1967calculation} \textsc{Hess} \& \textsc{Smith} (1967)
-}
-to the equivalence between a dipole panel and a vortex panel.
-Such a statement is not found there.
-Rather, rather a relationship was demonstrated by \textsc{Hess}%
+An albeit naïve but illustrative explanation of the modern vortex lattice method is the exchange of the doublets of the standard boundary element method for vortex filaments along their boundaries.
+The mathematical foundation for this apparent equivalence between a dipole panel and a vortex panel is elusive in the literature.
+This relationship was to the author's knowledge first demonstrated by \textsc{Hess},%
 \footnote{%
         \cite{hess1972calculation} \textsc{Hess} (1972), Appendix A
 }
-between the velocity induced by a distribution of dipoles and that induced by a certain vortex distribution.
-Furthermore, \textsc{Morino} has proved the very same.%
+\textsc{Morino} proving the very same in a later work,%
 \footnote{%
         \cite{morino1993boundary} \textsc{Morino} (1993), Appendix C
 }
+relating the jump discontinuity in the potential over the boundary 
+
 Some form of interpolation is done for the circulation on each filament, for which we choose a constant value.
 Thus,
 \[
@@ -92,8 +81,8 @@ We consider the parametrization of the vortex filament with respect to the midpo
 \footnote{%
   \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013), Appendix B.1
 }
-In contrast to the earlier treatment of parametrization of filaments, the arclength shall not serve as the parameter, us rather choosing $s \in [-1,1]$.
-Since the filament is a straight line, we have that $\xvec = \bkha + \sfrac{s}{2} (\xvec^{\romani} - \xvec^{\romanii})$.
+In contrast to the earlier treatment of parametrization of filaments, the arclength shall not serve as the parameter, us rather choosing $t \in [-1,1]$.
+Since the filament is a straight line, we have that $\xvec = \bkha + \sfrac{t}{2} (\xvec^{\romani} - \xvec^{\romanii})$.
 It can then be shown that the velocity induced by a straight vortex filament is given by
 
 \begin{equation}\label{eq:Biot-Savart_projection}
@@ -101,7 +90,7 @@ It can then be shown that the velocity induced by a straight vortex filament is 
 \end{equation}
 
 \noindent
-where $\rvec^\romani = \bzhe - \xvec^\romanii$, and so on.
+where $\rvec^\romani = \bzhe - \xvec^\romani$, and so on.
 Thus, the induced velocity at any point not on the filament can be calculated analytically.
 As the point of evaluation approaches the vortex filament, the scalar product in equation \eqref{eq:Biot-Savart_projection} approaches $-r^\romani r^\romanii$, yielding infinite induced velocity, corresponding to the \textsc{Biot}--\textsc{Savart} kernel being singular.
 A remedy for the implementation for such an expression is to add a small correction proportional to the difference in the denominator,%
@@ -112,7 +101,7 @@ or implementing a smoothing kernel for the vorticity two-form.%
 \footnote{%
   \cite{vatistas1991simpler} \textsc{Vatistas}, \textsc{Kozel} \& \textsc{Mih} (1991)
 }
-Opting for the latter, one will write
+Opting for the former, one will write
 
 \begin{equation}
   \uvec(\bzhe) = \frac{\Gamma}{4\pi} \frac{(\rvec^{\romani} \times \rvec^{\romanii}) (r^{\romani} + r^{\romanii})}{r^{\romani}r^{\romanii}(r^{\romani} r^{\romanii} + \rvec^{\romani} \cdot \rvec^{\romanii}) + {(\varepsilon \absl{\rvec^{\romanii} - \rvec^{\romani}})}^2},
@@ -120,3 +109,62 @@ Opting for the latter, one will write
 
 \noindent
 where $\varepsilon$ is the smoothing parameter.
+Figure \ref{fig:smoothing-comparison} illustrates the impact of the smoothing parameter, both in terms of its magnitude, and the distance of the point of evaluation from some vortex filament.
+Ascending from some isoline on the horizontal axis, it is evident that placing the point of evaluation close the the filament will increase the relative error in the induced velocity.
+In the same manner, increasing the smoothing parameter, perhaps better labeled the oft-called cutoff radius, increases the relative error overall.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 1]{smoothing-comparison.pdf}
+  \caption{The relative error in induced velocity for different smoothing parameters, evaluated at varying distances from some vortex filament in a wind turbine wake.}
+  \label{fig:smoothing-comparison}
+\end{figure}
+
+Considering once more the mollified vorticity of equation \eqref{eq:mollified-vorticity}, we can investigate a mollifier which trades the compact support for regularity at the filament.
+A collection of such possible mollifying functions have been discussed extensively in the literature.%
+\footnote{%
+  \cite{leonard1985computing} \textsc{Leonard} (1985), eq.17
+}\textsuperscript{,}%
+\footnote{%
+  \cite{hoydonck2013computation} \textsc{van Hoydonck}, p.58
+}
+We shall employ the mollifier of \textsc{Rosenhead} and \textsc{Moore}, which is the first of such modifications to the kernel conceived,%
+\footnote{%
+  \cite{rosenhead1930spread} \textsc{Rosenhead} (1930)
+}\textsuperscript{,}%
+\footnote{%
+  \cite{moore1972motion} \textsc{Moore} \& \textsc{Saffman} (1972)
+}
+the actual expression adapted from \textsc{Winckelmans} and \textsc{Leonard}.%
+\footnote{%
+  \cite{winckelmans1993contributions} \textsc{Winckelmans} \& \textsc{Leonard} (1993), eq.41; tab.II
+}
+It is imperative that we be aware of the dimensionality of the problem at hand.
+For the literature treats two inherently different approaches in vortex mechanics in close proximity---one will find threedimensional distributions and twodimensional distributions, and it is the latter we shall employ.
+Recall that the vorticity be a two-form supported along a filament, us considering the flux through the surface area of some vortex tube thereof.
+The \textsc{Rosenhead}--\textsc{Moore} mollifier is then
+
+\begin{equation}
+  \varphi_{\sigma}(n^1, n^2) = \frac{\sigma^2}{\pi{(\absl{n}^2 + \sigma^2)}^2}, \qquad \int_{\reals^2} \frac{\sigma^2}{\pi{(\absl{n}^2 + \sigma^2)}^2} \,\dee n^1 \dee n^2 = 1.
+\end{equation}
+
+\noindent
+The velocity that results from adding this mollifier can be derived analytically,%
+\footnote{%
+  \cite{hoydonck2013computation} \textsc{van Hoydonck}, Appendix F.1
+}
+and is what will be employed in the numerical machinery claculating the induced velocity from vortex lattices in the form of a wind turbine wake.
+It is clear that the length of the vortex filament is equal to the difference in length from the point of evaluation to either endpoint of the filament.
+That is, $\svec = \xvec^{\romani} - \xvec^{\romanii} = \rvec^{\romanii} - \rvec^{\romani}$, with $s$ denoting the magnitude of the vector, being the length of the filament.
+For clarity in the expression of the velocity, we then denote the distance from the evaluation point to the filament, and its distances to the endpoints as follows.
+
+\begin{equation}
+  a = \frac{\absl{\rvec^{\romani} \times \rvec^{\romanii}}}{s}, \qquad b = \frac{\rvec^{\romani} \cdot \svec}{s}, \qquad c = \frac{\rvec^{\romanii} \cdot \svec}{s}
+\end{equation}
+
+\noindent
+The mollified velocity is then
+
+\begin{equation}
+  \uvec_{\sigma} (\bzhe) = \frac{\Gamma (\rvec^{\romani} \times \rvec^{\romanii})}{4 \pi s (\sigma^2 + a^2)} \left( \frac{c}{\sqrt{\sigma^2 + a^2 + c^2}} - \frac{b}{\sqrt{\sigma^2 + a^2 + b^2}} \right).
+\end{equation}
