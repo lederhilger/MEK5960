@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%% SIMON's preamble %%%%%%%%%%%%%%%%%%%%%%%
 \ProvidesClass{simonspreamble} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Version 25022026, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
+% Version 14052026, UiO Oslo, Norway, for LuaLaTeX %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -18,7 +18,6 @@
 %%%%%%%%%%%%%%%%%%%%% PAGE LAYOUT SETTINGS %%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{fancyhdr}
 \RequirePackage{titling}
-%\RequirePackage{lastpage}
 \RequirePackage{geometry}
 \geometry{a4paper, margin=1in}
 \RequirePackage{changepage}
@@ -26,13 +25,25 @@
   \posttitle{%
     \par\end{center}
     \begin{center}\large#1\end{center}
-    \vskip .5em}}
-%\setcounter{secnumdepth}{0}
+      \vskip .5em}}
+\newcommand{\@institution}{}
+\newcommand{\institution}[1]{\gdef\@institution{#1}}
+\renewcommand{\maketitlehookb}{%
+  \ifx\@institution\@empty
+  \else
+    \begin{center}
+      \large\@institution
+    \end{center}
+    \vskip .5em
+  \fi
+}
+
 
 \pagestyle{fancy}
 \cfoot{}
 \rfoot{\thepage}
-\lhead{\textit{\headcourse}}
+\lhead{\sectionmark}
+\rhead{\subsectionmark}
 %%%%%%%%%%%%%%%%%%%%% TWO-COLUMN FOOTNOTES %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{dblfnote}
@@ -42,15 +53,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The package dblfnote is highly incompatible with the %%%%%%%%%
 % multicol package. No workaround has been found. %%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%% WRAPPING FIGURES %%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{wrapfig}
-\newcommand{\wrapfill}{\par\ifnum\value{WF@wrappedlines}>0
-  \addtocounter{WF@wrappedlines}{-1}%
-  \null\vspace{\arabic{WF@wrappedlines}\baselineskip}%
-  \WFclear
-  \fi}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% OTHER LAYOUT %%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{enumerate}
@@ -111,6 +113,15 @@
 \usepgfmodule{nonlineartransformations}
 \RequirePackage{tikz-3dplot}
 \RequirePackage{pdfrender}
+\newcommand{\zukovskijfp}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0pt] at (current page.center) {%
+      \includegraphics[width=\paperwidth, height=\paperheight]%
+        {figures/title-page/title-page.pdf}%
+    };
+  \end{tikzpicture}%
+}
+\renewcommand{\maketitlehooka}{\zukovskijfp}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -192,3 +203,4 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% MATH STUFF %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{mathglyphs}
+\RequirePackage{microtype}

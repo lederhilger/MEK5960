@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+  \path[use as bounding box] (0,0) rectangle (21,-29.7);
+
+  \begin{scope}
+    \clip (0,0) rectangle (21,-29.7);
+
+    \def\thefocus{5.35}
+    \def\lineoffset{2.05}
+    \def\loopdown{21.384}
+    \def\lineend{37.7}
+    \def\drawtitlepagetransformlines{%
+      \foreach \rowoffset in {-5.2,-4.2,-3.4,-2.8,2.8,3.4,4.2,5.2}{%
+        \draw[black!9, line width=.45pt, line cap=round]
+          plot[domain=-8:\lineend, samples=560, variable=\plotparameter]
+          ({\plotparameter*(1 + \thefocus^2/((\plotparameter)^2 + (\rowoffset)^2)) - \lineoffset},
+           {\loopdown + \rowoffset*(1 - \thefocus^2/((\plotparameter)^2 + (\rowoffset)^2))});
+      }%
+      \draw[black!18, line width=.65pt, line cap=round]
+        plot[domain=-4:\lineend, samples=720, variable=\t]
+        ({\lineoffset*\thefocus^2/(\lineoffset^2 + (\t-\loopdown)^2)},
+         {\loopdown + (\t-\loopdown)*(1 - \thefocus^2/(\lineoffset^2 + (\t-\loopdown)^2))});
+    }
+
+    \begin{scope}[shift={(0,0)}, x={(1cm,0cm)}, y={(0cm,-1cm)}]
+      \drawtitlepagetransformlines
+    \end{scope}
+
+    \begin{scope}[shift={(21,0)}, x={(-1cm,0cm)}, y={(0cm,-1cm)}]
+      \drawtitlepagetransformlines
+    \end{scope}
+  \end{scope}
+
+  \node[inner sep=0pt] at (10.5,-21.384) {%
+    \includegraphics[width=2.856cm]{../apollo/apollo.pdf}%
+  };
+\end{tikzpicture}
