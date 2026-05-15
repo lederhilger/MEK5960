@@ -1,0 +1,171 @@
+We construct a cylindrical coördinate system according to right-hand orientation.
+The $x$-axis will serve as the cylindrical extension of the polar $yz$-plane, centered at the hub of the wind turbine rotor $(x_0, y_0, z_0)$, downstream of the fluid flow being in the direction of increasing $x$, as is illustrated in figure \ref{fig:rotor-plane-nodes}.
+For all tests we shall perform, we shall distribute points along the rotorplane in a linear manner along the radial axis for $\sfrac{r}{R} \in [\sfrac{1}{5}, 1]$, and along the azimuthal axis for $\alpha \in [0, 2\pi)$, where the ray of zero degrees coïncides with the vertical $z$-axis.
+The number of points in the radial direction we choose to correspond approximately to one point per meter of blade, yielding a total number of 121 pints, regardless of the span of the interval of evaluation.
+In the azimuthal direction, we place one point at every other degree, yielding a total of 180 points.
+The grand total of points is thus $121 \times 180 = 21,780$.
+A selection of these numerous points is shown in figure \ref{fig:evaluation_points}.
+It is worth noting that the total number of panels in the \texttt{vtk}-file is 268,650, yielding the number of filaments to be 1,074,600.
+These points are chosen according to a spline interpolation of the midpoint of the wind turbine blades, which is then sampled in the radial axis, and swept in the azimuthal direction to construct a faux rotorplane.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = \textwidth]{evaluation_points.pdf}
+  \caption{The evaluation rotorplane. Every third evaluation point is shown.}
+  \label{fig:evaluation_points}
+\end{figure}
+
+After the evaluation of the induced velocity in the rotorplane, placing it at some specified position in the wake according to the position of the rotor hub, measured in $\sfrac{x}{D}$, the data is postprocessed in \texttt{json}-files containing the run data, and in \texttt{npz}-files containing the induced velocity.
+Representing the data graphically, we have chosen two methods of displaying the induced velocity.
+First is the induced velocity at $\sfrac{r}{R} = 0.8$, graphed over the azimuthal variable, illustrating the directly calculated values, with quickly calculated values of some chosen fast multipole method superimposed.
+Second is the average over the $r$ axis, weighted according to the cylindrical Jacobian $r\,\dee r\,\dee\alpha$.
+We shall test four such placements along the wake, namely values of $x$ corresponding to $-1D$, $-0.1D$, $0D$, and $1D$.
+That is, one rotor diameter upstream of the rotorplane, onetenth rotor diameters upstream from the rotorplane, the rotorplane itself, and one rotor diameter downstream of the rotorplane.
+We choose to compare the direct evaluation of the induced velocity to the \textsc{Lamb}--\textsc{Helmholtz} representation of the velocity, translated with the \textsc{rcr} method, at multipole order eight.
+We shall also inspect the convergence rates of the different methods at each of these placements, measured with respect to the relative error in the velocity.
+This measure of error is the standard choice in the fast multipole literature, and is calculated by taking the $\ell^2$ magnitude of the difference of the direct and quick induced velocities, divided by the $\ell^2$ magnitude of the direct induced velocity.
+
+For the case of one rotor diameter upstream of the rotorplane, we expect the induced velocity in the azimuthal direction to be effectively zero, due to the absence of viscosity.
+Inspecting the data of figures \ref{fig:neg1d_velocity_r80} and \ref{fig:neg1d_velocity_ravg}, we observe nothing unexpected.
+There is indeed no induced velocity in the azimuthal direction, only relatively small but expected velocities in the radial and transversal axes.
+We reckon the air must be somewhat hindered by the presence of the turbine, whence the negative value in $u^x$, and deflected around the rotorplane, whence the positive value in $u^r$.
+The multipole evaluation is virtually indistinguishable, being sampled sparsely to be superimposed, so as to not visually interfere with the direct calculation.
+The relative error is quite good, but not excellent at order four, as seen in figure \ref{fig:full_neg1_relative_error}, and the minimal error seems to get no smaller than on the order of $10^{-8}$.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{neg1d_velocity_r80.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = -1$, for $\sfrac{r}{R} = 0.8$.}
+  \label{fig:neg1d_velocity_r80}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{neg1d_velocity_ravg.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = -1$, averaged radially.}
+  \label{fig:neg1d_velocity_ravg}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_neg1D_relative_error.pdf}
+  \caption{The relative error of the multipole induced velocity to the direct calculation at $x = -1D$.}
+  \label{fig:full_neg1_relative_error}
+\end{figure}
+
+At a value of $x$ corresponding to $-0.1D$, we still do not expect to see any azimuthal induced velocity, again due to the inviscid nature of the flow.
+It is clear from the plot in figures \ref{fig:negp1d_velocity_r80} and \ref{fig:negp1d_velocity_ravg}, however, that there is some induced velocity in the azimuthal direction.
+We now see the three times periodic behavior expected from the presence of three distinct convected wake surfaces.
+The convergence of the relative error of the multipole expansions is now improved approximately by an order of magnitude, as is clear from figure \ref{fig:full_negp1_relative_error}.
+This is not unexpected, as we are now calculating more interactions directly, instead of using multipoles, when the targets are physically closer to the sources.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{negp1d_velocity_r80.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = -0.1$, for $\sfrac{r}{R} = 0.8$.}
+  \label{fig:negp1d_velocity_r80}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{negp1d_velocity_ravg.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = -0.1$, averaged radially.}
+  \label{fig:negp1d_velocity_ravg}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_negp1D_relative_error.pdf}
+  \caption{The relative error of the multipole induced velocity to the direct calculation at $x = -0.1D$.}
+  \label{fig:full_negp1_relative_error}
+\end{figure}
+
+For the rotorplane, the corresponding figures \ref{fig:rotorplane_velocity_r80} and \ref{fig:rotorplane_velocity_ravg} seem to show jumps in velocity for values of $\alpha$ around \SI{118}{\degree}, \SI{238}{\degree}, and \SI{358}{\degree}.
+These do not correspond to the placement of the wind turbine blades, as is evident from figure \ref{fig:rotor-plane-nodes}.
+Due to the orientation of that figure, the angles are inverted, as we are in effect viewing from below the cylindrical coördinate system the plots along the azimuthal angle use.
+We are led to conclude that this jump is due to newly shed wakes that are now out of phase with the blades.
+The relative error in the multipole accelerated induced velocity calculation is excellent, as seen in \ref{fig:full_rotorplane_relative_error}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{rotorplane_velocity_r80.pdf}
+  \caption{The induced velocity at the rotorplane, for $\sfrac{r}{R} = 0.8$.}
+  \label{fig:rotorplane_velocity_r80}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{rotorplane_velocity_ravg.pdf}
+  \caption{The induced velocity at the rotorplane, averaged radially.}
+  \label{fig:rotorplane_velocity_ravg}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_rotorplane_relative_error.pdf}
+  \caption{The relative error of the multipole induced velocity to the direct calculation in the rotorplane.}
+  \label{fig:full_rotorplane_relative_error}
+\end{figure}
+
+Downstream at one rotor diameter from the rotorplane, the induced velocities seem to have converged to one value over the azimuthal axis for the radially averaged velocity of figure \ref{fig:1d_velocity_ravg}.
+The induced velocity coïncides with the farwake modeling implemented in \texttt{3DFloat}, where panel nodes are convected according to $u^x = \SI{4}{\meter\per\second}$.
+We do still see some azimuthal velocity, and there is some variation in the azimuthal direction for the induced velocities at the eighty percent rotor radius in figure \ref{fig:1d_velocity_r80}.
+The multipole accuracy has again decreased, the error increasing by an order of magnitude compared to the rotorplane.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{1d_velocity_r80.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = 1$, for $\sfrac{r}{R} = 0.8$.}
+  \label{fig:1d_velocity_r80}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{1d_velocity_ravg.pdf}
+  \caption{The induced velocity at $\sfrac{x}{D} = 1$, averaged radially.}
+  \label{fig:1d_velocity_ravg}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_1D_relative_error.pdf}
+  \caption{The relative error of the multipole induced velocity to the direct calculation at $x = 1D$.}
+  \label{fig:full_1D_relative_error}
+\end{figure}
+
+At the rotorplane we have also measured the induced velocity for an annulus $\sfrac{r}{R} \in [\sfrac{1}{5}, 2]$ in the rotorplane, averaged over the azimuthal angle, to insure that the velocity decays as expected outside the rotorplane, which is shown in figure \ref{fig:full_wide_all}.
+The azimuthal induced velocity seems to have completely vanished, which is not unsurprising, considering the shape of its curve along $\alpha$ in figure \ref{fig:rotorplane_velocity_r80}.
+Its magnitude is in reality of around \SI{10e-3}{\meter\per\second}, as is illustrated in figure \ref{fig:full_wide_ua}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_wide_all.pdf}
+  \caption{The average over the azimuth of all three cylindrical velocity components.}
+  \label{fig:full_wide_all}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{full_wide_ua.pdf}
+  \caption{The average over the azimuth of the azimuthal velocity component.}
+  \label{fig:full_wide_ua}
+\end{figure}
+
+In order to mitigate the increasingly long computational time for the direct unsteady vortex lattice method, the wake is cut at some point to reduce the total number of panels.
+As they are convected, their influence at the rotorplane of course diminishes, so the removal of these panels should seemingly have little effect on the rotorplane calculations.
+We see from such testing, as in figures \ref{fig:cutoff_rotorplane_average_ux} and \ref{fig:cutoff_rotorplane_average_velocity}, that the induced velocity seems to hold its shape for cuts up to fifteen rotor diameters.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{cutoff_rotorplane_average_ux.pdf}
+  \caption{The velocity component $u^x$ in the rotorplane calculated at different cutoff distances.}
+  \label{fig:cutoff_rotorplane_average_ux}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .7\textwidth]{cutoff_rotorplane_average_velocity.pdf}
+  \caption{The weighted average of the velocity in the rotorplane calculated at different cutoff distances.}
+  \label{fig:cutoff_rotorplane_average_velocity}
+\end{figure}

@@ -1,9 +1,9 @@
-Any blade of a wind turbine is composed from root to tip of a smooth distribution of cross sections, much like the one illustrated in figure \labelcref{subfig:zukovsky_foil}.
+Any blade of a wind turbine is composed from root to tip of a smooth distribution of cross sections, much like the one illustrated in figure \labelcref{subfig:zukovskij_foil}.
 Referred to as airfoils, these cross sections are optimized for the generation of lift.
 As was alluded to in the section on complex analysis, these are wholly two dimensional objects, whose ability to generate lift can be quantified by the means of this theory.
 Their mathematical representation warrants discussion, as it lends itself to the impending numerical analysis by way of comparison to theoretically derived values.
 Consider then the complex variable $\ezh^{\prime} = x^{\prime} + i z^{\prime}$ whose values trace the circle centered at the origin of radius $c$.
-The \textsc{Žukvoskij} transform takes a complex value and maps it to the point%
+The \textsc{Žukovskij} transform takes a complex value and maps it to the point%
 \footnote{%
   \cite{schlichting1967aerodynamiki} \textsc{Schlichting} \& \textsc{Truckenbrodt}, p.404, eq.6.37
 }
@@ -86,7 +86,7 @@ A more thorough treatment on the matter of elliptic coördinates is given in \te
         \cite{kennard1967irrotational} \textsc{Kennard}, \S\S61,81--82
 }
 Nevertheless, the connexion between the transform at hand and the blades of a wind turbine is not these confocal ellipses from concentric circles of the origin.
-For shifting the center of a circle everso slightly away from the origin reveals the very airfoil of figure \labelcref{subfig:zukovsky_foil}.
+For shifting the center of a circle everso slightly away from the origin reveals the very airfoil of figure \ref{subfig:zukovskij_foil}.
 Consider a circle of radius $a$ with center at the imaginary number $s$, whose perimeter intersects both the real numbers $\pm c$.
 Consider then the complex numbers $\ezh \pm c$ originating from $\pm c$, such that they both intersect the circle.
 The angle at the point of incidence with the circle of the resulting triangle we name $\vartheta$, it being the difference in argument of the two complex numbers $\ezh \pm c$.
@@ -115,22 +115,26 @@ We then have the following.%
 \end{equation}
 Adding a real part to the center $s$ will yield the airfoil shape we are after.
 Construct a circle whose perimeter coïncides with $c$ and encompasses $-c$.
-
-
-\noindent
-The airfoils of \textsc{von Kármán} \& \textsc{Trefftz} are generalizations of those of \textsc{Žukovskij}.%
+Such airfoils have a cusp at the trailing edge, as is shown in figure \ref{subfig:zukovskij_foil}.
+The airfoils of \textsc{von Kármán} \& \textsc{Trefftz} are generalizations of those of \textsc{Žukovskij}, and modify the cusps to instead have a nonzero opening angle.%
 \footnote{%
         \cite{prandtl1957applied} \textsc{Prandtl} \& \textsc{Tietjens}, \S106, pp.182--185
 }
-It can be shown%
+It can be shown that for $k = 2$, this is equivalent to the expression%
 \footnote{%
         \cite{milne-thomson1958aerodynamics} \textsc{Milne-Thomson}, pp.125--128
 }
-that this is equivalent to the expression
-
+%
 \begin{equation}\label{eq:karman-trefftz}
   \frac{\ezh}{kc} = \frac{{(\ezh^{\prime} + c)}^k + {(\ezh^{\prime} - c)}^k}{{(\ezh^{\prime} + c)}^k - {(\ezh^{\prime} - c)}^k}.
 \end{equation}
+
+\noindent
+From this analytical expression, we may find the skeleton of the airfoil.
+It is simply the image of the cirle whose center coïncides with that of the imaginary part of the preïmage of the airfoil, but intersects both foci.%
+\footnote{%
+  \cite{milne-thomson1958aerodynamics} \textsc{Milne-Thomson}, pp.96--103
+}
 
 \begin{figure}[h]
   \centering
@@ -138,7 +142,7 @@ that this is equivalent to the expression
     \centering
     \scalebox{1}{\input{zukovsky-foil.tikz}}
     \caption{\textsc{Žukovskij} airfoil}
-    \label{subfig:zukovsky_foil}
+    \label{subfig:zukovskij_foil}
   \end{subfigure}
   \begin{subfigure}{.45\textwidth}
     \centering
@@ -148,7 +152,7 @@ that this is equivalent to the expression
   \end{subfigure}
   \caption{%
         Two airfoils described respectively be equations \eqref{eq:zukovsky_ellipse} and \eqref{eq:karman-trefftz}, whose parameters are $c = 1.4$ and $s = \sfrac{1}{4}(i -\sfrac{3}{5})$.
-        The (?) is $k = 1.94$.
+        The trailing edge parameter is $k = 1.94$.
         }
   \label{fig:analytic_foils}
 \end{figure}

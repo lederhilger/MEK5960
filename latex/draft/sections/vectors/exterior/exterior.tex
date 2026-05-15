@@ -22,7 +22,10 @@ At each point $p \in \Omega$, the value of such a vector field then lies in the 
 }
 We shall make no distinction in notation between the tangent bundle or sections thereof.
 Defining an inner product on the space of vector fields, $\langle \avec, \bvec \rangle = \metricg_{ij} a^{i} b^{j}$, where \textsc{Einstein} summation is implied, induces the metric.
-Definition of inclusion.%
+
+It shall often be of great importance to distinguish on what part of this manifold we are working, as the method we shall employ is of the boundary element family.
+An imbedded manifold is a manifold of lower dimension that is not selfintersective, he boundary of the manifold, in particular, being the most natural such imbedded manifold we shall consider.
+The following inclusion map provides the precise mechanism by which differential forms in the ambient manifold may be integrated over the imbedded manifold.%
 \footnote{
   \cite{morita2001geometry} \textsc{Morita}, pp.34--35,72
 }
@@ -66,8 +69,8 @@ We shall only draw from this intuition at a later point, as we shall focus on th
 
 The repeated application of the exterior product admits higher grade covector fields.
 We will therefore use for a grade $k$ monomial section of the exterior algebra $\afrak \in \Lambda^{k}\Omega$ a $k$-form, and avoid the terminology of covectors altogether, as forms serve a much broader purpose to our end.
-The exterior product is alternating in the sense that for $\afrak_i \in \Lambda\Omega$, given a permutation $\sigma$ of the positive integers up to $k$, we have $\afrak_{\sigma(1)}\wedge\cdots\wedge\afrak_{\sigma(k)} = \signum{(\sigma)} \, \big( \afrak_{1}\wedge\cdots\wedge\afrak_{k} \big)$.
-The sign of a permutation $\signum(\sigma)$ is $1$ if the number of transpositions from the identity permutation is even, and $-1$ if the number of transpositions is odd.
+The exterior product is alternating in the sense that for $\afrak_i \in \Lambda\Omega$, given a permutation $\varsigma$ of the positive integers up to $k$, we have $\afrak_{\varsigma(1)}\wedge\cdots\wedge\afrak_{\varsigma(k)} = \signum{(\varsigma)} \, \big( \afrak_{1}\wedge\cdots\wedge\afrak_{k} \big)$.
+The sign of a permutation $\signum(\varsigma)$ is $1$ if the number of transpositions from the identity permutation is even, and $-1$ if the number of transpositions is odd.
 This alternating property further reduces to the two properties that
 
 \begin{subequations}\label{eq:exterior_product}
@@ -226,7 +229,7 @@ We calculate that
 \end{equation}
 where $\widehat{\dee x^{i}}$ in the first equality in equation \eqref{eq:exterior_divergence} means the term is omitted.
 
-Having an idea of what the divergence and curl actually are, we are now ready for the progenitor of their named theorems---the fundamental theorem of multivariate calculus.
+Now having the notions of divergence and curl explicitly defined, we are now ready for the progenitor of their named theorems---the fundamental theorem of multivariate calculus.
 The proof for this theorem is beyond the scope of the present work, so it will only be stated.
 
 \begin{theorem}[Fundamental Theorem of Multivariate Calculus]
@@ -242,6 +245,10 @@ This is clear from the condition that $\ufrak$ shall have compact support.
 Such liberties are not ones we may always take, so we will make a concession in our definition of the manifold $\Omega$.
 Suppose $\partial\Omega = S \cup \Sigma$, such that $\Sigma$ encloses $\Omega$, whilst $S$ excises it, as is shown in figure \ref{fig:manifold}.
 We may now extend $\Sigma$ in such a way that the general properties of $\ufrak$ are conserved, now only requiring sufficiently rapid evanescence.
+In general, we shall not need such a strict definition of our manifold, as the rapid evanescence is sufficient for our purposes for $\Omega$ to be defined merely through the excision of the surface $S$ from the ambient Euclidean space.
+An interesting inquiry to propose is of course how a punctured manifold behaves differently than one which is not.
+The answer is simple---problems will arise concerning the behavior of closed differential forms.
+We consider the following.
 
 \begin{figure}
   \centering
@@ -249,9 +256,6 @@ We may now extend $\Sigma$ in such a way that the general properties of $\ufrak$
   \caption{A cross section of $\Omega$, illustrating the boundaries $S\cup\Sigma = \partial\Omega$.}
   \label{fig:manifold}
 \end{figure}
-An interesting inquiry to propose is of course how a punctured manifold behaves differently than one which is not.
-The answer is simple---problems will arise concerning the behavior of closed differential forms.
-We consider the following.
 
 \begin{lemma}[\textsc{Poincaré}]
   Let $\afrak \in \Lambda^k\mathbb{R}^n$ be an arbitrary closed form, meaning $\dee\afrak = 0$.

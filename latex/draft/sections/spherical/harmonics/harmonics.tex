@@ -77,12 +77,12 @@ By equation \eqref{eq:angular-hyperspherical-laplacian}, we get the following \t
 \noindent
 where $\spherical_{m_1}^{m_0} = F \spherical_{m_0}$.
 This is the associated \textsc{Legendre} equation, obtained by a substitution in the hypergeometric equation \eqref{eq:hypergeometric}.
-We force regular solutions at $x = \pm 1$, yielding the eigenvalues $\lambda = m_1(m_1 + 1)$, such that $m_1 = \absl{m_0} + k$ for all nonegative integers $k$.
+We force regular solutions at $x = \pm 1$, yielding the eigenvalues $\lambda = m_1(m_1 + 1)$, such that $m_1 = \absl{m_0} + k$ for all nonnegative integers $k$.
 In general, we have that the angular hyperspherical eigenvalue problem through equation \eqref{eq:angular-hyperspherical-laplacian} takes the form of a \textsc{Gegenbauer} equation, with solutions in the \textsc{Gegenbauer} polynomials times a sinusoidal function.%
 \footnote{%
   \cite{avery2018hyperspherical} \textsc{Avery} \& \textsc{Avery}, \S3.5
 }
-It is customary to favor simple idices over the index chain for the hyperspherical harmonics, so that the upper index is $m$, and the lower index is $n$.
+It is customary to favor simple indices over the index chain for the hyperspherical harmonics, so that the upper index is $m$, and the lower index is $n$.
 We seek solutions in threedimensional Euclidean space, meaning we want the spherical harmonics on the two-sphere, which are%
 \footnote{%
   \cite{cheng1999fast} \textsc{Cheng}, \textsc{Greengard}, \& \textsc{Rohlin}  (1999), eq.4
@@ -93,7 +93,7 @@ We seek solutions in threedimensional Euclidean space, meaning we want the spher
 
 \begin{subequations}\label{eq:sphericalharmonics}
   \begin{equation}\tag{\theequation{a, b}}
-    \spherical_{n}^{m}(\alpha^{0}, \alpha^{1}) = c \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^0)}, \qquad c = {(-1)}^m \sqrt{\frac{2n+1}{4\pi} \frac{(n - \absl{m})!}{(n + \absl{m})!}}
+    \spherical_{n}^{m}(\alpha^{0}, \alpha^{1}) = c_n^m \legendre_{n}^{\absl{m}}{(\cos{\alpha^1})} \exp{(im\alpha^0)}, \qquad c_n^m = {(-1)}^m \sqrt{\frac{2n+1}{4\pi} \frac{(n - \absl{m})!}{(n + \absl{m})!}}
   \end{equation}
 \end{subequations}
 

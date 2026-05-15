@@ -1,0 +1,165 @@
+\begin{algorithm}[h]
+  \caption{Octree construction}
+  \label{alg:octree_algorithm}
+  \begin{algorithmic}
+  \Require Filaments $\{\xvec_j^\romani,\xvec_j^\romanii,\Gamma_j\}_{j=1}^{\mathtt{N}_\mathrm{s}}$, targets $\{\bzhe_i\}_{i=1}^{\mathtt{N}_{\mathrm{t}}}$, capacity $\mathtt{n}$, maximal profundity $\mathtt{d}_{\mathrm{max}}$
+  \Ensure An octree whose voxels own source indices, target indices, and parent-child links
+  \State $\bkha_j \gets \sfrac{1}{2}(\xvec_j^\romani+\xvec_j^\romanii)$ for each filament $j$
+  \State Build the root voxel from all endpoints and all targets
+  \State The root owns all source indices $j$ and all target indices $i$
+  \State \Call{Subdivide}{root}
+  \Function{Subdivide}{$\mathtt{v}$}
+    \If{$|\mathtt{sources}(\mathtt{v})|\le \mathtt{n}$ or $\mathtt{depth}(\mathtt{v}) = \mathtt{d}_{\mathrm{max}}$}
+      \State Mark $\mathtt{v}$ as a leaf and \Return
+    \EndIf
+    \State Create the eight child voxels of $\mathtt{v}$
+    \State Initialize empty child source-index lists and child target-index lists
+    \ForAll{$j\in\mathtt{sources}(\mathtt{v})$}
+      \State Compare both endpoints of filament $j$ with the center of voxel $\mathtt{v}$
+      \If{the endpoint extent lies in one child voxel octant}
+        \State Assign $j$ to that child voxel
+      \Else
+        \State Keep $j$ owned by $\mathtt{v}$
+      \EndIf
+    \EndFor
+    \ForAll{$i\in\mathtt{targets}(\mathtt{v})$}
+      \State Assign $i$ to the child voxel octant containing $\bzhe_i$
+    \EndFor
+    \State Replace $\mathtt{sources}(\mathtt{v})$ by the parent-owned filament list
+    \ForAll{nonempty child voxel $\mathtt{c}$}
+      \State Set $\mathtt{parent}(\mathtt{v})\gets \mathtt{v}$ and recurse with \Call{Subdivide}{$\mathtt{c}$}
+    \EndFor
+    \If{$\mathtt{v}$ has no nonempty child}
+      \State Mark $\mathtt{v}$ as a leaf
+    \EndIf
+  \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h]
+  \caption{Adjacency and adaptive interaction lists}
+  \label{alg:interaction_lists}
+  \begin{algorithmic}
+    \Require Octree $\mathtt{T}$, reach parameter $\texttt{R} > 0$, target leaves
+    \Ensure Neighbor lists and adaptive $\mathtt{U}$, $\mathtt{V}$, $\mathtt{W}$, $\mathtt{X}$ source-voxel lists
+    \Function{Adjacent}{$\mathtt{b},\mathtt{c}$}
+      \State \Return $\absl{\ovec_{\mathtt{b}}-\ovec_{\mathtt{c}}} \leq \mathtt{R}\sqrt{3}\,(r_{\mathtt{b}}+r_{\mathtt{c}})$
+    \EndFunction
+    \State $\mathtt{a}\gets$ all target leaves and all their ancestors
+    \ForAll{$\mathtt{b}\in \mathtt{a}$}
+      \State $\mathtt{neighbors}(\mathtt{b})\gets\{\mathtt{c}:\mathtt{depth}(\mathtt{c})=\mathtt{depth}(\mathtt{b}) \text{ and } \Call{Adjacent}{\mathtt{b},\mathtt{c}}\}$
+    \EndFor
+    \For{$\mathtt{d} = 1$ to the actual profundity of $\mathtt{T}$}
+      \ForAll{$\mathtt{b}\in \mathtt{a}$ with $\mathtt{depth}(\mathtt{b}) = \mathtt{d}$}
+        \State Clear $\mathtt{V}(\mathtt{b})$ and $\mathtt{X}(\mathtt{b})$
+        \ForAll{$\mathtt{p}\in\mathtt{neighbors}(\mathtt{parent}(\mathtt{b}))$}
+          \If{$\mathtt{p}$ is a leaf}
+            \If{not \Call{Adjacent}{$\mathtt{p},\mathtt{b}$}}
+              \State Add $\mathtt{p}$ to $\mathtt{X}(\mathtt{b})$
+            \EndIf
+          \Else
+            \ForAll{child $\mathtt{c}$ of $\mathtt{p}$ at depth $\mathtt{d}$}
+              \If{$\mathtt{c}\notin\mathtt{neighbors}(\mathtt{b})$}
+                \State Add $\mathtt{c}$ to $\mathtt{V}(\mathtt{b})$
+              \EndIf
+            \EndFor
+          \EndIf
+        \EndFor
+      \EndFor
+    \EndFor
+    \ForAll{target leaf $\mathtt{b}$}
+      \State $\mathtt{U}(\mathtt{b})\gets\{\mathtt{c}:\ \mathtt{c}\text{ is a source leaf and }\Call{Adjacent}{\mathtt{b},\mathtt{c}}\}$
+      \State Clear $\mathtt{W}(\mathtt{b})$
+      \ForAll{$\mathtt{c}\in\mathtt{neighbors}(\mathtt{b})$ with $\mathtt{c}\ne \mathtt{b}$ and $\mathtt{c}$ not a leaf}
+        \State \Call{Gather\texttt{W}}{$\mathtt{b},\mathtt{c}$}
+      \EndFor
+    \EndFor
+    \Function{Gather\texttt{W}}{$\mathtt{b},\mathtt{c}$}
+      \If{$\mathtt{c}$ is a leaf}
+        \If{not \Call{Adjacent}{$\mathtt{b},\mathtt{c}$}}
+          \State Add $\mathtt{c}$ to $\mathtt{W}(\mathtt{b})$
+        \EndIf
+        \State \Return
+      \EndIf
+      \ForAll{child $\mathtt{e}$ of $\mathtt{c}$}
+        \If{not \Call{Adjacent}{$\mathtt{b},\mathtt{e}$}}
+          \State Add $\mathtt{e}$ to $\mathtt{W}(\mathtt{b})$
+        \Else
+          \State \Call{Gather\texttt{W}}{$\mathtt{b},\mathtt{e}$}
+        \EndIf
+      \EndFor
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h]
+  \caption{Upward pass with \textsc{m2m}}
+  \label{alg:upward_pass}
+  \begin{algorithmic}
+    \Require Octree $\mathtt{T}$, filament data, truncation $\mathtt{N}$, formulation map $\mathtt{SourceMap}$
+    \Ensure Multipole expansion $\mathtt{multipole}(\mathtt{v})$ for every source voxel $\mathtt{v}$
+    \For{$\mathtt{d} =$ actual profundity of $\mathtt{T}$ down to $0$}
+      \ForAll{voxel $\mathtt{v}$ at depth $\mathtt{d}$}
+        \If{$\mathtt{sources}(\mathtt{v})$ is not empty}
+          \State Build $\mathtt{native}(\mathtt{v})$ from the filaments owned by $\mathtt{v}$, centered at $\ovec_{\mathtt{v}}$
+          \State Use \textsc{Q2X} followed by $\mathtt{SourceMap}$ for the chosen formulation
+          \State $\mathtt{multipole}(\mathtt{v}) \gets \mathtt{multipole}(\mathtt{v}) + \mathtt{native}(\mathtt{v})$
+        \EndIf
+        \If{$\mathtt{v}$ has a parent and $\mathtt{multipole}(\mathtt{v})$ exists}
+          \State $\mathtt{p} \gets \mathtt{parent}(\mathtt{v})$
+          \State $\mathtt{M} \gets \textsc{m2m}(\mathtt{multipole}(\mathtt{v}), \ovec_{\mathtt{p}} - \ovec_{\mathtt{v}})$
+          \State Apply the post-\textsc{m2m} correction to $\mathtt{M}$ for \textsc{Lamb}--\textsc{Helmholtz}
+          \State $\mathtt{multipole}(\mathtt{p}) \gets \mathtt{multipole}(\mathtt{p}) + \mathtt{M}$
+        \EndIf
+      \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[h]
+  \caption{Downward pass with \textsc{m2l} and \textsc{l2l}}
+  \label{alg:downward_pass}
+  \begin{algorithmic}
+    \Require Octree $\mathtt{T}$ after algorithm \ref{alg:upward_pass}, target interaction lists
+    \Ensure Local expansions on target leaves
+    \If{some internal voxel owns native filaments}
+      \ForAll{target leaf $\mathtt{v}$}
+        \State Initialize $\mathtt{near}(\mathtt{v})\gets\varnothing$ and a stack containing the root
+        \While{the stack is not empty}
+          \State Pop a source voxel $\mathtt{c}$
+          \If{$\mathtt{c}$ has no multipole and owns no sources}
+            \State Continue
+          \EndIf
+          \If{\Call{Adjacent}{$\mathtt{v},\mathtt{c}$}}
+            \State Add $\mathtt{sources}(\mathtt{c})$ to $\mathtt{near}(\mathtt{v})$
+            \State Push the children of $\mathtt{c}$ onto the stack
+          \Else
+            \State $\mathtt{local}(\mathtt{v})\gets\mathtt{local}(\mathtt{v}) + \textsc{m2l}(\mathtt{multipole}(\mathtt{c}), \ovec_{\mathtt{v}}-\ovec_{\mathtt{c}})$
+            \State Apply the post-\textsc{m2l} correction the translated local expansion
+          \EndIf
+        \EndWhile
+      \EndFor
+      \State \Return
+    \EndIf
+    \State Build active target voxel interactions by algorithm \ref{alg:interaction_lists}
+    \For{$\mathtt{d} = 1$ to the actual profundity of $\mathtt{T}$}
+      \ForAll{active target voxel $\mathtt{v}$ at depth $\mathtt{d}$}
+        \If{$\mathtt{local}(\mathtt{parent}(\mathtt{v}))$ exists}
+          \State $\mathtt{local}(\mathtt{v})\gets\mathtt{local}(\mathtt{v}) + \textsc{l2l}(\mathtt{local}(\mathtt{parent}(\mathtt{v})),\ovec_{\mathtt{v}}-\ovec_{\mathtt{parent}(\mathtt{v})})$
+          \State Apply the post-\textsc{l2l} correction to the translated local expansion
+        \EndIf
+        \ForAll{$\mathtt{c}\in\mathtt{V}(\mathtt{v})\cup\mathtt{X}(\mathtt{v})$}
+          \State $\mathtt{local}(\mathtt{v})\gets\mathtt{local}(\mathtt{v}) + \textsc{m2l}(\mathtt{multipole}(\mathtt{c}),\ovec_{\mathtt{v}}-\ovec_{\mathtt{c}})$
+          \State Apply the post-\textsc{m2l} correction to the translated local expansion
+        \EndFor
+      \EndFor
+    \EndFor
+    \ForAll{target leaf $\mathtt{v}$}
+      \ForAll{$\mathtt{c}\in\mathtt{W}(\mathtt{v})$}
+        \State $\mathtt{local}(\mathtt{v})\gets\mathtt{local}(\mathtt{v}) + \textsc{m2l}(\mathtt{multipole}(\mathtt{c}),\ovec_{\mathtt{v}}-\ovec_{\mathtt{c}})$
+        \State Apply the post-\textsc{m2l} correction to the translated local expansion
+      \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}

@@ -1,9 +1,20 @@
-Many modern implementations of calculations on wind turbines invoke archaic methods illsuited for the needs of the industry for which this implementation as a service is provided.
+The numerical treatment of calculating the lifting forces on wings is nearing its centennial anniversary, and with this passage of time, ever more novel models and methods by which to perform these calculations being brought forth.
+Although most of this work was to be applied to airplanes, the study of extracting energy from the persistent winds of almost every habitable plot of land and inhabitable region of ocean has been ongoing for even longer.
+Yet many modern implementations of calculations on wind turbines invoke archaic methods illsuited for the needs of the industry for which this implementation as a service is provided.
 Such methods include, but are not limited to, the plurality of steady vortex methods attributed to Ludwig \textsc{Prandtl}.
 Admittedly, these methods, now a century old, were perfectly fine in those days of yore before the invention of the digital computer.
-But now, in the age of personal computers able to run massive fluid simulations using the finite volume method, those methods are wholly unnecessary idiosyncrasies.
-All the same, the methods of computational fluid dynamics---the finite volume method in particular---are absurdly time consuming and computationally inefficient.
+But now, in the age of personal computers able to run massive fluid simulations using the finite volume method and various flavors of eddy models, those methods are wholly unnecessary idiosyncrasies.
+All the same, the methods of computational fluid dynamics---the finite volume method in particular---are absurdly time consuming and computationally costly.
 Thus, concessions must be made between more temporally demanding though numerically accurate predictions, and predictions far more efficient yet fallible to provide such service.
 It is the goal of this thesis the examine exactly where such concessions ought to be made, and to what degree the predictions thereof are to be trusted.
 For in an effort to get with the times, so to speak, the main supervisor for this thesis has commisioned a survey of sorts of the implementation of one such method that has become increasingly more popular in its application to wind turbine rotor calculations.
 It is then imperative to not only manage to implement themethod and test its veracity, but to insure the veracity from the outset.
+This method is the unsteady \emph{vortex lattice method}, and we shall attempt to accelerate it using the \emph{fast multipole method}.
+
+Although the mathematical theory needed to implement modelling of fluid flow with any semblance of rigor and defensibility is wellestablished and widely adopted in communities where it is warranted---like those of the finite element method---the vortex lattice method we shall consider in this work apparently does not necessarily warrant it in the same manner.
+The observation has been made that most derivations of the theory of this method is largely treated in a superficial manner, lacking much of the rigor one would find in a comparable element method family.
+We shall thus spend some time mending this gap in the vortex lattice method before accelerating it with the fast multipole method.
+
+The implementation developed for this thesis is based on data produced by the software \texttt{3DFloat}, developed at the Institut for Energy Technology.
+A simulated wake was inititated and run in that software for some time, at which point the data was exported to \texttt{vtk}-files to be analyzed.
+The results of this analysis we present, and compare to expectations.

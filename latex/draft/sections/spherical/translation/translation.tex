@@ -9,8 +9,8 @@ their book on the fast multipole method applied to the \textsc{Helmholtz} equati
 }
 We shall however address first the matter of the result of the preceding text.
 We shall insert into equation \eqref{eq:hypersphere_green} the relation \eqref{eq:gegenbauer-legendre} for the threedimensional case, yielding
-
-\begin{equation}
+%
+\begin{equation}\label{eq:Green_translation}
   \green(\xvec; \bzhe) = \frac{1}{4\pi\absl{\bzhe}} \sum_{k = 0}^{\infty} \varepsilon^k \legendre_k(\cos{\alpha}).
 \end{equation}
 
@@ -31,7 +31,103 @@ This result simplifies further to what the literature on fast multipole calculat
 \end{theorem}
 
 \noindent
+The coëfficient is due to the normalization condition imposed upon the spherical harmonics.%
+\footnote{%
+  \cite{epton1995multipole} \textsc{Epton} \& \textsc{Dembart} (1995), eq.2.19
+}
+Note also the conjugate property that ${\Upsilon^m}^{\dag} = \Upsilon^{-m}$.
 We may now address the translation directly.
-It shall promtply become apparent that we seek local and distal expansions of the \textsc{Green} function.
-Relative to some new origin $O^{\prime}$ with vector $\ovec$ from the absolute origin, we write the point of evaluation $\bzhe^{\prime} = \bzhe - \ovec$.
+It shall promptly become apparent that we seek local and distal expansions of the \textsc{Green} function.
+Relative to some new origin $O^{\prime}$ with vector $\ovec$ from the absolute origin, we write the point of evaluation $\bzhe^{\prime} = \bzhe - \ovec$, the same with some source point $\xvec^{\prime}$.
 The local and distal expansions shall respectively regular and singular at this new origin.
+In particular, we shall have that%
+\footnote{%
+  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013), eq.25,28
+}
+%
+\begin{equation}
+  \green(\xvec; \bzhe) = \frac{1}{4\pi} \sum_{n = 0}^{\infty} \sum_{m = -n}^{n} \regular_{n}^{m}(-\xvec^{\prime}) \singular_{n}^{m}(\bzhe^{\prime}), \qquad
+  \varepsilon^{\prime} < 1;
+\end{equation}
+%
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    \regular_n^m (\bzhe^{\prime}) = \frac{{(-1)}^n i^{\absl{m}} {\absl{\bzhe^{\prime}}}^n}{c(n + \absl{m})!} \Upsilon_n^m(\bzhe^{\prime}), \qquad
+    \singular_n^m(\bzhe^{\prime}) = \frac{(n - \absl{m})!}{i^{\absl{m}} c \absl{\bzhe^{\prime}}^{n+1}} \Upsilon_n^m(\bzhe^{\prime}).
+  \end{equation}
+\end{subequations}
+
+\noindent
+The arguments of the spherical harmonics is understood to be the angular part.
+Note the interpretation now of switching the arguments of the \textsc{Green} function---we are explicitly changing which of the two variables contribute regularly, and \emph{vice versa} for thew singularity.
+The act of translating either harmonic by the regular and singular functions is to be interpreted as the reëxpansion of that harmonic locally or distally.
+In more concrete terms, we consider the position $\ovec_i$ of some origin one wishes to translate from, and the position $\ovec_j$ of some new origin one wishes to translate to.
+The displacement thereof we denote $\dvec = \ovec_j - \ovec_i$, such that the translations are given as follows.%
+\footnote{%
+  \cite{gumerov2004fast} \textsc{Gumerov} \& \textsc{Duraiswami}, ch.5
+}
+%
+\begin{equation}\label{eq:R2R}
+  \regular_n^m (\dvec + \bzhe_j^{\prime}) = \sum_{n^{\prime} = 0}^{\infty} \sum_{m^{\prime} = -n^{\prime}}^{n^{\prime}} \regular_{n - n^{\prime}}^{m - m^{\prime}} (\dvec) \regular_{n^{\prime}}^{m^{\prime}} (\bzhe_{j}^{\prime})
+\end{equation}
+%
+\begin{equation}\label{eq:S2R}
+  \singular_n^m (\dvec + \bzhe_j^{\prime}) = \sum_{n^{\prime} = 0}^{\infty} \sum_{m^{\prime} = -n^{\prime}}^{n^{\prime}} \singular_{n + n^{\prime}}^{m - m^{\prime}} (\dvec) \regular_{n^{\prime}}^{m^{\prime}} (\bzhe_{j}^{\prime})
+\end{equation}
+%
+\begin{equation}\label{eq:S2S}
+  \singular_n^m (\dvec + \bzhe_j^{\prime}) = \sum_{n^{\prime} = 0}^{\infty} \sum_{m^{\prime} = -n^{\prime}}^{n^{\prime}} \regular_{n^{\prime} - n}^{m - m^{\prime}} (\dvec) \singular_{n^{\prime}}^{m^{\prime}} (\bzhe_{j}^{\prime})
+\end{equation}
+
+\noindent
+For the translation of a singular function to one of regularity as with equation \eqref{eq:S2R}, we must evidently have that $\absl{\bzhe_j^{\prime}} < \absl{\dvec}$, and conversely for the translation of a singular expansion to another singular expansion as in equation \eqref{eq:S2S}, requiring that $\absl{\bzhe_j^{\prime}} > \absl{\dvec}$.
+Recall the magnitudinal ordering of the indices denoting the azimuthal \textsc{Fourier} mode $m$, and the angular degree $n$.
+The multiplication of this azimuthal term in the spherical harmonic must yield the proper azimuthal index, whence the subtraction of the indices in the intermediary expansion about $\dvec$.
+The index in angular degree is similar in that regard, as the total degree of polynomials must additively coïncide due to the additive property of exponents.
+We shall later discuss these translations in terms of the translations needed for the fast multipole method, in the context thereof the customarily named fast multiple kernels of equations \eqref{eq:R2R}--\eqref{eq:S2S} are bestowed the following notation.
+%
+\begin{subequations}\label{eq:translation_notation}
+  \begin{equation}\tag{\theequation{a, b, c}}
+    {\big[ \regular\vert\regular \big]}_{n^{\prime}n}^{m^{\prime}m} = \regular_{n - n^{\prime}}^{m - m^{\prime}}, \qquad
+    {\big[ \singular\vert\regular \big]}_{n^{\prime}n}^{m^{\prime}m} = \singular_{n + n^{\prime}}^{m - m^{\prime}}, \qquad
+    {\big[ \singular\vert\singular \big]}_{n^{\prime}n}^{m^{\prime}m} = \regular_{n^{\prime} - n}^{m - m^{\prime}}
+  \end{equation}
+\end{subequations}
+
+\noindent
+We shall briefly also discuss an alternate, more geometrically inspired mode of translation, namely the method rotation, coäxial translation, and backrotation, or \textsc{rcr} for brevity.
+For a truncated multipole expansion, we let not $n$ range to infinity, rather let its greatest extent be $N - 1$.
+For some multipole coëfficient, we arrange for each value of $n$ its span in $m$ in an array.
+Consider now $\dvec$ given explicitly in terms of spherical coördinates, and the multipole coëfficient be given by $A$.
+Say we wish to translate from the singular expansion to an expansion in terms of the regular harmonic, and that this translation matrix $T$ is given such that $A_{\regular} = T_{\singular\vert\regular}(\dvec) A_{\singular}$.
+This translation matrix is composed of a rotation matrix $R_{\regular}$, a coäxial displacement matrix $C_{\singular\vert\regular}$, and the inverse rotation matrix $R_{\singular}^{-1}$.
+The matter of rotating the spherical harmonics is an involved, but not particularly tedious task.
+The rotation will preserve the degree of the spherical harmonic, but it will not preserve the order in general.
+That is, should we wish to rotate from the orientation $(\alpha^0, \alpha^1)$ to the orientation $(\beta^0, \beta^1)$, we have that
+%
+\begin{equation}
+  \spherical_n^k(\beta^0, \beta^1) = \sum_{m = -n}^{n} D^n_{mk} \spherical_n^m(\alpha^0, \alpha^1), \qquad
+  D^n_{mk} = \exp{(im\alpha^0)} d^n_{mk}(\alpha^1)
+\end{equation}
+
+\noindent
+Here, $D^n_{mk}$ is the \textsc{Wigner} function, and $d^n_{mk}$ is the corresponding reduced function.%
+\footnote{%
+  \cite{varsalovic1988quantum} \textsc{Varšalovič}, \textsc{Moskalev}, \& \textsc{Hersonskij}, \S4
+}
+Thus for each value of $n$ we have one submatrix of size $(2n+1) \times (2n+1)$, accounting for each of the $2n+1$ terms of $m$ and their corresponding map to the same number of rotated terms.
+It is clear the rotation matrices will be diagonal, their coëfficient terms corresponding to regularization with respect to the spherical harmonics and either of the regular or singular functions.
+Along the diagonal, we then write
+%
+\begin{subequations}
+  \begin{align}
+    {\big[ R_{\regular}^n \big]}_{k}^{m} &= \frac{i^{\absl{k}}(n+\absl{m})! c_n^m}{i^{\absl{m}}(n+\absl{k})! c_n^k} D^n_{mk};\\
+    %
+    {\big[ R_{\singular}^n \big]}_{k}^{m} &= \frac{i^{\absl{m}}(n-\absl{k})! c_n^m}{i^{\absl{k}}(n-\absl{m})! c_n^k} D^n_{mk}.
+  \end{align}
+\end{subequations}
+
+\noindent
+Since the translation $C_{\singular\vert\regular}$ is coäxial, we preserve the azimuthal structure of $m$, and we may thus entirely skip the offset in indexation in \subeqref{\ref{eq:translation_notation}}[b].
+The final translation matrix is thus given in its decomposed form; $T_{\singular\vert\regular}(\dvec) = R_{\regular}^{-1}(\alpha^0, \alpha^1) C_{\singular\vert\regular}(d) R_{\singular}(\alpha^0, \alpha^1)$.
+In addition to its mathematical elegance, the sparsity of the rotation matrix, and the reduced cost in calculating the coäxial translation should theoretically reduce the needed computational strain from $O(N^4)$ to $O(N^3)$, yielding better performance with proper implementation.

@@ -3,11 +3,12 @@ A thorough exposition of that matter shall be handled in a later section, though
 We shall in this section examine how the \textsc{Biot}--\textsc{Savart} equation arises as a solution to the problem of a completely vortical fluid.
 For this purpose, we define the vorticity $\vorticityfrak = \star\dee\ufrak$, with the relation $\vorticityfrak^{\sharp} = \vorticity$.
 Should the fluid be otherwise nonvortical, we restrict the vorticity to the boundary.
+For discussions to be reëngaged at a later point in the work, we treat with some degree of rigor the matter of how such restrictions are mathematically founded.
 
 We consider the vorticity equation, obtained by taking the curl of the \textsc{Navier}--\textsc{Stokes} equation \subeqref{\ref{eq:Navier-Stokes}}[a].
 \begin{subequations}\label{eq:vorticity-equation}
          \begin{equation}\tag{\theequation{a, b}}
-           \varrho\deet\vorticityfrak + \varrho\lieder{\uvec}\vorticityfrak = \mu\Delta\vorticityfrak, \qquad \codee\vorticityfrak = 0.
+           \varrho\deet\star\!\vorticityfrak + \varrho\lieder{\uvec}\star\!\vorticityfrak = \mu\Delta\star\!\vorticityfrak, \qquad \codee\vorticityfrak = 0.
          \end{equation}
 \end{subequations}
 Confer with \textsc{Batchelor},%
@@ -32,7 +33,7 @@ Such vector fields may be described by decomposition into constituent \textsc{He
         \end{equation}
 \end{subequations}
 In terms of the vernacular of differential forms, the so-called scalar potential $\Phi$ is a zero-form, and the vector potential $\mathbf{\Psi}$ is a sharped one-form.
-Indeed, as the curl operator is simply $\star\dee$, any choice of bivector $\vfrak$ such that $\star\vfrak = \Psi_i\,\dee x^i$ will be approporiate, revealing the familiar \textsc{Hodge} decomposition of theorem (\ref{thm:Hodge_decomposition}).
+Indeed, as the curl operator is simply $\star\dee$, any choice of bivector $\vfrak$ such that $\star\vfrak = \Psi_i\,\dee x^i$ will be appropriate, revealing the familiar \textsc{Hodge} decomposition of theorem (\ref{thm:Hodge_decomposition}).
 Such a choice of representation of the vector potential is called a gauge, and the gauge chosen in equation \subeqref{\ref{eq:Helmholtz_decomposition}}[b] is that of \textsc{Gumerov} \& \textsc{Duraiswami},%
 \footnote{%
         \cite{gumerov2006fast} \textsc{Gumerov} \& \textsc{Duraiswami} (2006)
@@ -50,7 +51,10 @@ Nevertheless, the laplacian term in the \textsc{Navier}--\textsc{Stokes} equatio
 \end{equation}
 
 \noindent
-This immediately yields the biharmonic equation for the potential function $\Phi$ when the vorticity is zero, which has been discussed by \textsc{Gumerov} and \textsc{Duraiswami} in terms of implementation through fast multipole methods.\footnote{\emph{ibid}.}
+This immediately yields the biharmonic equation for the potential function $\Phi$ when the vorticity is zero, which has been discussed by \textsc{Gumerov} and \textsc{Duraiswami} in terms of implementation through fast multipole methods.%
+\footnote{
+  \cite{gumerov2006fast} \textsc{Gumerov} \& \textsc{Duraiswami} (2006)
+}
 For we know the divergence of the velocity field to be zero, so that the Laplacian is equal to the curl of the vorticity.
 The connexion is immediately apparent between that of viscous effects encoded in the Laplacian term, and the vorticity of the fluid.
 Thus our motivation is plainly laid out before us---we wish to imitate the viscous effects that the fluid exhibits through a potential formulation.
@@ -78,7 +82,7 @@ Note that integration is done with respect to the variable $\bzhe$, whilst the e
 To that end, we have $\partial_i \vorticityfrak(\bzhe)\dee x^{i} = 0$, so that by the graded product rule, we only differentiate the \textsc{Green} function.
 We then find the velocity vector field in terms of the vorticity, such that
 
-\begin{equation}
+\begin{equation}\label{eq:Biot-Savart_volume}
         \ufrak(\xvec) = -\int_{\Omega} \star\dee(\vorticityfrak \green) \,\dee V = -\int_{\Omega} \star\big( \mathfrak{w}\wedge\dee\green \big) \,\dee V.
 \end{equation}
 
@@ -94,7 +98,7 @@ as a similar result was obtained by \textsc{Hesin}.%
 The proof in the latter is somewhat different and more involved, as the vorticity is defined to be the two-form $\star\vorticityfrak$, yielding a componentwise \textsc{Poisson} equation $\Delta u^i = \star(\dee x^{i} \wedge \star \codee \!\star\! \vorticityfrak)$.
 This formulation results in the very same final equation, meaning the derivation, although novel to the present author, does not lend an unfamiliar approach to this common result.
 It does, however, lend credence to the result as valid in the formulation with which we have chosen to utilize.
-Barely predating that article is also a thorough investigaiton into vortex dynamics in fourdimensional space by \textsc{Shashikanth}.%
+Barely predating that article is also a thorough investigation into vortex dynamics in fourdimensional space by \textsc{Shashikanth}.%
 \footnote{%
         \cite{shashikanth2012vortex} \textsc{Shashikanth} (2012), \S{IV}
 }
@@ -132,7 +136,7 @@ We must have that at any point on the line the diffeömorphism maps identically 
 Thus, we define the local coördinate functions $n^i$ on $D_{\varepsilon}$ to be such that $\dee n^i(\partial_{n^j}) = \delta_j^i$, their values being zero coïnciding with the filament.
 On the filament, the interior product of the tangent vector and the Euclidean volume form must then be the area form on the normal plane on the filament, $\tvec \iprod \dee V = \dee n^1 \wedge \dee n^2$.
 This coördinate system is defined such that there is no intrinsic connexion between the vorticity and the radius of the disk.
-Clearly the above definition of the circulation makes no distinction of how great the readius of the disk shall be, and so the support of the vorticity shall need to be somehow dependent on the disk radius.
+Clearly the above definition of the circulation makes no distinction of how great the radius of the disk shall be, and so the support of the vorticity shall need to be somehow dependent on the disk radius.
 For this, we introduce the mollifier $\varphi$, in the sense that $\varphi \in C_{\mathrm{c}}^{\infty}(\reals^2)$, and $\varphi \geq 0$, with compact support on the unit disk.
 We regularize it such that
 
@@ -141,10 +145,13 @@ We regularize it such that
 \end{equation}
 
 \noindent
-The regularization of equation \eqref{eq:mollifier-regularization} admits $\varphi_\varepsilon = \varepsilon^{-2} \varphi(\sfrac{n^i}{\varepsilon})$, now with support on $D_{\varepsilon}$.
+The regularization of equation \eqref{eq:mollifier-regularization} admits $\varphi_\varepsilon = \varepsilon^{-2} \varphi(\sfrac{n^i}{\varepsilon})$, now with support on $D_{\varepsilon}$.%
+\footnote{%
+  \cite{rham1984differentiable} \textsc{de Rham}, \S15, pp.61--70
+}
 We can now define locally the vorticity two-form and associated one-form, with compact support on the disk,
 
-\begin{equation}
+\begin{equation}\label{eq:mollified-vorticity}
   \star\vorticityfrak_{\varepsilon} \equiv \Gamma \varphi_{\varepsilon} \tvec \iprod \dee V, \qquad \vorticityfrak_{\varepsilon} = \Gamma \varphi_{\varepsilon} \tvec^{\flat},
 \end{equation}
 
@@ -173,7 +180,7 @@ That is,
 \end{equation}
 
 \noindent
-This is essentially identical to the reuslt presented by \textsc{Hesin},%
+This is essentially identical to the result presented by \textsc{Hesin},%
 \footnote{%
   \cite{hesin2012symplectic} \textsc{Hesin} (2012), \S\S2.2, 6.1
 }
@@ -201,9 +208,17 @@ Finally, we have the \textsc{Biot}--\textsc{Savart} formulation of the induced v
 
 \noindent
 The great ambition of this subsection was to derive the vortex filament formulation of the \textsc{Biot}--\textsc{Savart} equation in a novel manner, employing the tools of differential geometry.
-This was unfortunately thwarted by greater minds at times greatly preceeding it, and as such it only serves as a point of comparison of the mastery of these tools.
+This was unfortunately thwarted by greater minds at times greatly preceding it, and as such it only serves as a point of comparison of the mastery of these tools.
+Furthermore of interest is the apparent ease with which the argumentation above is guided through the language of currents.
+Indeed, a filament is nothing more than a circulation weighted current acting on test one-forms.%
+\footnote{%
+  \cite{rham1984differentiable} \textsc{de Rham} 
+}
+We close this section with a rather interesting interpretation of the theory of currents, stating that no vortex filament can terminate independently of boundary data or other filaments, forming a vortex ring, essentially reframing the theorems of \textsc{Helmholtz}.
+A filament current with no initial endpoint contribution, can have no such contribution at a later time.
+By the theory already established, we may state this succinctly in the following manner.
 
-\begin{theorem}[The circulation theorem]
+\begin{theorem}[The circulation theorem]\label{thm:circulation-theorem}
   Consider an inviscid fluid, such that the righthand side of \subeqref{\ref{eq:vorticity-equation}}[a] is zero.
   By theorem \ref{thm:reynolds-transport}, there can be no change in circulation.
 \end{theorem}

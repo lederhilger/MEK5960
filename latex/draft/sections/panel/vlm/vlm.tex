@@ -48,7 +48,7 @@ These placements were later shown to be optimal, even for wings of multiple chor
 }
 
 
-An albeit naïve but illustrative explanation of the modern vortex lattice method is the exchange of the doublets of the standard boundary element method for vortex filaments along their boundaries.
+An albeit naïve yet illustrative explanation of the modern vortex lattice method is the exchange of the doublets of the standard boundary element method for vortex filaments along their boundaries.
 The mathematical foundation for this apparent equivalence between a dipole panel and a vortex panel is elusive in the literature.
 This relationship was to the author's knowledge first demonstrated by \textsc{Hess},%
 \footnote{%
@@ -58,14 +58,42 @@ This relationship was to the author's knowledge first demonstrated by \textsc{He
 \footnote{%
         \cite{morino1993boundary} \textsc{Morino} (1993), Appendix C
 }
-relating the jump discontinuity in the potential over the boundary 
+relating the tangential derivative of the jump discontinuity in the potential over the boundary $q$ to vorticity on the boundary.
+The intrinsic object on such a surface is indeed the exterior derivative $\dee q$, its \textsc{Hodge} dual accordingly aligning with the previously discussed notion of vortex sheets.
+When the wake and bound panels have piecewise constant values for the potential jump, this exterior derivative vanishes in the classical sense.
+The weak derivative, however, admits us to study the relationship between this potential jump and data at the edges of the panel through the fundamental theorem of exterior calculus.%
+\footnote{%
+  \cite{bonaldi2025exterior} \textsc{Bonaldi} \emph{et al.} (2025)
+}
+Admittedly, the jumps in potential are treated in greater detail through the language of currents in the framework finite element exterior calculus,%
+\footnote{%
+  \cite{licht2017complexes} \textsc{Licht} (2017)
+}\textsuperscript{,}%
+\footnote{%
+  \cite{chen2025distributional} \textsc{Chen}, \textsc{Huang}, \& \textsc{Zhang} (2025)
+}
+which we shall lend credence to, but not discuss in any meaningful detail.
+Nevertheless, the weak derivative exists in a weak sense on the boundary skeleton.
+For the wake, we test the \textsc{Hodge} dual of the panelwise constant jump in potential against a smooth one-form, yielding
 
-Some form of interpolation is done for the circulation on each filament, for which we choose a constant value.
-Thus,
+\begin{equation}
+  {(\afrak, \star\dee q)}_{S_{\mathrm{w}}} \equiv - \sum_{\mathrm{p}} q_{\mathrm{p}} \int_{\mathrm{p}} \dee\afrak = - \sum_{\mathrm{p}} q_{\mathrm{p}} \int_{\partial\mathrm{p}} \afrak = \sum_{\mathrm{e}} \Gamma_{\mathrm{e}} \int_{C_{\mathrm{e}}} \afrak(\tvec_{\mathrm{e}}) \,\dee s.
+\end{equation}
+
+\noindent
+We have here used the fundamental theorem of multivariate calculus, and our preliminary work on vortical fluid flows, after first defining the test over the portion of the boundary that is the wake in a panelwise manner.
+Interior edges must thus be collected twice, with opposite orientations, yielding a difference on the edge that is exactly equivalent to the edge circulation.
+Edges whose neighboring panel does not exist, clearly yields no difference in potential jump from the panel value.
+In explicit mathematical terms, we have that for two adjacent panels $\mathrm{p}_1$ and $\mathrm{p}_2$, sharing the edge $\mathrm{e}$ between them, their respective values for the jump in potential over their interface being $q_{\mathrm{p}_1}$ and $q_{\mathrm{p}_2}$, we define up to orientation the circulation on the shared edge $\Gamma_{\mathrm{e}} = q_{\mathrm{p}_2} - q_{\mathrm{p}_1}$, in a weak sense.
+Henceforth, we shall consider the induced velocity from a single panel
+
 \[
-  \uvec(\bzhe) \approx \frac{1}{4\pi} \sum_{i = 1}^{4} \Gamma_i \int_{C_i} \frac{\xvec - \bzhe}{r^3} \times \dee\svec.
+  \uvec(\bzhe) \approx \frac{1}{4\pi} \sum_{i = 1}^{4} \Gamma_i \int_{C_i} \frac{\xvec - \bzhe}{r^3} \times \dee\svec,
 \]
-For each filament, we can calculate the induced velocity analytically.
+
+\noindent
+where the circulation $\Gamma_i = q_{\mathrm{p}}$.
+For each filament, it is possible calculate the induced velocity analytically.
 In order to reduce clutter, we drop the index indicating filament.
 The procedure of evaluating for one filament in a lattice is illustrated in figure \ref{fig:line_integral}.
 
@@ -153,7 +181,7 @@ The velocity that results from adding this mollifier can be derived analytically
 \footnote{%
   \cite{hoydonck2013computation} \textsc{van Hoydonck}, Appendix F.1
 }
-and is what will be employed in the numerical machinery claculating the induced velocity from vortex lattices in the form of a wind turbine wake.
+and is what will be employed in the numerical machinery calculating the induced velocity from vortex lattices in the form of a wind turbine wake.
 It is clear that the length of the vortex filament is equal to the difference in length from the point of evaluation to either endpoint of the filament.
 That is, $\svec = \xvec^{\romani} - \xvec^{\romanii} = \rvec^{\romanii} - \rvec^{\romani}$, with $s$ denoting the magnitude of the vector, being the length of the filament.
 For clarity in the expression of the velocity, we then denote the distance from the evaluation point to the filament, and its distances to the endpoints as follows.

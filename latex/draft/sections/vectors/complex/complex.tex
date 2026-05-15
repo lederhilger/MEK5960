@@ -15,7 +15,7 @@ The formalism of the complex numbers may indeed be approached through the founda
 
 \noindent
 This definition is in many ways completely unhelpful to anyone not already familiar with the matter of complex numbers.
-First and foremost is the inclusion of demarkation that the manifold be \emph{real} in some way.
+First and foremost is the inclusion of demarcation that the manifold be \emph{real} in some way.
 Indeed, Euclidean space upon which we base our notion of structure is complete, and indeed constructed by the real number line.
 One must surely agree when pressed that the field of real numbers is not algebraically closed, as the polynomial equation $x^2 + 1 = 0$, for instance, has no solution.
 Much like the rational numbers may be extended through irrational numbers, we extend the real numbers.
@@ -30,23 +30,33 @@ there is a correspondence between the complex numbers and the plane.
 That is, there is an isomorphism $\reals^2 \simeq \complexes$.
 
 Second, is the elusiveness of the complex structure $\mathrm{J}$.
-Extending the tangent bundle through complexification 
-
+Extending the tangent bundle through complexification will yield the complex tangent bundle, whose associated tangent spaces house complex tangent vectors.
+The complex tangent space can be written as the sum of the constituent eigenspaces of $\mathrm{J}$, corresponding to either of $i$ or $-i$.%
+\footnote{%
+  \cite{kobayashi1996foundationsII} \textsc{Kobayashi} \& \textsc{Nomizu}, p.125
+}
 The complex structure then takes the form
+%
 \begin{subequations}
   \begin{equation}\tag{\theequation{a, b}}
     \mathrm{J} \partial_{x^k} = \partial_{z^k}, \qquad \mathrm{J} \partial_{z^k} = -\partial_{x^k}
   \end{equation}
 \end{subequations}
 
-The complex conjugate is given by $\ezh^{\ast} = x - iz$.
-$\dee\ezh = \dee x + i \dee z$.
+Where we denote by $\ezh^{\dag} = x - iz$ the complex conjugate of $\ezh$.
+We write $\dee\ezh = \dee x + i \dee z$, such that we have the \textsc{Wirtinger} basis for the complex tangent space is
 \begin{subequations}
   \begin{equation}\tag{\theequation{a, b}}
-      \partial_{\ezh} = \sfrac{1}{2} \big( \deex - i\deez \big), \qquad \partial_{\ezh^{\ast}} = \sfrac{1}{2} \big( \deex + i\deez \big)
+      \partial_{\ezh} = \sfrac{1}{2} \big( \deex - i\deez \big), \qquad \partial_{\ezh^{\ast}} = \sfrac{1}{2} \big( \deex + i\deez \big).
   \end{equation}
 \end{subequations}
-      
+
+The study of functions of a complex variable in the plane is of great importance to the classical study of aerodynamics, but is not something we shall dwell on.
+We note that a function $f$ on the complex plane whose conjugate derivative is zero is called holomorphic, and if this function furthermore has nonzero complex derivative, then it is conformal.
+The Jacobian matrix of such functions can be interpreted as scaling and rotation, effectively locally preserving angles.
+The implication for this is that the \textsc{Wirtinger} basis forces the real and imaginary parts of the function to be harmonic, yielding interesting results for the study of velocity potential functions.
+An example of such a function is the \textsc{Žukovskij} map, illustrated in figure \ref{fig:complex map}, which we shall return to in the section on airfoils.
+
 \begin{figure}[h]
   \centering
   \begin{subfigure}{.45\textwidth}

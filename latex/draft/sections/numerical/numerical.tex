@@ -1,17 +1,32 @@
-We are given a \texttt{vtk}-file to analyze.
-
-\begin{figure}
+The numerical implementation of the calculation of induced velocities of a wind turbine wake that has been produced as a result of this work has been somewhat tailored to process data output by \texttt{3DFloat} provided by the main advisor.%
+\footnote{%
+  \cite{nygaard2016development} \textsc{Nygaard} emph{et al.} (2016)
+}
+Since the very purpose of this work is in large part been to determine whether the fast multipole method is worth the effort it takes to implement in terms of numerical accuracy compared to the cost of computation, we are to compare the results of computation of the fast multipole accelerated vortex lattice method to the direct calculation thereof.
+That is to say that we are given a partial solution produced by \texttt{3DFloat}, for which we calculate the induced velocity directly, and quickly using the fast multipole method.
+Output from this partial run in \texttt{3DFloat} is a \texttt{vtk}-file with the vertices of the panels of the wake, along with their potential jump values and connectivity.
+The run was started abruptly, with time step sizes of \SI{0.02}{\second}, releasing panels into the wake at every twentieth step in time, the total elapsed time being \SI{1500}{\second}.
+%
+\begin{figure}[h]
   \centering
   \includegraphics[width = \textwidth]{rotor-plane-nodes.pdf}
-  \caption{}
+  \caption{The turbine blades from the \texttt{vtk}-file.}
   \label{fig:rotor-plane-nodes}
 \end{figure}
 
+The modeled wind turbine is an IEA \SI{15}{\mega\watt}, with a rotor diameter about of $D = \SI{234}{\meter}$, though the measured radius of the blades in the \texttt{vtk}-file yield a radius $R = \SI{120.945}{\meter}$, which shall serve as the baseline.
+Extracting the data for the blades as we have in figure \ref{fig:rotor-plane-nodes}, we see that it has some twist near the root.
+As such we shall choose the domain of evaluation somewhat carefully.
+It is worth noting that the solid lines are inferred vortex filaments based on panel vertex connectivity, and is not in the set of data proper.
+For the ``circulation'' described at each panel of connected vertices is indeed merely the potential jump, and not the edge circulation we derived earlier.
+The run we are provided with has a nonturbulent freestream velocity \SI{10}{\meter\per\second}, being a representative simulation of wind speeds below rate.
+
+What follows is a description of the methodology for the implementation of the fast multipole accelerated vortex lattice method, and the results of tests performed.
+We make some cloud of target points for which we shall calculate the induced velocity, and partition the domain in a manner which classifies wellseparated filaments as such.
+The potential induced by the filaments may then be expanded into multipole expansions, and be translated in such a manner that they may be evaluated at the target points.
+
 \subsection{Octree data structure}
 \subfile{octree/octree.tex}
-
-\subsection{Unsteady scheme}
-\subfile{unsteady/unsteady.tex}
 
 \subsection{Results}
 \subfile{results/results.tex}

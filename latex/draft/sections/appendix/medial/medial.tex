@@ -1,0 +1,54 @@
+When perusing for possible airfoils to base one's implementation of the unsteady vortex lattice method, one will often find simple \texttt{dat}-files, whose contents are the vertices of a polygon.
+This polygon is a piecewise linear approximation of some airfoil curve, though the data is not always readily available for any and all airfoils at one's disposal.
+For the insteady vortex lattice method, we want the mean camber line for the aerodynamic calculations and discretization into bound panels on the wind turbine blade.
+Extracting the skeleton from the airfoil may be as simple as finding it analytically through splines.
+It would be interesting, however, if one could find the skeleton using a more rudimentary method, like the one proposed in conjecture \ref{con:medial-axis}.
+For future studies, a script for calculating the medial axis through the \textsc{Voronoj} diagram was implemented, yielding figure \ref{fig:karman-trefftz_voronoj} for the \textsc{Kármán}--\textsc{Trefftz} airfoil of figure \ref{subfig:karman-trefftz_foil}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\linewidth]{karman-trefftz_voronoj.pdf}
+  \caption{\textsc{Voronoj} diagram of the \textsc{von Kármán}--\textsc{Trefftz} airfoil (dashed).}
+  \label{fig:karman-trefftz_voronoj}
+\end{figure}
+
+\noindent
+We note that the \textsc{Voronoj} diagram is rather jagged towards the trailing edge, yielding in turn a jagged medial axis.
+The medial axis is drawn with the analytically calculated skeleton of the airfoil in figure \ref{fig:karman-trefftz_medial_axis}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\linewidth]{karman-trefftz_medial_axis.pdf}
+  \caption{Medial axis of the \textsc{von Kármán}--\textsc{Trefftz} airfoil (dashed), and the skeleton (full).}
+  \label{fig:karman-trefftz_medial_axis}
+\end{figure}
+
+\noindent
+With half the number of vertices, we attempt an even more naïve approach in figure \ref{fig:karman-trefftz_camber}.
+From each vertex on the airfoil, we draw a vertical line to the opposite side of the polygon, and calculate the point midway between the vertex and the intersection on the opposite side.
+This did indeed yield much better results.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\linewidth]{karman-trefftz_camber.pdf}
+  \caption{Mean camber line (dashed) and skeleton (full) of the \textsc{von Kármán}--\textsc{Trefftz} airfoil.}
+  \label{fig:karman-trefftz_camber}
+\end{figure}
+
+\noindent
+For the \textsc{Selig}--\textsc{Donovan} airfoil SD7032, whose number of vertices is even lower than this, the \textsc{Voronoj} diagram was unfortunately not the better option between the two naïve methods.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\linewidth]{sd7032_voronoj.pdf}
+  \caption{\textsc{Voronoj} diagram of SD7032 (dashed).}
+  \label{fig:sd7032_voronoj}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\linewidth]{sd7032_medial_axis.pdf}
+  \caption{Medial axis of SD7032 (dashed) and mean camber line (full).}
+  \label{fig:sd7032_medial_axis}
+\end{figure}

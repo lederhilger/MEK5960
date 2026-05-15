@@ -1,7 +1,30 @@
-An \emph{octree} is a data structure which partitions the cube.
+An \emph{octree} is a data structure which partitions the cube, whose modern adaptation in large part can be attributed to a 1980 report by Donald \textsc{Meagher}.%
+\footnote{%
+  \cite{meagher1980octree} \textsc{Meagher} (1980)
+}
+Owing to its treelike structure and roots in other arboreal algorithms, so to speak, the parlance with which one speaks of it is thusly inspired.
+The partitioning starts with a \emph{root}, which is split into eight equal pieces, whence its name---we shall call these cubes \emph{voxels}.
+Like a family, these voxels can produce further children voxels, their relation thereto being that of a parent.
+Imagining an inverted structure compared to that of a physical tree, we place the root voxel at the very top, and let its eight children spread out downwards.
+These voxels shall then perhaps also have eight children, and so on.
+Voxels that have no children we call leaves.
+For each generation, we may assign a depth relative to the root, whose depth is zero, and the maximal depth in the tree we call the \emph{profundity}.
+Algorithm \ref{alg:octree_algorithm} outlines the implemented construction, adhering to a conservative subdivision criterion of voxel ownership of both endpoints of the filaments to insure regularity.
 
-Capacity versus profundity.
-Increasing profundity will increase the propagation of translation errors.
-Increasing capacity will increase runtime.
-
-
+The purpose of implementing this partitioning is to effectively determine sufficient distance between targets and sources, and to aggregate the sources by means of multipole transfers.
+The direct application to the problem at hand in this thesis is to somehow partition the domain of evaluation using the octree data structure, and expanding the influence coëfficients of the filaments relative to the voxel center.
+Calculating the influence of some aggregate of filaments is then as simple as translating the coëfficients up the tree, and down again to the target.
+This is referred to as the upward and downward passes, respectively.
+Determining what constitutes farfield is an involved matter, which has been addressed through so-called $\mathtt{U}$, $\mathtt{V}$, $\mathtt{W}$, and $\mathtt{X}$ lists.%
+\footnote{%
+  \cite{cheng1999fast} \textsc{Cheng}, \textsc{Greengard}, \& \textsc{Rohlin} (1999)
+}\textsuperscript{,}%
+\footnote{%
+  \cite{wala2018fast} \textsc{Wala} \& \textsc{Klöckner} (2018)
+}
+The construction of these interaction lists is specified in algorithm \ref{alg:interaction_lists}.
+Further, we shall adopt the parlance of the fast multipole method, denoting the translations of equation \eqref{eq:translation_notation} respectively the \textsc{l2l}, \textsc{m2l}, and \textsc{m2m} translations.
+These names are perhaps more explanatory than their purely mathematical counterparts.
+The \textsc{m2m}, or multipole-to-multipole translation shifts the child multipoles to the center of the parent voxel, and so on up the octree, until the downward pass of the \textsc{m2l}, or multipole-to-local translation of this wellseparated source multipole to a local regular representation.
+The \textsc{l2l}, or local-to-local translation shifts the parent local expansion to the child target center.
+The upward pass is described in algorithm \ref{alg:upward-pass}, and the downward pass is described in algorithm \ref{alg:downward-pass}.

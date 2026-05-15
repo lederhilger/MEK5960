@@ -3,7 +3,296 @@ The application of equation \eqref{eq:law_of_cosines}, and the polynomials of \t
 \footnote{%
   \cite{kellogg1929foundations} \textsc{Kellogg}, pp.124--146
 }
-We shall now leverage the theory which we derived previously 
+For our purposes, as we have stated yet not necessarily explained, the multipole expansion is simply an approximation tool with which we shall attempt to accelerate the calculation of farfield vortex filament influence on the local velocity.
+These are to be implemented through the local and distal spherical harmonic expansions $\regular_n^m$ and $\singular_n^m$, respectively regular and singular at the point of evaluation.
+The matter of evaluating this velocity can be approached in two manners, one more natural to the standard multipole translation theory discussed earlier, and one more natural to the \textsc{rcr} translation.
+Both these methods exploit the \textsc{Hodge} decomposition of the velocity of equation \subeqref{\ref{eq:Helmholtz_decomposition}}[a], the latter of which insists on the form \subeqref{\ref{eq:Helmholtz_decomposition}}[b].
+In the literature of \textsc{Gumerov} \& \textsc{Duraiswami}, this particular latter form is referred to as the \textsc{Lamb}--\textsc{Helmholtz} vector potential.
+Simply not applying the curl operator that results in equation \eqref{eq:Biot-Savart_volume} will evidently yield
+%
+\begin{subequations}\label{eq:bPsi_parametrized}
+  \begin{equation}\tag{\theequation{a, b}}
+    \mathbf{\Psi}(\bzhe) = \Gamma \tvec I(\bzhe), \qquad
+    I(\bzhe) = \sfrac{1}{2} \absl{\xvec^{\romani} - \xvec^{\romanii}} \int_{-1}^{1} \green \big( \xvec(t); \bzhe \big) \,\dee t.
+  \end{equation}
+\end{subequations}
 
-We want expansions of solutions locally and distally.
+\noindent
+The treatment of integrals like \subeqref{\ref{eq:bPsi_parametrized}}[b] is a bottleneck for many implementations of the boundary element method, as the evaluation of integrals by quadrature tends to be rather ravenous in terms of its temporal extent, and lousy in its general accuracy.
+Exploiting the expansion of the \textsc{Green} function of equation \eqref{eq:Green_translation}, we may now expand this integral in terms of multipoles by the quadrature to expansion (\textsc{q2x}) method,%
+\footnote{%
+  \cite{gumerov2023recursive} \textsc{Gumerov}, \textsc{Kaneko}, \& \textsc{Duraiswami} (2023)
+}
+%
+\begin{subequations}\label{eq:Q2X}
+  \begin{equation}\tag{\theequation{a, b}}
+    I(\bzhe) \approx \sum_{n = 0}^{N-1} \sum_{m = -n}^{n} K_n^m (\ovec) \singular_n^m (\bzhe\prime), \qquad
+    K_n^m(\ovec) = \sfrac{{(-1)}^n}{8\pi} \absl{\xvec^{\romani} - \xvec^{\romanii}} \int_{-1}^{1} \regular_{n}^{-m} \big( \xvec\prime(t) \big) \,\dee t.
+  \end{equation}
+\end{subequations}
+%
+\noindent
+This expansion we know to be valid as long as the magnitude of the point of evaluation relative to some new origin is greater than the supremum of the magnitude of the point of expansion relative to that same new origin.
+Performing the actual evaluation of the integral \subeqref{\ref{eq:Q2X}}[b] is done through a recurrence relation.%
+\footnote{%
+  \cite{gumerov2023recursive} \textsc{Gumerov}, \textsc{Kaneko}, \& \textsc{Duraiswami} (2023), eq.43
+}
+The expansion coëfficients of the vector potential are then componentwise ${\big[ \Psi^i \big]}_n^m = \Gamma t^i K_n^m$, such that the local vector potential after some translation is
+%
+\begin{equation}\label{eq:Psi_local}
+  \Psi^i(\bzhe) = \sum_{n = 0}^{N - 1} \sum_{m = -n}^{n} {\big[ \Psi^i \big]}_n^m \regular_n^m (\bzhe\prime).
+\end{equation}
 
+\noindent
+This we shall henceforth label the \emph{standard} velocity calculator, as it is the most obvious path from which we may calculate the velocity---we simply take the curl thereof.
+Due to the termwise nature of the differentiation of a series, we may perform the differentiation on either of the regular or singular functions, and transfer any index recurrence relation we presume we shall see to the multipole coëfficients by reïndexing.
+We shall reïntroduce the complex differential in terms of the variable $\ezh = \che + i\ze$ for the local frame $\bzhe = \zhe\,\deex + \che\,\deey + \ze\,\deez$, constructing a cylindrical coördinate system with respect to the complex variable.
+We then consider the generating function of the regular function, derived from the \textsc{Herglotz} function,%
+\footnote{%
+  \cite{sack1974generating} \textsc{Sack} (1974)
+}\textsuperscript{,}%
+\footnote{%
+  \cite{courant1989methods} \textsc{Courant} \& \textsc{Hilbert}, \S{VII.7.3}
+}
+%
+\begin{equation}\label{eq:Herglotz}
+  f(a, b; \bzhe)
+  = \exp{\Bigg( a \left( -\zhe + \frac{\ezh}{2b} - \frac{b\ezh^{\dag}}{2}  \right) \Bigg)}
+  = \sum_{n = 0}^{\infty} \sum_{m = -n}^{n} a^n b^m \regular_n^m(\bzhe).
+\end{equation}
+
+\noindent
+It is clear that differentiating the explicit exponential representation of the function $f$ of equation \eqref{eq:Herglotz} will result in a selfsimilar differential.
+Indeed, $\partial_{\zhe}f = - a f$ and $\partial_{\ezh}f = \sfrac{a}{2b} f$ and $\partial_{\ezh^{\dag}}f = -\sfrac{ab}{2}f$.
+Due to the uniform and absolute convergence of the series representation for nonzero $b$, we may differentiate the regular functions term by term, assigning recurrence relations based on the principle of homogeneity we have discussed earlier.
+That is, $\partial_{\zhe}\regular_n^m = -\regular_{n-1}^m$ and $\partial_{\ezh}\regular_n^m = \sfrac{1}{2}\regular_{n-1}^{m+1}$ and $\partial_{\ezh^{\dag}}\regular_n^m = -\sfrac{1}{2} \regular_{n-1}^{m-1}$.
+We find after returning to Cartesian coördinates that
+%
+\begin{equation}\label{eq:Regular_derivative}
+  \dee\!\regular_n^m = -\regular_{n-1}^{m} \,\dee x
+  + \bigg( \frac{\regular_{n-1}^{m+1} - \regular_{n-1}^{m-1}}{2} \bigg) \,\dee y
+  - \bigg( \frac{\regular_{n-1}^{m+1} + \regular_{n-1}^{m-1}}{2i} \bigg) \,\dee z
+\end{equation}
+
+\noindent
+It ought now to be evident that the calculation of the velocity from equation \eqref{eq:Psi_local} is no more complicated than evaluating the curl thereof.
+We shall however but for a brief moment clarify the matter of differentiating a scalar function of expanded form.
+Let $F$ be some scalar function for which we have some truncated local expansion of maximal degree $N - 1$, relative to another origin, such that we may express it in terms of the regular function as follows.
+%
+\[
+  F(\bzhe) = \sum_{n = 0}^{N - 1} \sum_{m = -n}^{n} L_n^m \regular_n^m(\bzhe\prime)
+\]
+
+\noindent
+As was stated earlier, differentiating this function will result in a shift of indices, which we may inversely apply to the local multipole coëfficients such that they take the form
+%
+\begin{equation}
+  {\big[ \dee F \big]}_n^m = -L_{n+1}^m \,\dee x
+  + \bigg( \frac{L_{n+1}^{m-1} - L_{n+1}^{m+1}}{2} \bigg) \,\dee y
+  - \bigg( \frac{L_{n+1}^{m-1} + L_{n+1}^{m+1}}{2i} \bigg) \,\dee z
+\end{equation}
+
+\noindent
+From the relations for the regular derivative of equation \eqref{eq:Regular_derivative}, it is trivial to find the differential recurrence relations for the singular function by considering the multipole expansion of the \textsc{Green} function in equation \eqref{eq:Green_translation}.
+Transferring the differential operator instead to the regular function, we in much the same manner as with the regular differential recurrence find the recurrence for the singular function, though of opposite index.
+%
+\begin{equation}\label{eq:Singular_derivative}
+  \dee\!\singular_n^m = -\singular_{n+1}^{m} \,\dee x
+  + \bigg( \frac{\singular_{n+1}^{m+1} - \singular_{n+1}^{m-1}}{2} \bigg) \,\dee y
+  - \bigg( \frac{\singular_{n+1}^{m-1} + \singular_{n+1}^{m+1}}{2i} \bigg) \,\dee z
+\end{equation}
+
+\noindent
+This formulation is in general less useful, as the derivative is something we would like to calculate as a final step after multipole translation.
+Nevertheless, expanding the scalar function $F$ now distally, we get the multipole coëfficients $M_n^m$.
+In the exact same manner as with the local expansion, we shift the indices in the singular function, effectively moving the differentiation onto the multipole coëfficients.
+We then have
+%
+\begin{equation}
+  {\big[ \dee F \big]}_n^m = -M_{n-1}^m \,\dee x
+  + \bigg( \frac{M_{n-1}^{m-1} - M_{n-1}^{m+1}}{2} \bigg) \,\dee y
+  - \bigg( \frac{M_{n-1}^{m-1} + M_{n-1}^{m+1}}{2i} \bigg) \,\dee z.
+\end{equation}
+
+\noindent
+We may now find the standard velocity by taking the curl of the vector potential, calculating the differentials componentwise according to the formula previously discussed.
+We write the velocity one-form $\ufrak = u\,\dee x + v\,\dee y + w\,\dee z$, such that we may calculate the multipole coëfficients of these components as follows.
+%
+\begin{subequations}
+  \begin{align}
+    {u}_n^m &
+    = {\big[ \deey\Psi^z \big]}_n^m - {\big[ \deez\Psi^y \big]}_n^m
+    = \frac{{\big[ \Psi^z \big]}_{n+1}^{m-1} - {\big[ \Psi^z \big]}_{n+1}^{m+1}}{2}
+    + \frac{{\big[ \Psi^y \big]}_{n+1}^{m-1} + {\big[ \Psi^y \big]}_{n+1}^{m+1}}{2i}\\
+    %
+    {v}_n^m &
+    = {\big[ \deez\Psi^x \big]}_n^m - {\big[ \deez\Psi^z \big]}_n^m
+    = {\big[ \Psi^z \big]}_{n+1}^{m} - \frac{{\big[ \Psi^x \big]}_{n+1}^{m-1} + {\big[ \Psi^x \big]}_{n+1}^{m+1}}{2i}\\
+    %
+    {w}_n^m &
+    = {\big[ \deex\Psi^y \big]}_n^m - {\big[ \deey\Psi^x \big]}_n^m
+    = \frac{{\big[ \Psi^x \big]}_{n+1}^{m+1} - {\big[ \Psi^x \big]}_{n+1}^{m-1}}{2} - {\big[ \Psi^y \big]}_{n+1}^{m}
+  \end{align}
+\end{subequations}
+
+\noindent
+We have established the \textsc{Hodge} decomposition theorem as a matter of fact insofar as we may indeed express the velocity one-form as the sum of the exterior derivative of some scalar function, the codifferential of some one-form, and some harmonic one-form.
+The expression for the velocity just derived is a choice of gauge in the velocity vector potential $\Psi$, the form of which we have made purposefully unspecified.
+Forcing the specificity of the vector potential will yield some corrective exact form of sorts, yielding the so-called \textsc{Lamb}--\textsc{Helmholtz} representation of the velocity, as we specified in equation \eqref{eq:Helmholtz_decomposition}.%
+\footnote{%
+  \cite{lamb1945hydrodynamics} \textsc{Lamb}, \S{335}, eq.9
+}
+The advantage of this gauge is the fact that we now only have to calculate two scalar potentials $\Phi$ and $\chi$, compared to the three components of the vector potential $\mathbf{\Psi}$.
+We must then have that from any filament the velocity induced is
+%
+\begin{equation}
+  \ufrak = \star(\dee I \wedge \Gamma \tfrak) = \dee\Phi + \star\dee \big( \chi {\bzhe\prime}^{\flat} \big);
+\end{equation}
+%
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    \Phi(\bzhe) = \sum_{n = 0}^{\infty} \sum_{m = -n}^{n} \Phi_n^m \singular_n^m(\bzhe\prime), \qquad
+    \chi(\bzhe) = \sum_{n = 0}^{\infty} \sum_{m = -n}^{n} \chi_n^m \singular_n^m(\bzhe\prime).
+  \end{equation}
+\end{subequations}
+
+\noindent
+We need now only contract either side of this equation with the vector $\bzhe\prime$ to isolate the scalar potential.
+Using the fact that $\avec\iprod\star\bfrak = \star(\bfrak\wedge\afrak)$, we must indeed have that $\bzhe\prime \iprod \star \big( \dee\chi \wedge {\bzhe\prime}^{\flat} \big) = 0$.
+Taking the curl evidently erases the scalar potential term.
+The other term we expand as $\codee\dee \big( \chi {\bzhe\prime}^{\flat} \big) = \dee \big( \chi + \bzhe\prime \iprod \dee\chi \big) - {\bzhe\prime}^{\flat}\Delta\chi$.
+In the same vein, we write that $\codee \big( \dee I \wedge \tfrak \big) = \dee \big( \tvec \iprod \dee I \big) - \tfrak\Delta I$.
+The integral $I$ is clearly harmonic by construction, and the potential $\chi$ is harmonic by gauge.
+Equating primitives, we find that the procedure is
+%
+\begin{subequations}
+  \begin{equation}\tag{\theequation{a, b}}
+    \star\big( \Gamma \dee I \wedge \tfrak \wedge {\bzhe\prime}^{\flat} \big) = \bzhe\prime\iprod\dee\Phi, \qquad
+    \Gamma\tvec \iprod \dee I = (\id + \bzhe\prime \iprod \dee)\chi.
+  \end{equation}
+\end{subequations}
+
+\noindent
+The singular function is homogeneous, meaning $\singular_n^m(a\bzhe\prime) = \absl{a}^{-(n+1)}\singular_n^m(\bzhe\prime)$, and that the directional derivative at $a = 1$ yields $\bzhe\prime \iprod \dee\singular_n^m = -(n+1) \singular_n^m$.
+We may now use the relations of equation \eqref{eq:Singular_derivative}, and shift the indices as before when performing the derivative of the line integral.
+Thus, for the source terms of the potentials, we find their expansion coëfficients to be given in terms of the line integral multipole coëfficients of equation \subeqref{\ref{eq:Q2X}}[b] as follows.%
+\footnote{%
+  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013), eq.47
+}
+%
+\begin{equation}
+  \Phi_n^m = \frac{\Gamma}{2(n+1)} \Big(
+  2imt^x K_{n}^{m}
+  + \big( -t^z + i t^y \big) \big( n-m+1 \big) K_{n}^{m-1}
+  + \big( t^z + i t^y \big) \big( n+m+1 \big) K_{n}^{m+1}
+  \Big)
+\end{equation}
+
+\begin{equation}
+  \chi_n^m = -\frac{\Gamma}{2n} \Big(
+  -2t^x K_{n-1}^{m}
+  + t^y \big( K_{n-1}^{m-1} - K_{n-1}^{m+1} \big)
+  + it^z \big( K_{n-1}^{m+1} + K_{n-1}^{m+1} \big)
+  \Big)
+\end{equation}
+
+\noindent
+For the evaluation of the curl in terms of the regular expansion, we again use the generating function of equation \eqref{eq:Herglotz}.
+We shall seek expressions of the form $\star\big( \dee f \wedge {\bzhe\prime}^{\flat} \big)$, which we may simply calculate the differentials of the generating function.
+Indeed, we find that $ib\partial_b f = \ze\partial_{\che} f - \che\partial_{\ze} f$, which is exactly the component of the curl along $\zhe$.
+Matching coëfficients of the regular harmonic for this and the remaining components, we find that
+%
+\begin{subequations}\label{eq:Lamb-Helmholtz_velocity}
+  \begin{align}
+    u_n^m &= - \Phi_{n+1}^{m}
+    + i m \chi_{n}^{m}; \\
+    %
+    v_n^m &= \frac{\Phi_{n+1}^{m-1} + \Phi_{n+1}^{m+1}}{2}
+    + \frac{(n+m)\chi_{n}^{m-1} - i(n-m)\chi_{n}^{m+1}}{2i}; \\
+    %
+    w_n^m &=  \frac{(n+m)\chi_{n}^{m-1} - (n-m)\chi_{n}^{m+1}}{2}
+    - \frac{\Phi_{n+1}^{m-1} + \Phi_{n+1}^{m+1}}{2i}.
+  \end{align}
+\end{subequations}
+
+\noindent
+A considerable weakness of this method of calculating the velocity components is its dependence on the vector $\bzhe$ in its gauge.
+Translating the functions will in general break the gauge, and so it must be repaired.%
+\footnote{%
+  \cite{gumerov2013efficient} \textsc{Gumerov} \& \textsc{Duraiswami} (2013)
+}
+Let the old expansion origin be $\ovec_i$, and the new be $\ovec_j$, such that $\dvec = \ovec_j - \ovec_i$, as before, and the translated potentials be denoted $\hat{\Phi}$ and $\hat{\chi}$.
+Now we evidently have that $\bzhe^{\prime}_i = \dvec + \bzhe^{\prime}_j$, and that the potentials satisfy $\dee(\Phi - \hat{\Phi}) + \star\dee \big( (\chi - \hat{\chi}) {\bzhe^{\prime}_j}^{\flat} \big) = \star\dee(\hat{\chi}\dvec^{\flat})$.
+Exploiting the same procedure as we did for the untranslated coëfficients, we find that we must have
+%
+\begin{subequations}
+  \begin{equation}
+    \bzhe^{\prime}_{j} \iprod \dee(\Phi - \hat{\Phi}) = \bzhe^{\prime}_{j} \iprod \star(\dee\hat{\chi} \wedge \dvec^{\flat}), \qquad
+    (\id + \bzhe^{\prime}_{j} \iprod \dee) (\chi - \hat{\chi}) = \dvec \iprod \dee\hat{\chi}.
+  \end{equation}
+\end{subequations}
+
+\noindent
+\textsc{Gumerov} \& \textsc{Duraiswami} now introduce conversion coëfficients to convert the translated potentials back into \textsc{Lamb}--\textsc{Helmholtz} form.
+For the regular and singular harmonics we must then have corresponding conversion coëfficients, each tailored to the respective differential properties of the function.
+For brevity, we shall write $A_n^m = {\big[ \bzhe^{\prime}_{j} \iprod \star(\dee\hat{\chi} \wedge \dvec^{\flat}) \big]}_n^{m}$, and $B_n^m = {\big[ \dvec \iprod \dee\hat{\chi} \big]}_n^m$.
+As we have already found, normal differentiation in the regular function yields a multiplicative factor of $n$, and so
+%
+\begin{subequations}
+  \begin{align}
+    \Phi_n^m &= {\hat{\Phi}}_n^m + \frac{A_n^m}{n},
+    & n \geq 1;\\
+    %
+    \chi_n^m &= {\hat{\chi}}_n^m + \frac{B_n^m}{n+1},
+    & n \geq 0,
+  \end{align}
+\end{subequations}
+
+\noindent
+where we set $\Phi_0^0 = {\hat{\Phi}}_0^0$.
+We compute these explicitly as follows.
+%
+\begin{subequations}
+  \begin{align}
+    A_n^{m} &=
+    - i m d^{\zhe} \hat{\chi}_{n}^m
+    + \frac{(n+m)\hat{\chi}_{n}^{m-1}}{2} \big( i d^{\che} - d^{\ze} \big)
+    - \frac{(n-m)\hat{\chi}_{n}^{m+1}}{2} \big( i d^{\che} + d^{\ze} \big)\\
+    %
+    B_n^m &=
+    - d^{\zhe} \hat{\chi}_{n+1}^m
+    + \frac{d^{\che} \big( \hat{\chi}_{n+1}^{m-1} - \hat{\chi}_{n+1}^{m+1} \big)}{2}
+    - \frac{d^{\ze} \big( \hat{\chi}_{n+1}^{m-1} - \hat{\chi}_{n+1}^{m+1} \big)}{2i}
+  \end{align}
+\end{subequations}
+
+\noindent
+For the singular harmonic expansion, we similarly have the following, though with the condition that $\chi_0^0 = \hat{\chi}_ 0^0$.
+%
+\begin{subequations}
+  \begin{align}
+    \Phi_n^m &= {\hat{\Phi}}_n^m + \frac{A_n^m}{n+1},
+    & n \geq 0\\
+    %
+    \chi_n^m &= {\hat{\chi}}_n^m + \frac{B_n^m}{n},
+    & n \geq 1
+  \end{align}
+\end{subequations}
+%
+\begin{subequations}
+  \begin{align}
+    A_n^{m} &=
+    - i m d^{\zhe} \hat{\chi}_{n}^m
+    - \frac{(n-m+1)\hat{\chi}_{n}^{m-1}}{2} \big( i d^{\che} + d^{\ze} \big)
+    + \frac{(n+m+1)\hat{\chi}_{n}^{m+1}}{2} \big( i d^{\che} - d^{\ze} \big)\\
+    %
+    B_n^m &=
+    - d^{\zhe} \hat{\chi}_{n-1}^m
+    + \frac{d^{\che} \big( \hat{\chi}_{n-1}^{m-1} - \hat{\chi}_{n-1}^{m+1} \big)}{2}
+    - \frac{d^{\ze} \big( \hat{\chi}_{n-1}^{m-1} - \hat{\chi}_{n-1}^{m+1} \big)}{2i}
+  \end{align}
+\end{subequations}
+
+\noindent
+We shall for the remainder of this work refer to this construction of the velocity as the \textsc{Lamb}--\textsc{Helmholtz} velocity, and as was stated earlier, we refer to the somewhat more direct method with the three scalar potentials as the standard method.
+With now either of the velocity constructions, and the two translation methods, we have four options for the implementation of the fast multipole method at our disposal.

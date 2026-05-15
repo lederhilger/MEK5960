@@ -1,3 +1,55 @@
+The preceding mathematical discussion has revealed holes in the canopy of the methods considered through which beams of noumenal amendments glaringly gleam through.
+Most obvious is perhaps in the evaluation of the line integrals one must calculate, two nodes accounting for two distinct vortex filaments, one in each orientation.
+We showed that the mathematical nature of the vortex lattice method was this very notion of differences in potential jump across panels results in a circulation on the shared edge.
+For in truth, the circulation we do use to calculate the induced velocity is only the proverbial half of the circulation when not accounting for the inverse orientation.
+Accounting for this will effectively improve the calculation time by a factor of two, and has indeed been implemented in \texttt{3DFloat}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = .75\textwidth]{cpu_time.pdf}
+  \caption{Median times of three benchmark CPU time measurements, comparing all fast multipole methods to the direct calculation.}
+  \label{fig:cpu_time}
+\end{figure}
+
+As for the choices made during the performed tests, there is a multiplicity of factors to account for.
+Perhaps the most direct, yet elusive such factor is the assessment in determining the profundity and capacities of the octree partitioning.
+Increasing the profundity will of course decrease the number of direct calculations one must make.
+Yet, the number of translations one must perform is counteractively raised.
+Increasing the capacity will have the opposite effect, for if there are more permitted filaments in a given voxel, there will be more direct evaluations.%
+\footnote{%
+  \cite{gumerov2006fast} \textsc{Gumerov} \& \textsc{Duraiswami} (2006)
+}
+There is also the matter of choosing the velocity formulation and the multipole translator.
+Both wall time measurements and measurements of the central processing unit show that the fast multipole method indeed is exceedingly faster that the direct calculation of the velocity, as is illustrated in figure \ref{fig:cpu_time}, and tabulated in table \ref{tab:rotorplane_time}.
+This was not expected, as the prototype developed for this thesis was written in \texttt{Python}, a language not suitable for the fast multipole method.
+The increased performance from that which was expected is likely due to the implementation of \texttt{numba.njit}, which compiles some of the code.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|l|c|c|c|}
+    \hline
+    Method & Order & Wall time [s] & CPU time [s] \\
+    \hline
+    direct & -- & 415.547 & 414.861 \\
+    standard / standard & 4 & 150.498 & 150.247 \\
+    standard / standard & 8 & 153.272 & 153.025 \\
+    standard / standard & 12 & 156.675 & 156.413 \\
+    standard / \textsc{rcr} & 4 & 150.480 & 150.230 \\
+    standard / \textsc{rcr} & 8 & 153.145 & 152.890 \\
+    standard / \textsc{rcr} & 12 & 157.005 & 156.741 \\
+    L--H / standard & 4 & 151.684 & 151.430 \\
+    L--H / standard & 8 & 161.601 & 161.294 \\
+    L--H / standard & 12 & 174.946 & 174.582 \\
+    L--H / \textsc{rcr} & 4 & 151.838 & 151.580 \\
+    L--H / \textsc{rcr} & 8 & 161.576 & 161.270 \\
+    L--H / \textsc{rcr} & 12 & 174.183 & 173.818\\
+    \hline
+  \end{tabular}
+  \caption{Rotorplane benchmark timing.}
+  \label{tab:rotorplane_time}
+\end{table}
+
+
 One avenue that admittedly was the original intention of this thesis was that of dipole panel evaluation, as described in a paper of \textsc{Deng} \emph{et alii}.
 This work does not necessarily employ the vortex lattice method, as it retains the dipole formulation of the integral equation, exploiting fast algorithms for solving the integrals upon the panel.
 From the analysis of the methodology, it seems the choice of a uniquely determined normal vector upon a plane panel.

@@ -1,10 +1,17 @@
-This thesis seeks to provide a mathematical foundation for the unsteady vortex lattice method, and its computational acceleration through the fast multipole method.
+This thesis seeks to provide a mathematical foundation for the unsteady step of calculating the induced velocity in the vortex lattice method, and its computational acceleration through the fast multipole method.
+The unsteady vortex lattice method calculates the induced velocity at any point in space by vortex panels, defined by its vertices and the vortex filaments enclosing it.
+As the \emph{unsteady} in the name of the method perhaps implies, the process involves doing repeated calculations over many steps in time.
+Should one want to model an offshore wind turbine, for instance, one would need sufficient spatial resolution on the body to calculate the elastic responses of the turbine to the wind, and its loads turning the rotor.
+The unsteady vortex lattice method ejects such panels at specified intervals of time, growing the wake behind the wind turbine to ever greater extents.
+Due to the mathematical formulation of this method, is we were to have say $n$ such vortex panels in the wake, we would need to perform over $n^2$ calculations for the next step in time.
+For long simulations, these wakes become so large that the time to calculate further steps in time are too costly, and the wake is trimmed.
+We will show that this leads to errors, so we naturally wish to extend the life of the wind turbine wake, so to speak, by accelerating the computation.
+This we do through the fast multipole method, which aggregates far away vortex filaments, and calculates them in bulk.
+Thus, we instead only need to perform some $n$ or $n\log{n}$ calculations, depending on the competence of the implementer, naturally.
+The algorithms for the implementation used for this thesis is provided in the appendix.
 
 \subsection{Motivation}
 \subfile{motivation/motivation.tex}
-
-\subsection{Background}
-\subfile{background/background.tex}
 
 \subsection{Overview}
 \subfile{overview/overview.tex}

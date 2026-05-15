@@ -1,5 +1,8 @@
 Until the conclusion of this work, we concern ourselves with the airfoil skeleton theory of \textsc{Birnbaum}, wherein the aerodynamical calculations are performed on the mean camber line only.
-For it shall be shown that the matter of flow due to thickness and inclination and camber are fundamentally different, and indeed separable.
+For it is known that the matter of flow due to thickness and inclination and camber are fundamentally different, and indeed separable.%
+\footnote{%
+  \cite{torres2024nonlinear} \textsc{Torres} \& \textsc{Marques} (2024)
+}
 Consider an airfoil given as a closed curve in the complex plane, whose chord coïncides with the abscissal coördinate.
 The mean camber line is the curve that for any abscissal value lies exactly midway between the two ordinal values of the airfoil.
 It is evident that this curve describing the airfoil can then be depicted entirely by the sum of the mean camber line and the thickness function.
@@ -25,7 +28,7 @@ Its definition is as follows.%
 }
 
 \begin{definition}[Medial axis]
-  Given a simple polygon $\Omega^{\dag}$, its medial axis is the set of points $\{\xvec_i\}$ internal to it, such that there are at least two points on its boundary that are equdistant from and are closest to $\{ \xvec_i \}$.
+  Given a simple polygon $\Omega^{\dag}$, its medial axis is the set of points $\{\xvec_i\}$ internal to it, such that there are at least two points on its boundary that are equidistant from and are closest to $\{ \xvec_i \}$.
 \end{definition}
 
 \noindent
@@ -41,12 +44,9 @@ We can then implement an algorithm to determine the \textsc{Voronoj} diagram, wh
 }
 simply terminating branches thereof incident with reflex vertices.
 
-\begin{conjecture}
+\begin{conjecture}\label{con:medial-axis}
         For an airfoil sampled at a finite number of points, the medial axis of the polygon thereof is the best approximation of its mean camber line.
 \end{conjecture}
 
-\begin{figure}[h]
-        \centering
-        \scalebox{1}{\input{airfoil_panel.tikz}}
-        \caption{Airfoil}
-\end{figure}
+\noindent
+The numerical results of the implementation of the algorithm of \textsc{Li} is given in the appendix.

@@ -4,27 +4,34 @@ The fast multipole method was developed by Leslie \textsc{Greengard} and Vladimi
 }
 The application was manyparticle systems, interstellar mechanics and electrostatics being the immediate examples thereof.
 Consider a swath of electrically charged particles gathered in clusters at some locations, and spread war apart in others.
-By the law of \textsc{Coloumb} governing the physics of charged particle interaction, the force impressed upon some particle by all the others depends on its distance thereto.
+By the law of \textsc{Coulomb} governing the physics of charged particle interaction, the force impressed upon some particle by all the others depends on its distance thereto.
 The idea of the fast multipole method is to systematically evaluate the influence of faraway sources on a point by aggregating their influence, and calculating them in bulk.
-This is done through space octree partitioning.
+This is done through octree space partitioning.
 Whatever influence an aggregate of points children nodes have are passed onto the parent, and the influence of the parent is calculated instead.
 This is efficient computationally because a lot of the required calculation for each panel is already done.
+For the unsteady vortex lattice method, all vertices of wake filaments are to be convected farther downstream, influenced by the entirety of the wake, meaning the total number of calculations needed for a single step in time is proportional to the square of the number of such vertices.
+This type of interaction, where the evaluation of each point depends on some property of every other point is illustrated in figure \ref{subfig:liu-direct}.%
+\footnote{%
+  \cite{liu2009fast} \textsc{Liu}, fig.3.1, p.49, adapted with permission from the author.
+}
+By instead considering instead the tree-based evaluation of the fast multipole method through aggregation of neighboring influence as show in \ref{subfig:liu-tree}, the complexity of the number of operations in the evaluation is now shifted over to the complexity of the mechanism by which one aggregates and translates the influence through the tree.
+
 \begin{figure}[h]
   \centering
   \begin{subfigure}{.49\textwidth}
     \centering
     \includegraphics[scale = 3]{bem_influence.pdf}
     \caption{Direct interactions.}
+    \label{subfig:liu-direct}
   \end{subfigure}
   \begin{subfigure}{.49\textwidth}
     \centering
     \includegraphics[scale = 3]{fmm_influence.pdf}
     \caption{Tree-based interactions.}
+    \label{subfig:liu-tree}
   \end{subfigure}
   \caption{
-        The difference in number of interactions for the direct and tree-based approaches.%
-        \footnote{%
-                \cite{liu2009fast} \textsc{Liu}, fig.3.1, p.49, adapted with permission from author.
-        }
+        The difference in number of interactions for the direct and tree-based approaches.
   }
+  \label{fig:liu}
 \end{figure}
