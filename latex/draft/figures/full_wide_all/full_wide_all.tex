@@ -1,0 +1,12 @@
+\ExplSyntaxOn
+\sys_ensure_backend:
+\pdf_version_gset:n{1.7}
+\ExplSyntaxOff
+\documentclass{standalone}
+\usepackage{pgf}
+\usepackage{siunitx}
+\usepackage{simonspackages}
+\providecommand{\mathdefault}[1]{#1}
+\begin{document}
+\input{direct_components_azimuth_average_vs_r.pgf}
+\end{document}
